@@ -39,7 +39,7 @@ export const siteConfig = {
     ],
   },
   contact: {
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "+966500000000",
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
   },
 } as const;
 
