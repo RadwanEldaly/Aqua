@@ -40,11 +40,11 @@ export function SectionHeading({
           {eyebrow}
         </span>
       )}
-      <TitleTag className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-brand-deep leading-tight">
+      <TitleTag className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
         {title}
       </TitleTag>
       {description && (
-        <p className="text-sm sm:text-base text-text-subtle-accessible font-normal leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
           {description}
         </p>
       )}

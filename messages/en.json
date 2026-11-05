@@ -50,12 +50,12 @@
   "ProductsPage": {
     "eyebrow": "Product Catalog",
     "title": "Water Filtration Solutions",
-    "description": "Browse our curated selection of purification systems, dispensers, and replacement cartridges.",
+    "description": "Water filtration systems, water dispensers, and filter cartridges.",
     "filterGroupAriaLabel": "Filter products by category",
-    "inquire": "Inquire",
+    "inquire": "Inquire via WhatsApp",
     "inquireAria": "Inquire about {name} via WhatsApp",
     "whatsappPrefill": "Hello, I would like to inquire about: {name}",
-    "showingCount": "Showing {count} of {total} products",
+    "showingCount": "{count, plural, =0 {No products} one {1 of {total} product} other {{count} of {total} products}}",
     "emptyState": "No products found in this category."
   }
 }

@@ -50,12 +50,12 @@
   "ProductsPage": {
     "eyebrow": "كتالوج المنتجات",
     "title": "حلول وفلاتر تنقية المياه",
-    "description": "تصفح مجموعتنا المختارة من أنظمة التنقية، الموزعات، وشمعات الاستبدال.",
+    "description": "أنظمة التنقية، موزعات المياه، وشمعات الفلاتر.",
     "filterGroupAriaLabel": "تصفية المنتجات حسب الفئة",
-    "inquire": "طلب استفسار",
-    "inquireAria": "طلب استفسار عن {name} عبر واتساب",
+    "inquire": "استفسر عبر واتساب",
+    "inquireAria": "استفسر عن {name} عبر واتساب",
     "whatsappPrefill": "السلام عليكم، أود الاستفسار عن: {name}",
-    "showingCount": "عرض {count} من أصل {total} منتجات",
+    "showingCount": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد من أصل {total}} two {منتجان من أصل {total}} few {{count} منتجات من أصل {total}} many {{count} منتجاً من أصل {total}} other {{count} منتج من أصل {total}}}",
     "emptyState": "لا توجد منتجات متطابقة في هذه الفئة."
   }
 }
