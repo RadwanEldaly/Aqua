@@ -19,7 +19,7 @@ export interface ProductCardProps {
     text: string;
     variant?: "primary" | "neutral" | "success" | "warning";
   };
-  href: string;
+  href?: string;
   locale?: "ar" | "en";
   actions?: React.ReactNode;
   className?: string;
@@ -38,16 +38,18 @@ export function ProductCard({
   actions,
   className,
 }: ProductCardProps) {
+  const CardTag = href ? "div" : "article";
+
   return (
-    <div
+    <CardTag
       className={cn(
-        "group relative flex flex-col rounded-2xl bg-white border border-slate-200/80",
+        "group relative flex flex-col rounded-2xl bg-brand-surface border border-border",
         "transition-all duration-200 hover:shadow-card hover:border-brand-primary/40 overflow-hidden",
         className
       )}
     >
-      {/* Visual Image Container with Fixed Aspect Ratio */}
-      <div className={cn("relative w-full overflow-hidden bg-slate-50", PRODUCT_CARD_IMAGE_ASPECT)}>
+      {/* Visual Image Container with Pure White Panel (blends opaque JPEG cutouts seamlessly) */}
+      <div className={cn("relative w-full overflow-hidden bg-white border-b border-border-subtle/50", PRODUCT_CARD_IMAGE_ASPECT)}>
         {badge && (
           <div className="absolute top-3 start-3 z-10 pointer-events-none">
             <Badge variant={badge.variant || "primary"} size="sm">
@@ -66,7 +68,7 @@ export function ProductCard({
             loading="lazy"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center p-6 text-slate-300">
+          <div className="flex h-full w-full items-center justify-center p-6 text-text-subtle-accessible">
             <svg
               className="w-12 h-12 stroke-current"
               viewBox="0 0 24 24"
@@ -85,41 +87,44 @@ export function ProductCard({
       {/* Card Content */}
       <div className="flex flex-1 flex-col p-5 gap-3">
         {category ? (
-          <span className="h-4 text-xs font-medium text-slate-500 uppercase tracking-wider leading-none">
+          <span className="h-4 text-xs font-medium text-text-subtle-accessible uppercase tracking-wider leading-none">
             {category}
           </span>
         ) : (
           <div className="h-4" aria-hidden="true" />
         )}
 
-        <h3 className="min-h-[48px] text-base font-semibold text-slate-900 leading-6 group-hover:text-brand-primary transition-colors line-clamp-2">
-          {/* Main accessible hit link covering card title */}
-          <Link href={href} className="focus:outline-none">
-            <span className="absolute inset-0 z-0" aria-hidden="true" />
+        <h3 className="min-h-[48px] text-base font-semibold text-brand-deep leading-6 group-hover:text-brand-primary transition-colors line-clamp-2">
+          {href ? (
+            <Link href={href} className="focus:outline-none">
+              <span className="absolute inset-0 z-0" aria-hidden="true" />
+              <bdi>{name}</bdi>
+            </Link>
+          ) : (
             <bdi>{name}</bdi>
-          </Link>
+          )}
         </h3>
 
         {/* Price & Actions Row */}
-        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-slate-100">
-          {typeof price === "number" ? (
-            <Price
-              amount={price}
-              compareAtAmount={compareAtPrice}
-              locale={locale}
-              size="md"
-            />
-          ) : (
-            <span className="text-xs font-semibold text-slate-500">
-              {locale === "ar" ? "السعر عند الاستفسار" : "Price upon inquiry"}
-            </span>
-          )}
+        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-border-subtle">
+          <div>
+            {typeof price === "number" && (
+              <Price
+                amount={price}
+                compareAtAmount={compareAtPrice}
+                locale={locale}
+                size="md"
+              />
+            )}
+          </div>
 
-          {actions && (
-            <div className="relative z-10">{actions}</div>
+          {actions ? (
+            <div className="relative z-10 shrink-0">{actions}</div>
+          ) : (
+            <div className="h-9 shrink-0" aria-hidden="true" />
           )}
         </div>
       </div>
-    </div>
+    </CardTag>
   );
 }
