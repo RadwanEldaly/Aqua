@@ -17,12 +17,34 @@
   "Navigation": {
     "home": "الرئيسية",
     "products": "المنتجات",
-    "about": "من نحن",
+    "about": "عن أكوا",
     "contact": "تواصل معنا"
   },
-  "Status": {
-    "underPreparation": "المنصة قيد الإعداد والتطوير الفني",
-    "comingSoon": "قريباً",
-    "support": "خدمة العملاء"
+  "Pages": {
+    "home": {
+      "title": "الرئيسية",
+      "heading": "أكوا لتنقية المياه"
+    },
+    "products": {
+      "title": "المنتجات",
+      "heading": "جميع المنتجات"
+    },
+    "about": {
+      "title": "عن أكوا",
+      "heading": "عن أكوا"
+    },
+    "contact": {
+      "title": "تواصل معنا",
+      "heading": "تواصل معنا"
+    }
+  },
+  "Footer": {
+    "rights": "جميع الحقوق محفوظة.",
+    "codNotice": "الدفع عند الاستلام"
+  },
+  "NotFound": {
+    "title": "404 - الصفحة غير موجودة",
+    "description": "عذراً، لم نتمكن من العثور على الصفحة المطلوبة.",
+    "homeAction": "العودة للرئيسية"
   }
 }

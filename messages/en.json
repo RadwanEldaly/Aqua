@@ -1,11 +1,11 @@
 {
   "Metadata": {
-    "title": "Aqua | Premium Water Filtration & Purification Systems",
+    "title": "AQUA | Premium Water Filtration & Purification Systems",
     "description": "Specialized store for domestic and commercial water filtration and purification solutions in Saudi Arabia.",
     "keywords": "water filters, reverse osmosis, water purifiers, Saudi Arabia, filter replacement"
   },
   "Common": {
-    "brandName": "Aqua",
+    "brandName": "AQUA",
     "tagline": "Purity you can trust for your family",
     "localeName": "English",
     "switchLocale": "العربية",
@@ -17,12 +17,34 @@
   "Navigation": {
     "home": "Home",
     "products": "Products",
-    "about": "About Us",
+    "about": "About AQUA",
     "contact": "Contact"
   },
-  "Status": {
-    "underPreparation": "The platform is undergoing technical preparation",
-    "comingSoon": "Coming Soon",
-    "support": "Customer Support"
+  "Pages": {
+    "home": {
+      "title": "Home",
+      "heading": "AQUA Water Purification"
+    },
+    "products": {
+      "title": "Products",
+      "heading": "All Products"
+    },
+    "about": {
+      "title": "About AQUA",
+      "heading": "About AQUA"
+    },
+    "contact": {
+      "title": "Contact",
+      "heading": "Contact Us"
+    }
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "codNotice": "Cash on Delivery"
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "description": "Sorry, the page you are looking for could not be found.",
+    "homeAction": "Return Home"
   }
 }
