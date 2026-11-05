@@ -46,5 +46,16 @@
     "title": "404 - Page Not Found",
     "description": "Sorry, the page you are looking for could not be found.",
     "homeAction": "Return Home"
+  },
+  "ProductsPage": {
+    "eyebrow": "Product Catalog",
+    "title": "Water Filtration Solutions",
+    "description": "Browse our curated selection of purification systems, dispensers, and replacement cartridges.",
+    "filterGroupAriaLabel": "Filter products by category",
+    "inquire": "Inquire",
+    "inquireAria": "Inquire about {name} via WhatsApp",
+    "whatsappPrefill": "Hello, I would like to inquire about: {name}",
+    "showingCount": "Showing {count} of {total} products",
+    "emptyState": "No products found in this category."
   }
 }

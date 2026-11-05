@@ -1,8 +1,13 @@
 import React from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { ProductCatalog } from "@/components/products/product-catalog";
+import {
+  PROVISIONAL_PRODUCTS,
+  PROVISIONAL_CATEGORIES,
+} from "@/data/provisional-products";
 
 export async function generateMetadata({
   params,
@@ -24,19 +29,23 @@ export default async function ProductsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-
-  return <ProductsScaffold />;
-}
-
-function ProductsScaffold() {
-  const t = useTranslations("Pages.products");
+  const t = await getTranslations({ locale, namespace: "ProductsPage" });
 
   return (
-    <section className="py-20 sm:py-28 flex-1 flex items-center">
-      <Container size="lg" className="text-center">
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-brand-deep leading-[1.3] ltr:tracking-tight">
-          <bdi>{t("heading")}</bdi>
-        </h1>
+    <section className="py-12 sm:py-16 flex-1 flex flex-col">
+      <Container size="lg" className="flex flex-col gap-10">
+        <SectionHeading
+          titleAs="h1"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
+        />
+
+        <ProductCatalog
+          products={PROVISIONAL_PRODUCTS}
+          categories={PROVISIONAL_CATEGORIES}
+          locale={locale as "ar" | "en"}
+        />
       </Container>
     </section>
   );
