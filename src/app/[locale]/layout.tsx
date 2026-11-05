@@ -4,6 +4,8 @@ import { getMessages, setRequestLocale, getTranslations } from "next-intl/server
 import { NextIntlClientProvider } from "next-intl";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontArabic, fontSans } from "@/styles/fonts";
+import { SkipToContent } from "@/components/ui/navigation";
+import { SiteHeader, SiteFooter } from "@/components/navigation";
 import "@/app/globals.css";
 
 export function generateStaticParams() {
@@ -27,7 +29,7 @@ export async function generateMetadata({
   return {
     title: {
       default: t("title"),
-      template: `%s | ${locale === "ar" ? "أكوا" : "Aqua"}`,
+      template: `%s | ${locale === "ar" ? "أكوا" : "AQUA"}`,
     },
     description: t("description"),
     metadataBase: new URL(siteUrl),
@@ -75,9 +77,14 @@ export default async function LocaleLayout({
       className={`${fontArabic.variable} ${fontSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900" dir={dir}>
+      <body className="min-h-full flex flex-col bg-brand-surface text-brand-deep selection:bg-brand-primary selection:text-white" dir={dir}>
         <NextIntlClientProvider messages={messages} locale={locale}>
-          {children}
+          <SkipToContent />
+          <SiteHeader />
+          <main id="main-content" className="flex-1 flex flex-col">
+            {children}
+          </main>
+          <SiteFooter />
         </NextIntlClientProvider>
       </body>
     </html>

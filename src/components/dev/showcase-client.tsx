@@ -42,7 +42,12 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
-      {/* 1. Header Shell Demonstration */}
+      {/* 1. Header Shell Demonstration (Isolated Component Specimen) */}
+      <div className="bg-brand-neutral-100 border-b border-border-subtle py-2 px-4 text-center text-xs font-mono text-text-subtle-accessible">
+        {isRtl
+          ? "[عينة تجريبية لمكون HeaderShell في نظام التصميم — ترويسة العرض المعزولة]"
+          : "[Design System Component Specimen: HeaderShell — Isolated Demo Specimen]"}
+      </div>
       <HeaderShell
         brand={
           /* Plain text placeholder - No invented logo or mark */

@@ -60,7 +60,7 @@ export function NavLink({
         "hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary",
         isActive
           ? "text-brand-primary font-semibold bg-brand-mist/80"
-          : "text-slate-600 hover:bg-slate-100/60",
+          : "text-text-subtle-accessible hover:bg-brand-mist/60",
         className
       )}
     >
@@ -90,7 +90,7 @@ export function HeaderShell({
 }: HeaderShellProps) {
   return (
     <header className={cn("sticky top-4 z-40 w-full px-4 sm:px-6 lg:px-8", className)}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-5 sm:px-7 rounded-full bg-white/90 backdrop-blur-md border border-slate-200/80 shadow-subtle">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-5 sm:px-7 rounded-full bg-brand-surface/90 backdrop-blur-md border border-border shadow-subtle">
         {/* Brand Slot */}
         <div className="flex items-center gap-3 shrink-0">{brand}</div>
 
@@ -140,7 +140,7 @@ export function VisualLanguageSwitcher({
       disabled={isPending}
       aria-label={currentLocale === "ar" ? "Switch to English" : "التبديل إلى العربية"}
       className={cn(
-        "inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full border border-slate-200 bg-white/90 text-xs font-semibold text-slate-700",
+        "inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full border border-border bg-brand-surface/90 text-xs font-semibold text-brand-navy",
         "transition-colors duration-150 hover:text-brand-primary hover:border-brand-primary/40 active:scale-95",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary disabled:opacity-50 cursor-pointer",
         className
@@ -243,7 +243,7 @@ export function MobileDrawerShell({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs"
+            className="fixed inset-0 bg-brand-deep/40 backdrop-blur-xs"
             aria-hidden="true"
           />
 
@@ -254,16 +254,16 @@ export function MobileDrawerShell({
             animate={{ x: 0 }}
             exit={slideExit}
             transition={{ type: "spring", damping: 25, stiffness: 240 }}
-            className="relative w-full max-w-xs sm:max-w-sm h-full bg-white shadow-elevated flex flex-col z-10 me-auto"
+            className="relative w-full max-w-xs sm:max-w-sm h-full bg-brand-surface shadow-elevated flex flex-col z-10 me-auto"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-              <span className="text-base font-bold text-slate-900">{title}</span>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+              <span className="text-base font-bold text-brand-deep">{title}</span>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="إغلاق القائمة / Close drawer"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="w-9 h-9 rounded-full flex items-center justify-center text-text-subtle-accessible hover:text-brand-deep hover:bg-brand-mist transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" aria-hidden="true" />
               </button>
@@ -276,7 +276,7 @@ export function MobileDrawerShell({
 
             {/* Drawer Footer */}
             {footer && (
-              <div className="p-6 border-t border-slate-100 bg-slate-50/50">
+              <div className="p-6 border-t border-border bg-brand-mist/40">
                 {footer}
               </div>
             )}
