@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Aqua | Premium Water Filtration & Purification Systems",
+    "description": "Specialized store for domestic and commercial water filtration and purification solutions in Saudi Arabia.",
+    "keywords": "water filters, reverse osmosis, water purifiers, Saudi Arabia, filter replacement"
+  },
+  "Common": {
+    "brandName": "Aqua",
+    "tagline": "Purity you can trust for your family",
+    "localeName": "English",
+    "switchLocale": "العربية",
+    "currency": "SAR",
+    "direction": "ltr",
+    "cod": "Cash on Delivery",
+    "shippingLocation": "Saudi Arabia"
+  },
+  "Navigation": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "Status": {
+    "underPreparation": "The platform is undergoing technical preparation",
+    "comingSoon": "Coming Soon",
+    "support": "Customer Support"
+  }
+}

@@ -1,0 +1,15 @@
+import { IBM_Plex_Sans_Arabic, Plus_Jakarta_Sans } from "next/font/google";
+
+export const fontArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
+export const fontSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
