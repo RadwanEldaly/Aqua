@@ -64,7 +64,7 @@ export function Price({
 
       {/* Compare-at / Original Price (if discounted) */}
       {isDiscounted && original && (
-        <span className="inline-flex items-baseline gap-1 text-xs sm:text-sm text-slate-400 line-through">
+        <span className="inline-flex items-baseline gap-1 text-xs sm:text-sm text-slate-500 line-through">
           <span className="sr-only">
             {locale === "ar" ? "السعر الأصلي قبل الخصم:" : "Original price before discount:"}
           </span>

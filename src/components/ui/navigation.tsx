@@ -173,13 +173,52 @@ export function MobileDrawerShell({
   footer,
   dir = "rtl",
 }: MobileDrawerShellProps) {
-  // Close on ESC key
+  const asideRef = React.useRef<HTMLElement>(null);
+
+  // Focus trap & Escape key handling
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
+    if (!isOpen) return;
+
+    // Focus the drawer or close button on open
+    const aside = asideRef.current;
+    if (aside) {
+      const focusables = aside.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length > 0) {
+        focusables[0].focus();
       }
     }
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab" && aside) {
+        const focusables = aside.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            last.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === last) {
+            first.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    }
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
@@ -210,14 +249,12 @@ export function MobileDrawerShell({
 
           {/* Drawer Panel */}
           <motion.aside
+            ref={asideRef}
             initial={slideInitial}
             animate={{ x: 0 }}
             exit={slideExit}
             transition={{ type: "spring", damping: 25, stiffness: 240 }}
-            className={cn(
-              "relative w-full max-w-xs sm:max-w-sm h-full bg-white shadow-elevated flex flex-col z-10",
-              dir === "rtl" ? "me-auto" : "ms-auto"
-            )}
+            className="relative w-full max-w-xs sm:max-w-sm h-full bg-white shadow-elevated flex flex-col z-10 me-auto"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">

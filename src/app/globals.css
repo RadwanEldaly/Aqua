@@ -182,6 +182,7 @@
   --color-surface-muted: var(--surface-muted);
   --color-border-strong: var(--border-strong);
   --color-accent-water: var(--accent-water);
+  --color-text-subtle-accessible: var(--color-text-subtle-accessible);
 
   --color-status-success-bg: var(--color-status-success-bg);
   --color-status-success-fg: var(--color-status-success-fg);

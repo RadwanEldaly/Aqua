@@ -85,7 +85,7 @@ export function ProductCard({
       {/* Card Content */}
       <div className="flex flex-1 flex-col p-5 gap-3">
         {category ? (
-          <span className="h-4 text-xs font-medium text-slate-400 uppercase tracking-wider leading-none">
+          <span className="h-4 text-xs font-medium text-slate-500 uppercase tracking-wider leading-none">
             {category}
           </span>
         ) : (

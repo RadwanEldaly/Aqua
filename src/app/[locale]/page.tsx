@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { LanguageSwitcher } from "@/components/common/language-switcher";
+import { LabelValue } from "@/components/ui";
 
 export default async function IndexPage({
   params,
@@ -61,32 +62,24 @@ function TechnicalFoundationStatus({ locale }: { locale: string }) {
           </p>
         </div>
 
-        {/* Technical Diagnostics Summary */}
-        <div className="w-full bg-slate-50 rounded-xl p-4 text-xs text-slate-600 border border-slate-100 space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-slate-400 font-medium">Locale / Language:</span>
-            <span className="font-semibold text-slate-700">
-              {tCommon("localeName")} ({locale})
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-slate-400 font-medium">Layout Direction:</span>
-            <span className="font-semibold text-slate-700 uppercase">
-              {isRtl ? "RTL (Right to Left)" : "LTR (Left to Right)"}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-slate-400 font-medium">Target Market:</span>
-            <span className="font-semibold text-slate-700">
-              {tCommon("shippingLocation")}
-            </span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-slate-400 font-medium">Payment Model:</span>
-            <span className="font-semibold text-slate-700">
-              {tCommon("cod")}
-            </span>
-          </div>
+        {/* Technical Diagnostics Summary (Using Direction-Safe LabelValue) */}
+        <div className="w-full bg-slate-50 rounded-xl p-4 text-xs text-slate-600 border border-slate-100 space-y-1">
+          <LabelValue
+            label="Locale / Language"
+            value={`${tCommon("localeName")} (${locale})`}
+          />
+          <LabelValue
+            label="Layout Direction"
+            value={isRtl ? "RTL (Right to Left)" : "LTR (Left to Right)"}
+          />
+          <LabelValue
+            label="Target Market"
+            value={tCommon("shippingLocation")}
+          />
+          <LabelValue
+            label="Payment Model"
+            value={tCommon("cod")}
+          />
         </div>
       </div>
     </main>

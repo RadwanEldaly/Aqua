@@ -27,7 +27,11 @@ import {
   Divider,
   LabelValue,
 } from "@/components/ui";
-import { PLACEHOLDER_CARD_DATA, PLACEHOLDER_SWATCHES } from "@/dev/fixtures/products";
+import {
+  PLACEHOLDER_CARD_DATA,
+  PLACEHOLDER_NAV_ITEMS,
+  SWATCH_FAMILIES,
+} from "@/dev/fixtures/products";
 import { cn } from "@/lib/utils";
 import { Menu, Search, ShoppingBag } from "lucide-react";
 
@@ -41,23 +45,18 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
       {/* 1. Header Shell Demonstration */}
       <HeaderShell
         brand={
-          <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold text-sm">
-              أ
-            </span>
-            <span className="font-extrabold text-lg tracking-tight text-slate-900">
-              أكوا <span className="text-brand-primary text-xs font-semibold">AQUA</span>
-            </span>
-          </div>
+          /* Plain text placeholder - No invented logo or mark */
+          <span className="font-bold text-sm tracking-tight text-slate-900 select-none">
+            أكوا (AQUA PLACEHOLDER)
+          </span>
         }
         navigation={
           <>
-            <NavLink href="#" isActive>
-              {isRtl ? "الرئيسية" : "Home"}
-            </NavLink>
-            <NavLink href="#">{isRtl ? "المنتجات" : "Products"}</NavLink>
-            <NavLink href="#">{isRtl ? "خدمات الصيانة" : "Maintenance"}</NavLink>
-            <NavLink href="#">{isRtl ? "من نحن" : "About Us"}</NavLink>
+            {PLACEHOLDER_NAV_ITEMS.map((item, idx) => (
+              <NavLink key={idx} href={item.href} isActive={idx === 0}>
+                {item.label[locale]}
+              </NavLink>
+            ))}
           </>
         }
         actions={
@@ -94,26 +93,24 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
       <MobileDrawerShell
         isOpen={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        title={isRtl ? "قائمة التصفح" : "Navigation"}
+        title={isRtl ? "قائمة التصفح (PLACEHOLDER)" : "Navigation (PLACEHOLDER)"}
         dir={isRtl ? "rtl" : "ltr"}
         footer={
-          <div className="text-xs text-slate-400 text-center">
-            {isRtl ? "أكوا لتنقية المياه - السعودية" : "Aqua Water Purification - SA"}
+          <div className="text-xs text-slate-500 text-center">
+            {isRtl ? "أكوا (AQUA PLACEHOLDER)" : "Aqua (AQUA PLACEHOLDER)"}
           </div>
         }
       >
-        <NavLink href="#" isActive onClick={() => setIsDrawerOpen(false)}>
-          {isRtl ? "الرئيسية" : "Home"}
-        </NavLink>
-        <NavLink href="#" onClick={() => setIsDrawerOpen(false)}>
-          {isRtl ? "المنتجات" : "Products"}
-        </NavLink>
-        <NavLink href="#" onClick={() => setIsDrawerOpen(false)}>
-          {isRtl ? "خدمات الصيانة" : "Maintenance"}
-        </NavLink>
-        <NavLink href="#" onClick={() => setIsDrawerOpen(false)}>
-          {isRtl ? "تواصل معنا" : "Contact"}
-        </NavLink>
+        {PLACEHOLDER_NAV_ITEMS.map((item, idx) => (
+          <NavLink
+            key={idx}
+            href={item.href}
+            isActive={idx === 0}
+            onClick={() => setIsDrawerOpen(false)}
+          >
+            {item.label[locale]}
+          </NavLink>
+        ))}
       </MobileDrawerShell>
 
       <Container className="pt-10 flex flex-col gap-16">
@@ -128,32 +125,107 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
           </span>
         </div>
 
-        {/* 2. Color Swatches Section */}
+        {/* 2. Color Swatches Section (Ordered Families) */}
         <Section spacing="none">
           <SectionHeading
             eyebrow="Tokens / الألوان"
-            title={isRtl ? "باليت ألوان أكوا المستوحاة من نقاء المياه" : "Aqua Water-Inspired Palette"}
+            title={isRtl ? "تدرجات الألوان ومعدلات التباين (WCAG AA)" : "Color Token Scales & Contrast"}
             description={
               isRtl
-                ? "تدرجات ألوان موحدة ومطابقة لمعايير WCAG AA للتباين اللوني وسهولة الوصول."
-                : "Standardized token scales complying with WCAG AA contrast requirements."
+                ? "تدرجات كاملة مرتبة حسب العائلة مع إظهار كود اللون ومعدل التباين ضد النص."
+                : "Full ordered scales per family with hex codes and contrast ratios against foreground text."
             }
           />
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {PLACEHOLDER_SWATCHES.map((swatch) => (
-              <div
-                key={swatch.name}
-                className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
-              >
-                <div className={cn("h-16 w-full", swatch.var)} />
-                <div className="p-2.5 flex flex-col gap-0.5">
-                  <span className="text-[11px] font-bold text-slate-800 truncate">
-                    {swatch.label}
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400">{swatch.hex}</span>
-                </div>
+
+          <div className="mt-8 flex flex-col gap-8">
+            {/* Family 1: Blue Scale (50 - 950) */}
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                1. Aqua Blue Scale (50–950):
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-2.5">
+                {SWATCH_FAMILIES.blueScale.map((swatch) => (
+                  <div
+                    key={swatch.step}
+                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                  >
+                    <div
+                      className={cn(
+                        "h-14 w-full flex items-center justify-center font-bold text-xs p-1",
+                        swatch.bgClass,
+                        swatch.textClass
+                      )}
+                    >
+                      {swatch.step}
+                    </div>
+                    <div className="p-2 flex flex-col gap-0.5">
+                      <span className="text-[10px] font-mono text-slate-600">{swatch.hex}</span>
+                      <span className="text-[9px] font-semibold text-slate-500">{swatch.contrast}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Family 2: Neutral Scale (50 - 900) */}
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                2. Neutral Slate Scale (50–900):
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5">
+                {SWATCH_FAMILIES.neutralScale.map((swatch) => (
+                  <div
+                    key={swatch.step}
+                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                  >
+                    <div
+                      className={cn(
+                        "h-14 w-full flex items-center justify-center font-bold text-xs p-1",
+                        swatch.bgClass,
+                        swatch.textClass
+                      )}
+                    >
+                      {swatch.step}
+                    </div>
+                    <div className="p-2 flex flex-col gap-0.5">
+                      <span className="text-[10px] font-mono text-slate-600">{swatch.hex}</span>
+                      <span className="text-[9px] font-semibold text-slate-500">{swatch.contrast}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Family 3: Status Family */}
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                3. Status Colors Family:
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {SWATCH_FAMILIES.statusScale.map((swatch) => (
+                  <div
+                    key={swatch.name}
+                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                  >
+                    <div
+                      className={cn(
+                        "h-14 w-full flex items-center justify-center font-bold text-xs p-1",
+                        swatch.bgClass,
+                        swatch.textClass
+                      )}
+                    >
+                      {swatch.name}
+                    </div>
+                    <div className="p-2.5 flex flex-col gap-0.5">
+                      <span className="text-[11px] font-mono text-slate-600">
+                        {swatch.bg} / {swatch.fg}
+                      </span>
+                      <span className="text-[10px] font-semibold text-slate-500">{swatch.contrast}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </Section>
 
@@ -221,7 +293,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Badges Box */}
             <div className="p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-4">
-              <span className="text-xs font-semibold text-slate-400">BADGE VARIANTS:</span>
+              <span className="text-xs font-semibold text-slate-500">BADGE VARIANTS:</span>
               <div className="flex flex-wrap items-center gap-3">
                 <Badge variant="primary">{isRtl ? "أساسي" : "Primary"}</Badge>
                 <Badge variant="neutral">{isRtl ? "محايد" : "Neutral"}</Badge>
@@ -233,18 +305,18 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
             {/* Price Box */}
             <div className="p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-4">
-              <span className="text-xs font-semibold text-slate-400">PRICE FORMATTING (SAR):</span>
+              <span className="text-xs font-semibold text-slate-500">PRICE FORMATTING (SAR):</span>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500">{isRtl ? "سعر مع خصم (كبير):" : "Discounted (Lg):"}</span>
+                  <span className="text-xs text-slate-600">{isRtl ? "سعر مع خصم (كبير):" : "Discounted (Lg):"}</span>
                   <Price amount={850} compareAtAmount={1100} locale={locale} size="lg" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500">{isRtl ? "سعر عادي (متوسط):" : "Regular (Md):"}</span>
+                  <span className="text-xs text-slate-600">{isRtl ? "سعر عادي (متوسط):" : "Regular (Md):"}</span>
                   <Price amount={450} locale={locale} size="md" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-500">{isRtl ? "سعر صغير:" : "Small:"}</span>
+                  <span className="text-xs text-slate-600">{isRtl ? "سعر صغير:" : "Small:"}</span>
                   <Price amount={120} locale={locale} size="sm" />
                 </div>
               </div>
@@ -392,7 +464,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
               {/* Direction-Safe LabelValue Demo */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-1">
-                <span className="text-[11px] font-bold text-slate-400 mb-1">
+                <span className="text-[11px] font-bold text-slate-500 mb-1">
                   DIRECTION-SAFE LABELVALUE (<bdi>{"<bdi>"}</bdi> Isolation):
                 </span>
                 <LabelValue
