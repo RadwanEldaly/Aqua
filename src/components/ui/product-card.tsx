@@ -11,7 +11,7 @@ export interface ProductCardProps {
   id: string;
   name: string;
   category?: string;
-  price: number;
+  price?: number;
   compareAtPrice?: number;
   imageUrl?: string;
   imageAlt?: string;
@@ -102,12 +102,18 @@ export function ProductCard({
 
         {/* Price & Actions Row */}
         <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-slate-100">
-          <Price
-            amount={price}
-            compareAtAmount={compareAtPrice}
-            locale={locale}
-            size="md"
-          />
+          {typeof price === "number" ? (
+            <Price
+              amount={price}
+              compareAtAmount={compareAtPrice}
+              locale={locale}
+              size="md"
+            />
+          ) : (
+            <span className="text-xs font-semibold text-slate-500">
+              {locale === "ar" ? "السعر عند الاستفسار" : "Price upon inquiry"}
+            </span>
+          )}
 
           {actions && (
             <div className="relative z-10">{actions}</div>
