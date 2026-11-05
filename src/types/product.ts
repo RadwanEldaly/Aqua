@@ -33,11 +33,7 @@ export interface Product {
   currency: "SAR";
   images: string[];
   thumbnailImage: string;
-  category: "ro-systems" | "filter-cartridges" | "accessories" | "shower-filters";
-  stagesCount?: number;
-  stages?: FilterStage[];
+  category: string;
   specs: ProductSpec[];
   inStock: boolean;
-  warrantyYears?: number;
-  freeInstallationAvailable: boolean;
 }

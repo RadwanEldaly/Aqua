@@ -295,11 +295,11 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             <div className="p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-4">
               <span className="text-xs font-semibold text-slate-500">BADGE VARIANTS:</span>
               <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="primary">{isRtl ? "أساسي" : "Primary"}</Badge>
-                <Badge variant="neutral">{isRtl ? "محايد" : "Neutral"}</Badge>
-                <Badge variant="success">{isRtl ? "توصيل وتركيب مجاني" : "Free Delivery"}</Badge>
-                <Badge variant="warning">{isRtl ? "متبقي 3 فقط" : "Only 3 left"}</Badge>
-                <Badge variant="error">{isRtl ? "نفدت الكمية" : "Out of stock"}</Badge>
+                <Badge variant="primary">PRIMARY (PLACEHOLDER)</Badge>
+                <Badge variant="neutral">NEUTRAL (PLACEHOLDER)</Badge>
+                <Badge variant="success">SUCCESS (PLACEHOLDER)</Badge>
+                <Badge variant="warning">WARNING (PLACEHOLDER)</Badge>
+                <Badge variant="error">ERROR (PLACEHOLDER)</Badge>
               </div>
             </div>
 
@@ -377,8 +377,8 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
               </span>
               <ProductCard
                 id="placeholder-sample-02"
-                name="طقم فلاتر بديل (PLACEHOLDER CARTRIDGES)"
-                category="قطع غيار (PARTS)"
+                name="منتج تجريبي 2 (PLACEHOLDER ITEM 02)"
+                category="فئة تجريبية (PLACEHOLDER)"
                 price={180}
                 href="#"
                 locale={locale}
@@ -468,12 +468,12 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                   DIRECTION-SAFE LABELVALUE (<bdi>{"<bdi>"}</bdi> Isolation):
                 </span>
                 <LabelValue
-                  label={isRtl ? "الموديل التجريبي (RO-75G)" : "Demo Model (RO-75G)"}
-                  value={isRtl ? "متوفر في المخزون" : "In Stock"}
+                  label="KEY (PLACEHOLDER 01)"
+                  value="VALUE (PLACEHOLDER 01)"
                 />
                 <LabelValue
-                  label={isRtl ? "طريقة الدفع" : "Payment Method"}
-                  value={isRtl ? "الدفع عند الاستلام (COD)" : "Cash on Delivery (COD)"}
+                  label="KEY (PLACEHOLDER 02)"
+                  value="VALUE (PLACEHOLDER 02)"
                 />
                 <FieldError className="mt-1">
                   {isRtl ? "رسالة خطأ تجريبية للتحقق" : "Sample field error message"}
