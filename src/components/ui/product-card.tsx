@@ -84,13 +84,15 @@ export function ProductCard({
 
       {/* Card Content */}
       <div className="flex flex-1 flex-col p-5 gap-3">
-        {category && (
-          <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+        {category ? (
+          <span className="h-4 text-xs font-medium text-slate-400 uppercase tracking-wider leading-none">
             {category}
           </span>
+        ) : (
+          <div className="h-4" aria-hidden="true" />
         )}
 
-        <h3 className="text-base font-semibold text-slate-900 group-hover:text-brand-primary transition-colors line-clamp-2">
+        <h3 className="min-h-[48px] text-base font-semibold text-slate-900 leading-6 group-hover:text-brand-primary transition-colors line-clamp-2">
           {/* Main accessible hit link covering card title */}
           <Link href={href} className="focus:outline-none">
             <span className="absolute inset-0 z-0" aria-hidden="true" />
@@ -99,7 +101,7 @@ export function ProductCard({
         </h3>
 
         {/* Price & Actions Row */}
-        <div className="mt-auto pt-2 flex items-center justify-between border-t border-slate-100">
+        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-slate-100">
           <Price
             amount={price}
             compareAtAmount={compareAtPrice}

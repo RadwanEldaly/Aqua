@@ -36,7 +36,7 @@ export function Skeleton({
       )}
       {...props}
     >
-      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent shimmer-active" />
+      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent shimmer-active pointer-events-none" />
     </div>
   );
 }
@@ -113,18 +113,20 @@ export function ProductCardSkeleton({ className }: { className?: string }) {
       {/* Content Skeleton */}
       <div className="flex flex-1 flex-col p-5 gap-3">
         {/* Category */}
-        <Skeleton className="h-3 w-20" rounded="sm" />
+        <div className="h-4 flex items-center">
+          <Skeleton className="h-3.5 w-20" rounded="sm" />
+        </div>
 
         {/* Title Lines */}
-        <div className="flex flex-col gap-1.5">
+        <div className="min-h-[48px] flex flex-col justify-center gap-2">
           <Skeleton className="h-4 w-5/6" rounded="sm" />
           <Skeleton className="h-4 w-3/5" rounded="sm" />
         </div>
 
         {/* Price & Action Row */}
-        <div className="mt-auto pt-2 flex items-center justify-between border-t border-slate-100">
+        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-slate-100">
           <PriceSkeleton />
-          <Skeleton className="h-8 w-20" rounded="full" />
+          <Skeleton className="h-9 w-20" rounded="full" />
         </div>
       </div>
     </div>

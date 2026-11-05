@@ -118,12 +118,12 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
       <Container className="pt-10 flex flex-col gap-16">
         {/* Banner */}
-        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <span>
             <strong>DEV-ONLY SHOWCASE:</strong> This page is strictly for testing design tokens, RTL/LTR
             symmetry, and components. Excluded in production via <code>notFound()</code>.
           </span>
-          <span className="font-mono bg-amber-100 px-2 py-0.5 rounded uppercase font-bold">
+          <span className="font-mono bg-amber-100 px-2 py-0.5 rounded uppercase font-bold shrink-0">
             Locale: {locale} ({isRtl ? "RTL" : "LTR"})
           </span>
         </div>
@@ -423,7 +423,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             }
           />
           <div className="mt-6 p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-6">
-            <Stack direction="row" spacing="md" align="center" justify="between">
+            <Stack direction="row" spacing="md" align="center" justify="between" wrap>
               <span className="text-sm font-semibold text-slate-800">
                 {isRtl ? "مكدس أفقي مع فاصل (Stack Horizontal):" : "Stack Horizontal Row:"}
               </span>
