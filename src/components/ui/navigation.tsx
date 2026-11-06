@@ -56,11 +56,11 @@ export function NavLink({
       onClick={onClick}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "relative text-sm font-medium transition-colors duration-150 py-1.5 px-3 rounded-full select-none",
-        "hover:text-brand-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary",
+        "relative text-sm font-semibold transition-all duration-150 py-1.5 px-4 rounded-full select-none inline-flex items-center justify-center",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary",
         isActive
-          ? "text-brand-primary font-semibold bg-brand-mist/80"
-          : "text-text-subtle-accessible hover:bg-brand-mist/60",
+          ? "bg-brand-mist text-brand-primary shadow-subtle"
+          : "text-text-subtle-accessible hover:text-brand-deep hover:bg-brand-mist/50",
         className
       )}
     >
@@ -89,8 +89,8 @@ export function HeaderShell({
   className,
 }: HeaderShellProps) {
   return (
-    <header className={cn("sticky top-4 z-40 w-full px-4 sm:px-6 lg:px-8", className)}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-16 px-5 sm:px-7 rounded-full bg-brand-surface/90 backdrop-blur-md border border-border shadow-subtle">
+    <header className={cn("fixed top-3 sm:top-5 inset-x-0 z-40 px-3 sm:px-6 pointer-events-none flex justify-center", className)}>
+      <div className="pointer-events-auto w-full max-w-7xl h-14 sm:h-16 px-4 sm:px-7 rounded-full bg-white/95 backdrop-blur-md border border-border-subtle/80 shadow-card flex items-center justify-between gap-4">
         {/* Brand Slot */}
         <div className="flex items-center gap-3 shrink-0">{brand}</div>
 
@@ -98,14 +98,14 @@ export function HeaderShell({
         {navigation && (
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-1 lg:gap-2"
+            className="hidden md:flex items-center gap-1.5 lg:gap-2.5"
           >
             {navigation}
           </nav>
         )}
 
         {/* Utility Actions (Language switcher, search, cart trigger) */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {actions}
           {mobileTrigger && <div className="flex md:hidden">{mobileTrigger}</div>}
         </div>

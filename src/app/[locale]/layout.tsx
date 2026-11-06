@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontArabic, fontSans } from "@/styles/fonts";
 import { SkipToContent } from "@/components/ui/navigation";
-import { SiteHeader, SiteFooter } from "@/components/navigation";
+import { SiteHeader, SiteFooter, FloatingActionButton } from "@/components/navigation";
 import "@/app/globals.css";
 
 export function generateStaticParams() {
@@ -90,6 +90,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <SiteFooter />
+          <FloatingActionButton />
         </NextIntlClientProvider>
       </body>
     </html>

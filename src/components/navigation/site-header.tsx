@@ -10,6 +10,8 @@ import {
   NavLink,
 } from "@/components/ui/navigation";
 import { LanguageSwitcher } from "@/components/common/language-switcher";
+import { SearchTrigger } from "./search-trigger";
+import { CartTrigger } from "./cart-trigger";
 
 export function SiteHeader() {
   const locale = useLocale() as "ar" | "en";
@@ -31,7 +33,8 @@ export function SiteHeader() {
         brand={
           <Link
             href="/"
-            className="text-xl sm:text-2xl font-extrabold text-brand-deep hover:text-brand-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg px-1 leading-[1.3] ltr:tracking-tight"
+            aria-label={brandMark}
+            className="text-2xl sm:text-3xl font-black text-brand-deep hover:text-brand-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg px-1 leading-none tracking-tight"
           >
             <span>{brandMark}</span>
           </Link>
@@ -48,13 +51,19 @@ export function SiteHeader() {
             })}
           </>
         }
-        actions={<LanguageSwitcher />}
+        actions={
+          <div className="flex items-center gap-1.5 sm:gap-2.5">
+            <SearchTrigger />
+            <CartTrigger />
+            <LanguageSwitcher />
+          </div>
+        }
         mobileTrigger={
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
             aria-label={locale === "ar" ? "فتح القائمة الرئيسية" : "Open main menu"}
-            className="w-10 h-10 rounded-full flex items-center justify-center text-brand-navy hover:text-brand-primary hover:bg-brand-mist transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary cursor-pointer"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-brand-navy hover:text-brand-primary hover:bg-brand-mist transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary cursor-pointer shrink-0"
           >
             <Menu className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -75,7 +84,7 @@ export function SiteHeader() {
           </div>
         }
       >
-        <nav aria-label="Mobile Navigation" className="flex flex-col gap-1">
+        <nav aria-label="Mobile Navigation" className="flex flex-col gap-2">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
@@ -83,9 +92,9 @@ export function SiteHeader() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setDrawerOpen(false)}
-                className={`px-4 py-3 rounded-xl text-base font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${
+                className={`px-4 py-3 rounded-2xl text-base font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary ${
                   isActive
-                    ? "bg-brand-mist/80 text-brand-primary font-bold"
+                    ? "bg-brand-mist text-brand-primary shadow-subtle"
                     : "text-brand-navy hover:text-brand-primary hover:bg-brand-mist/50"
                 }`}
               >
