@@ -16,6 +16,14 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical: locale === "ar" ? "/contact" : "/en/contact",
+      languages: {
+        ar: "/contact",
+        en: "/en/contact",
+        "x-default": "/contact",
+      },
+    },
   };
 }
 

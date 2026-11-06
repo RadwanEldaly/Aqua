@@ -66,7 +66,7 @@ export function BrandVideoBand() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             poster="/video/brand-water-poster.webp"
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             aria-hidden="true"

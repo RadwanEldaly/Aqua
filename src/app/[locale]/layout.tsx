@@ -24,7 +24,11 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.replace(/\/+$/, "")}`
+      : "http://localhost:3000");
 
   return {
     title: {
@@ -32,12 +36,13 @@ export async function generateMetadata({
       template: `%s | ${locale === "ar" ? "أكوا" : "AQUA"}`,
     },
     description: t("description"),
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(baseUrl),
     alternates: {
-      canonical: locale === "ar" ? "/" : `/${locale}`,
+      canonical: locale === "ar" ? "/" : "/en",
       languages: {
         ar: "/",
         en: "/en",
+        "x-default": "/",
       },
     },
     openGraph: {

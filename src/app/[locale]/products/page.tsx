@@ -21,6 +21,14 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: tProducts("description"),
+    alternates: {
+      canonical: locale === "ar" ? "/products" : "/en/products",
+      languages: {
+        ar: "/products",
+        en: "/en/products",
+        "x-default": "/products",
+      },
+    },
   };
 }
 

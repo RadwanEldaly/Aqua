@@ -112,7 +112,7 @@ export function ProductCatalog({
       {/* 2. Products Responsive Grid (1 col @ 360, 2 col @ 768, 3-4 col @ 1440) */}
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => {
+          {filteredProducts.map((product, index) => {
             const productName = product.name[locale];
             const prefilledMessage = t("whatsappPrefill", {
               name: productName,
@@ -133,6 +133,7 @@ export function ProductCatalog({
                 imageUrl={product.image.src}
                 imageAlt={product.image.alt[locale]}
                 locale={locale}
+                priority={index === 0}
                 actions={
                   whatsAppHref ? (
                     <a

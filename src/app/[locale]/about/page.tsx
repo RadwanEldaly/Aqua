@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
@@ -23,6 +24,9 @@ export default async function AboutPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  // Temporarily deactivated until approved copy is provided
+  notFound();
+
   const { locale } = await params;
   setRequestLocale(locale);
 

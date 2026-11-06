@@ -23,6 +23,7 @@ export interface ProductCardProps {
   locale?: "ar" | "en";
   actions?: React.ReactNode;
   className?: string;
+  priority?: boolean;
 }
 
 export function ProductCard({
@@ -37,6 +38,7 @@ export function ProductCard({
   locale = "ar",
   actions,
   className,
+  priority = false,
 }: ProductCardProps) {
   const CardTag = href ? "div" : "article";
 
@@ -65,7 +67,9 @@ export function ProductCard({
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
+            priority={priority}
+            fetchPriority={priority ? "high" : "auto"}
+            loading={priority ? undefined : "lazy"}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center p-6 text-text-subtle-accessible">
