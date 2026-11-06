@@ -47,6 +47,23 @@
     "description": "عذراً، لم نتمكن من العثور على الصفحة المطلوبة.",
     "homeAction": "العودة للرئيسية"
   },
+  "ContactPage": {
+    "eyebrow": "خدمة العملاء",
+    "title": "تواصل معنا",
+    "description": "نسعد باستقبال استفساراتكم مباشرة عبر واتساب.",
+    "directAction": "محادثة فورية عبر واتساب",
+    "directActionAria": "محادثة فورية مع خدمة العملاء عبر واتساب",
+    "directPrefill": "السلام عليكم، أود التواصل مع خدمة العملاء",
+    "formTitle": "إرسال رسالة",
+    "nameLabel": "الاسم",
+    "namePlaceholder": "أدخل اسمك الكريم",
+    "nameRequired": "الرجاء إدخال الاسم",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك أو استفسارك هنا...",
+    "messageRequired": "الرجاء كتابة الرسالة",
+    "submitAction": "إرسال عبر واتساب",
+    "whatsappOffline": "خدمة واتساب غير مفعلة حالياً."
+  },
   "ProductsPage": {
     "eyebrow": "كتالوج المنتجات",
     "title": "حلول وفلاتر تنقية المياه",

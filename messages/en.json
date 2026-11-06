@@ -47,6 +47,23 @@
     "description": "Sorry, the page you are looking for could not be found.",
     "homeAction": "Return Home"
   },
+  "ContactPage": {
+    "eyebrow": "Customer Support",
+    "title": "Contact Us",
+    "description": "We are glad to receive your inquiries directly via WhatsApp.",
+    "directAction": "Direct Chat via WhatsApp",
+    "directActionAria": "Direct chat with customer support via WhatsApp",
+    "directPrefill": "Hello, I would like to contact customer support",
+    "formTitle": "Send a Message",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter your name",
+    "nameRequired": "Please enter your name",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write your message or inquiry here...",
+    "messageRequired": "Please enter your message",
+    "submitAction": "Send via WhatsApp",
+    "whatsappOffline": "WhatsApp service is currently unavailable."
+  },
   "ProductsPage": {
     "eyebrow": "Product Catalog",
     "title": "Water Filtration Solutions",

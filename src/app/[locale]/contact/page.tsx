@@ -1,8 +1,9 @@
 import React from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/container";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { ContactForm } from "@/components/contact/contact-form";
 
 export async function generateMetadata({
   params,
@@ -10,10 +11,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Pages.contact" });
+  const t = await getTranslations({ locale, namespace: "ContactPage" });
 
   return {
     title: t("title"),
+    description: t("description"),
   };
 }
 
@@ -24,19 +26,20 @@ export default async function ContactPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-
-  return <ContactScaffold />;
-}
-
-function ContactScaffold() {
-  const t = useTranslations("Pages.contact");
+  const t = await getTranslations({ locale, namespace: "ContactPage" });
 
   return (
-    <section className="py-20 sm:py-28 flex-1 flex items-center">
-      <Container size="lg" className="text-center">
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-brand-deep leading-[1.3] ltr:tracking-tight">
-          <bdi>{t("heading")}</bdi>
-        </h1>
+    <section className="py-12 sm:py-16 lg:py-20 flex-1 flex flex-col justify-center">
+      <Container size="lg" className="flex flex-col gap-8 sm:gap-10">
+        <SectionHeading
+          titleAs="h1"
+          align="center"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
+        />
+
+        <ContactForm locale={locale as "ar" | "en"} />
       </Container>
     </section>
   );
