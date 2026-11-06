@@ -48,12 +48,12 @@
     "homeAction": "العودة للرئيسية"
   },
   "ContactPage": {
-    "eyebrow": "خدمة العملاء",
+    "eyebrow": "تواصل معنا",
     "title": "تواصل معنا",
     "description": "نسعد باستقبال استفساراتكم مباشرة عبر واتساب.",
     "directAction": "محادثة فورية عبر واتساب",
-    "directActionAria": "محادثة فورية مع خدمة العملاء عبر واتساب",
-    "directPrefill": "السلام عليكم، أود التواصل مع خدمة العملاء",
+    "directActionAria": "محادثة فورية مع أكوا عبر واتساب",
+    "directPrefill": "السلام عليكم، أود التواصل مع أكوا",
     "formTitle": "إرسال رسالة",
     "nameLabel": "الاسم",
     "namePlaceholder": "أدخل اسمك الكريم",
@@ -92,15 +92,15 @@
       "productCount": "{count, plural, one {منتج واحد} two {منتجان} few {{count} منتجات} many {{count} منتجاً} other {{count} منتج}}"
     },
     "featured": {
-      "eyebrow": "منتجات مختارة",
-      "title": "أبرز حلول التنقية",
+      "eyebrow": "المنتجات",
+      "title": "المنتجات",
       "viewAllAction": "عرض جميع المنتجات"
     },
     "whatsappBand": {
       "title": "تواصل معنا عبر واتساب",
       "chatAction": "محادثة عبر واتساب",
-      "chatAria": "محادثة خدمة العملاء عبر واتساب",
-      "whatsappPrefill": "السلام عليكم، أود التواصل مع خدمة عملاء أكوا"
+      "chatAria": "محادثة أكوا عبر واتساب",
+      "whatsappPrefill": "السلام عليكم، أود التواصل مع أكوا"
     }
   }
 }

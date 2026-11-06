@@ -48,12 +48,12 @@
     "homeAction": "Return Home"
   },
   "ContactPage": {
-    "eyebrow": "Customer Support",
+    "eyebrow": "Contact Us",
     "title": "Contact Us",
     "description": "We are glad to receive your inquiries directly via WhatsApp.",
     "directAction": "Direct Chat via WhatsApp",
-    "directActionAria": "Direct chat with customer support via WhatsApp",
-    "directPrefill": "Hello, I would like to contact customer support",
+    "directActionAria": "Direct chat with AQUA via WhatsApp",
+    "directPrefill": "Hello, I would like to contact AQUA",
     "formTitle": "Send a Message",
     "nameLabel": "Name",
     "namePlaceholder": "Enter your name",
@@ -92,15 +92,15 @@
       "productCount": "{count, plural, one {1 product} other {{count} products}}"
     },
     "featured": {
-      "eyebrow": "Selected Products",
-      "title": "Featured Filtration Solutions",
+      "eyebrow": "Products",
+      "title": "Products",
       "viewAllAction": "View All Products"
     },
     "whatsappBand": {
       "title": "Contact us on WhatsApp",
       "chatAction": "Chat via WhatsApp",
-      "chatAria": "Chat with customer support via WhatsApp",
-      "whatsappPrefill": "Hello, I would like to contact AQUA customer support"
+      "chatAria": "Chat with AQUA via WhatsApp",
+      "whatsappPrefill": "Hello, I would like to contact AQUA"
     }
   }
 }
