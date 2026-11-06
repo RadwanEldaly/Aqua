@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 export function BrandVideoBand() {
   const t = useTranslations("Common");
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
     const container = containerRef.current;
-    if (!video || !container) return;
+    if (!container) return;
 
     // Check reduced motion & saveData
     const prefersReducedMotion = window.matchMedia(
@@ -22,22 +22,18 @@ export function BrandVideoBand() {
     };
     const isSaveData = Boolean(nav.connection?.saveData);
 
-    // If reduced motion or saveData is requested, leave paused on poster
     if (prefersReducedMotion || isSaveData) {
-      video.pause();
       return;
     }
 
-    // Play only while in viewport using IntersectionObserver
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Autoplay policy restrictions handled gracefully
-            });
+            setIsInView(true);
+            videoRef.current?.play().catch(() => {});
           } else {
-            video.pause();
+            videoRef.current?.pause();
           }
         }
       },
@@ -71,7 +67,7 @@ export function BrandVideoBand() {
             aria-hidden="true"
             tabIndex={-1}
           >
-            <source src="/video/brand-water-720p.mp4" type="video/mp4" />
+            {isInView && <source src="/video/brand-water-720p.mp4" type="video/mp4" />}
           </video>
 
           {/* High-Contrast Tint Overlay (Passes AA/AAA contrast > 8:1 on all frames) */}
