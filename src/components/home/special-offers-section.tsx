@@ -38,6 +38,7 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
             scale: 1,
             duration: 0.8,
             ease: "power2.out",
+            clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: banner,
               start: "top 85%",
@@ -57,6 +58,7 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
             duration: 0.7,
             stagger: 0.15,
             ease: "power2.out",
+            clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: cards[0],
               start: "top 85%",

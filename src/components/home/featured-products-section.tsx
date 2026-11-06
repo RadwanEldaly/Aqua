@@ -37,8 +37,9 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
             opacity: 1,
             y: 0,
             duration: 0.6,
-            stagger: 0.1,
+            stagger: 0.08,
             ease: "power2.out",
+            clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: containerRef.current,
               start: "top 85%",

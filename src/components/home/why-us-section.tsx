@@ -25,6 +25,7 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
             duration: 0.6,
             stagger: 0.12,
             ease: "power2.out",
+            clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: containerRef.current,
               start: "top 85%",
