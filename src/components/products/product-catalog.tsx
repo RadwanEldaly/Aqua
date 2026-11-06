@@ -132,6 +132,8 @@ export function ProductCatalog({
                 category={categoryLabel}
                 imageUrl={product.image.src}
                 imageAlt={product.image.alt[locale]}
+                imageWidth={product.image.width}
+                imageHeight={product.image.height}
                 locale={locale}
                 priority={index === 0}
                 actions={

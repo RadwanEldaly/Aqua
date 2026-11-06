@@ -41,9 +41,9 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
   const isRtl = locale === "ar";
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
+    <div className="min-h-screen bg-canvas text-brand-deep pb-24 font-sans">
       {/* 1. Header Shell Demonstration (Isolated Component Specimen) */}
-      <div className="bg-brand-neutral-100 border-b border-border-subtle py-2 px-4 text-center text-xs font-mono text-text-subtle-accessible">
+      <div className="bg-brand-surface border-b border-border-subtle py-2 px-4 text-center text-xs font-mono text-text-subtle-accessible">
         {isRtl
           ? "[عينة تجريبية لمكون HeaderShell في نظام التصميم — ترويسة العرض المعزولة]"
           : "[Design System Component Specimen: HeaderShell — Isolated Demo Specimen]"}
@@ -51,7 +51,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
       <HeaderShell
         brand={
           /* Plain text placeholder - No invented logo or mark */
-          <span className="font-bold text-sm tracking-tight text-slate-900 select-none">
+          <span className="font-bold text-sm ltr:tracking-tight text-brand-deep select-none">
             أكوا (AQUA PLACEHOLDER)
           </span>
         }
@@ -101,7 +101,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
         title={isRtl ? "قائمة التصفح (PLACEHOLDER)" : "Navigation (PLACEHOLDER)"}
         dir={isRtl ? "rtl" : "ltr"}
         footer={
-          <div className="text-xs text-slate-500 text-center">
+          <div className="text-xs text-text-subtle-accessible text-center">
             {isRtl ? "أكوا (AQUA PLACEHOLDER)" : "Aqua (AQUA PLACEHOLDER)"}
           </div>
         }
@@ -125,7 +125,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             <strong>DEV-ONLY SHOWCASE:</strong> This page is strictly for testing design tokens, RTL/LTR
             symmetry, and components. Excluded in production via <code>notFound()</code>.
           </span>
-          <span className="font-mono bg-amber-100 px-2 py-0.5 rounded uppercase font-bold shrink-0">
+          <span className="font-mono bg-amber-100 px-2 py-0.5 rounded ltr:uppercase font-bold shrink-0">
             Locale: {locale} ({isRtl ? "RTL" : "LTR"})
           </span>
         </div>
@@ -145,14 +145,14 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
           <div className="mt-8 flex flex-col gap-8">
             {/* Family 1: Blue Scale (50 - 950) */}
             <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
                 1. Aqua Blue Scale (50–950):
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-11 gap-2.5">
                 {SWATCH_FAMILIES.blueScale.map((swatch) => (
                   <div
                     key={swatch.step}
-                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                    className="flex flex-col rounded-xl overflow-hidden border border-border bg-white shadow-subtle"
                   >
                     <div
                       className={cn(
@@ -164,8 +164,8 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                       {swatch.step}
                     </div>
                     <div className="p-2 flex flex-col gap-0.5">
-                      <span className="text-[10px] font-mono text-slate-600">{swatch.hex}</span>
-                      <span className="text-[9px] font-semibold text-slate-500">{swatch.contrast}</span>
+                      <span className="text-xs font-mono text-text-muted">{swatch.hex}</span>
+                      <span className="text-xs font-semibold text-text-subtle-accessible">{swatch.contrast}</span>
                     </div>
                   </div>
                 ))}
@@ -174,14 +174,14 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
             {/* Family 2: Neutral Scale (50 - 900) */}
             <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
                 2. Neutral Slate Scale (50–900):
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5">
                 {SWATCH_FAMILIES.neutralScale.map((swatch) => (
                   <div
                     key={swatch.step}
-                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                    className="flex flex-col rounded-xl overflow-hidden border border-border bg-white shadow-subtle"
                   >
                     <div
                       className={cn(
@@ -193,8 +193,8 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                       {swatch.step}
                     </div>
                     <div className="p-2 flex flex-col gap-0.5">
-                      <span className="text-[10px] font-mono text-slate-600">{swatch.hex}</span>
-                      <span className="text-[9px] font-semibold text-slate-500">{swatch.contrast}</span>
+                      <span className="text-xs font-mono text-text-muted">{swatch.hex}</span>
+                      <span className="text-xs font-semibold text-text-subtle-accessible">{swatch.contrast}</span>
                     </div>
                   </div>
                 ))}
@@ -203,14 +203,14 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
             {/* Family 3: Status Family */}
             <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
                 3. Status Colors Family:
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {SWATCH_FAMILIES.statusScale.map((swatch) => (
                   <div
                     key={swatch.name}
-                    className="flex flex-col rounded-xl overflow-hidden border border-slate-200 bg-white shadow-subtle"
+                    className="flex flex-col rounded-xl overflow-hidden border border-border bg-white shadow-subtle"
                   >
                     <div
                       className={cn(
@@ -222,10 +222,10 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                       {swatch.name}
                     </div>
                     <div className="p-2.5 flex flex-col gap-0.5">
-                      <span className="text-[11px] font-mono text-slate-600">
+                      <span className="text-xs font-mono text-text-muted">
                         {swatch.bg} / {swatch.fg}
                       </span>
-                      <span className="text-[10px] font-semibold text-slate-500">{swatch.contrast}</span>
+                      <span className="text-xs font-semibold text-text-subtle-accessible">{swatch.contrast}</span>
                     </div>
                   </div>
                 ))}
@@ -245,7 +245,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 : "Primary, secondary, outline, ghost variants with loading, disabled, and 44px min touch targets."
             }
           />
-          <div className="mt-6 flex flex-wrap items-center gap-4 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div className="mt-6 flex flex-wrap items-center gap-4 p-6 bg-white rounded-2xl border border-border">
             <Button variant="primary" size="lg">
               {isRtl ? "زر أساسي كبير" : "Primary Large"}
             </Button>
@@ -297,8 +297,8 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
           />
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Badges Box */}
-            <div className="p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-4">
-              <span className="text-xs font-semibold text-slate-500">BADGE VARIANTS:</span>
+            <div className="p-6 bg-white rounded-2xl border border-border flex flex-col gap-4">
+              <span className="text-xs font-semibold text-text-subtle-accessible">BADGE VARIANTS:</span>
               <div className="flex flex-wrap items-center gap-3">
                 <Badge variant="primary">PRIMARY (PLACEHOLDER)</Badge>
                 <Badge variant="neutral">NEUTRAL (PLACEHOLDER)</Badge>
@@ -309,19 +309,19 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             </div>
 
             {/* Price Box */}
-            <div className="p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-4">
-              <span className="text-xs font-semibold text-slate-500">PRICE FORMATTING (SAR):</span>
+            <div className="p-6 bg-white rounded-2xl border border-border flex flex-col gap-4">
+              <span className="text-xs font-semibold text-text-subtle-accessible">PRICE FORMATTING (SAR):</span>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">{isRtl ? "سعر مع خصم (كبير):" : "Discounted (Lg):"}</span>
+                  <span className="text-xs text-text-muted">{isRtl ? "سعر مع خصم (كبير):" : "Discounted (Lg):"}</span>
                   <Price amount={850} compareAtAmount={1100} locale={locale} size="lg" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">{isRtl ? "سعر عادي (متوسط):" : "Regular (Md):"}</span>
+                  <span className="text-xs text-text-muted">{isRtl ? "سعر عادي (متوسط):" : "Regular (Md):"}</span>
                   <Price amount={450} locale={locale} size="md" />
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600">{isRtl ? "سعر صغير:" : "Small:"}</span>
+                  <span className="text-xs text-text-muted">{isRtl ? "سعر صغير:" : "Small:"}</span>
                   <Price amount={120} locale={locale} size="sm" />
                 </div>
               </div>
@@ -369,7 +369,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
             {/* Skeleton Card */}
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md w-fit">
+              <span className="text-xs font-bold text-text-muted bg-surface-muted px-2 py-0.5 rounded-md w-fit">
                 {isRtl ? "الهيكل التحميلي (Skeleton)" : "Matching Skeleton"}
               </span>
               <ProductCardSkeleton />
@@ -397,7 +397,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
             {/* Skeleton Card 2 */}
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md w-fit">
+              <span className="text-xs font-bold text-text-muted bg-surface-muted px-2 py-0.5 rounded-md w-fit">
                 {isRtl ? "هيكل تحميلي ثانٍ" : "Matching Skeleton 2"}
               </span>
               <ProductCardSkeleton />
@@ -420,7 +420,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 : "Phone and numeric fields automatically enforce LTR orientation inside RTL layouts."
             }
           />
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-2xl border border-border">
             <div className="flex flex-col gap-4">
               <div>
                 <Label htmlFor="demo-name" required>
@@ -468,8 +468,8 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
               </div>
 
               {/* Direction-Safe LabelValue Demo */}
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-1">
-                <span className="text-[11px] font-bold text-slate-500 mb-1">
+              <div className="p-4 rounded-xl bg-canvas border border-border-subtle flex flex-col gap-1">
+                <span className="text-xs font-bold text-text-subtle-accessible mb-1">
                   DIRECTION-SAFE LABELVALUE (<bdi>{"<bdi>"}</bdi> Isolation):
                 </span>
                 <LabelValue
@@ -499,9 +499,9 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 : "Flexible structural layout primitives with responsive logical spacing."
             }
           />
-          <div className="mt-6 p-6 bg-white rounded-2xl border border-slate-200/80 flex flex-col gap-6">
+          <div className="mt-6 p-6 bg-white rounded-2xl border border-border flex flex-col gap-6">
             <Stack direction="row" spacing="md" align="center" justify="between" wrap>
-              <span className="text-sm font-semibold text-slate-800">
+              <span className="text-sm font-semibold text-brand-deep">
                 {isRtl ? "مكدس أفقي مع فاصل (Stack Horizontal):" : "Stack Horizontal Row:"}
               </span>
               <Badge variant="primary">Stack Item 1</Badge>
@@ -512,13 +512,13 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             <Divider />
 
             <Grid cols={3} gap="sm">
-              <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-center font-medium">
+              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
                 Grid Col 1
               </div>
-              <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-center font-medium">
+              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
                 Grid Col 2
               </div>
-              <div className="p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-center font-medium">
+              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
                 Grid Col 3
               </div>
             </Grid>
@@ -526,7 +526,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
             <Divider />
 
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-semibold text-slate-500">Standalone Shimmer Skeletons:</span>
+              <span className="text-xs font-semibold text-text-subtle-accessible">Standalone Shimmer Skeletons:</span>
               <Skeleton className="h-6 w-1/3" rounded="md" />
               <Skeleton className="h-4 w-2/3" rounded="sm" />
             </div>
@@ -544,7 +544,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 : "Full composite preview of the upcoming product detail loading state."
             }
           />
-          <div className="mt-6 p-8 bg-white rounded-2xl border border-slate-200/80">
+          <div className="mt-6 p-8 bg-white rounded-2xl border border-border">
             <ProductDetailSkeleton />
           </div>
         </Section>

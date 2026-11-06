@@ -82,7 +82,7 @@ export function BrandVideoBand() {
 
           {/* Centered Brand Tagline */}
           <div className="relative z-10 text-center px-6 max-w-2xl">
-            <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-wide leading-tight drop-shadow-md">
+            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white ltr:tracking-wide leading-tight drop-shadow-md">
               <bdi>{t("tagline")}</bdi>
             </p>
           </div>

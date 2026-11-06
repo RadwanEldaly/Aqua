@@ -79,16 +79,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "under-sink-system-with-tank",
     categoryId: "home-systems",
     name: {
-      ar: "وحدة تنقية مياه متعددة الأسطوانات مع خزان أبيض وصنبور",
-      en: "Multi-cylinder water filtration unit with white tank and faucet",
+      ar: "وحدة تنقية متعددة الأسطوانات مع خزان",
+      en: "Multi-cylinder filtration unit with tank",
     },
     image: {
       src: "/images/products/under-sink-system-with-tank.jpg",
       width: 1080,
       height: 1113,
       alt: {
-        ar: "أسطوانات تنقية رأسية مع خزان أسطواني أبيض وصنبور معدني منحني",
-        en: "Vertical filtration cylinders with white cylindrical tank and curved metal faucet",
+        ar: "وحدة تنقية متعددة الأسطوانات مع خزان أبيض وصنبور معدني منحني",
+        en: "Multi-cylinder filtration unit with white cylindrical tank and curved metal faucet",
       },
     },
   },
@@ -96,16 +96,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "countertop-dispenser-silver",
     categoryId: "dispensers",
     name: {
-      ar: "موزع مياه مكتبي باللون الفضي مع ثلاثة صنابير",
-      en: "Tabletop water dispenser in silver with three taps",
+      ar: "موزع مياه مكتبي فضي",
+      en: "Silver tabletop water dispenser",
     },
     image: {
       src: "/images/products/countertop-dispenser-silver.jpg",
       width: 1080,
       height: 1238,
       alt: {
-        ar: "موزع مياه مكتبي فضي مع صينية تنقيط وثلاثة صنابير",
-        en: "Silver tabletop water dispenser with drip tray and three taps",
+        ar: "موزع مياه مكتبي فضي مع ثلاثة صنابير وصينية تنقيط",
+        en: "Silver tabletop water dispenser with three taps and drip tray",
       },
     },
   },
@@ -113,16 +113,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "countertop-dispenser-black",
     categoryId: "dispensers",
     name: {
-      ar: "موزع مياه مكتبي باللون الأسود مع ثلاثة صنابير",
-      en: "Tabletop water dispenser in black with three taps",
+      ar: "موزع مياه مكتبي أسود",
+      en: "Black tabletop water dispenser",
     },
     image: {
       src: "/images/products/countertop-dispenser-black.jpg",
       width: 1080,
       height: 1290,
       alt: {
-        ar: "موزع مياه مكتبي أسود مع صينية تنقيط وثلاثة صنابير",
-        en: "Black tabletop water dispenser with drip tray and three taps",
+        ar: "موزع مياه مكتبي أسود مع ثلاثة صنابير وصينية تنقيط",
+        en: "Black tabletop water dispenser with three taps and drip tray",
       },
     },
   },
@@ -130,8 +130,8 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "countertop-purifier-digital",
     categoryId: "dispensers",
     name: {
-      ar: "جهاز تنقية مياه مكتبي باللون الأسود مع شاشة رقمية",
-      en: "Countertop water purifier in black with digital display",
+      ar: "جهاز تنقية مكتبي بشاشة رقمية",
+      en: "Tabletop purifier with digital display",
     },
     image: {
       src: "/images/products/countertop-purifier-digital.jpg",
@@ -147,8 +147,8 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "triple-housing-filter-rack",
     categoryId: "filters",
     name: {
-      ar: "وحدة تنقية مياه ثلاثية على حامل معدني مع مقياس ضغط",
-      en: "Triple-housing filtration unit on metal stand with pressure gauge",
+      ar: "وحدة تنقية ثلاثية بحامل معدني",
+      en: "Triple-housing filtration unit on stand",
     },
     image: {
       src: "/images/products/triple-housing-filter-rack.jpg",
@@ -164,16 +164,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "triple-housing-system-pump",
     categoryId: "filters",
     name: {
-      ar: "وحدة تنقية ثلاثية الأسطوانات الزرقاء على هيكل أبيض مع أسطوانة أفقية سوداء وتمديدات علوية",
-      en: "Triple blue cylinder filtration unit on white frame with black horizontal top cylinder and tubing",
+      ar: "وحدة تنقية ثلاثية بهيكل أبيض",
+      en: "Triple-cylinder filtration unit on white frame",
     },
     image: {
       src: "/images/products/triple-housing-system-pump.jpg",
       width: 1080,
       height: 1065,
       alt: {
-        ar: "ثلاث أسطوانات تنقية زرقاء رأسية مثبتة داخل هيكل أبيض يعلوه جسم أسطواني أسود وتمديدات بيضاء",
-        en: "Three vertical blue filtration cylinders in a white frame topped by a black cylinder and white tubing",
+        ar: "ثلاث أسطوانات تنقية زرقاء رأسية داخل هيكل أبيض يعلوه جسم أسطواني أسود وتمديدات",
+        en: "Three vertical blue filtration cylinders in white frame with black top cylinder and tubing",
       },
     },
   },
@@ -181,16 +181,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "triple-housing-system-gauge",
     categoryId: "filters",
     name: {
-      ar: "وحدة تنقية ثلاثية مع أسطوانة شفافة ومقياس ضغط",
-      en: "Triple-housing filtration unit with clear cylinder and pressure gauge",
+      ar: "وحدة تنقية ثلاثية بمقياس ضغط",
+      en: "Triple-housing filtration unit with gauge",
     },
     image: {
       src: "/images/products/triple-housing-system-gauge.jpg",
       width: 1080,
       height: 1076,
       alt: {
-        ar: "وحدة تنقية ثلاثية تضم أسطوانتين زرقاوين وأسطوانة شفافة على حامل",
-        en: "Triple filtration unit with two blue cylinders and one transparent cylinder on stand",
+        ar: "وحدة تنقية ثلاثية تضم أسطوانتين زرقاوين وأسطوانة شفافة مع مقياس ضغط",
+        en: "Triple filtration unit with two blue cylinders and one transparent cylinder with gauge",
       },
     },
   },
@@ -198,15 +198,15 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "replacement-cartridges-trio",
     categoryId: "cartridges-and-parts",
     name: {
-      ar: "طقم شمعات تنقية أسطوانية ثلاثي بألوان أبيض وأزرق وبني",
-      en: "Three-piece cylindrical filter cartridge set in white, blue, and brown",
+      ar: "طقم شمعات تنقية ثلاثي ملون",
+      en: "Three-piece colored filter cartridge set",
     },
     image: {
       src: "/images/products/replacement-cartridges-trio.jpg",
       width: 1080,
       height: 1074,
       alt: {
-        ar: "ثلاث شمعات تنقية أسطوانية رأسية بألوان أبيض وأزرق وبني موضوعة جنباً إلى جنب",
+        ar: "ثلاث شمعات تنقية أسطوانية رأسية بألوان أبيض وأزرق وبني جنباً إلى جنب",
         en: "Three vertical cylindrical filter cartridges in white, blue, and brown standing side by side",
       },
     },
@@ -215,8 +215,8 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "replacement-cartridges-set",
     categoryId: "cartridges-and-parts",
     name: {
-      ar: "مجموعة شمعات تنقية أسطوانية متعددة الألوان مرتبة في صف واحد",
-      en: "Multi-colored cylindrical filter cartridges arranged in a single row",
+      ar: "طقم شمعات تنقية متعدد الألوان",
+      en: "Multi-colored filter cartridge set",
     },
     image: {
       src: "/images/products/replacement-cartridges-set.jpg",
@@ -232,16 +232,16 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "pressurized-storage-tank",
     categoryId: "cartridges-and-parts",
     name: {
-      ar: "خزان مياه أسطواني باللون الأبيض مع قاعدة وصمام علوي",
-      en: "White cylindrical water tank with base and top valve",
+      ar: "خزان مياه أسطواني أبيض",
+      en: "White cylindrical water tank",
     },
     image: {
       src: "/images/products/pressurized-storage-tank.jpg",
       width: 1600,
       height: 1398,
       alt: {
-        ar: "خزان مياه أسطواني أبيض مع ملصق أزرق وصمام علوي",
-        en: "White cylindrical water tank with blue label and top valve",
+        ar: "خزان مياه أسطواني أبيض مع قاعدة وصمام علوي وملصق أزرق",
+        en: "White cylindrical water tank with base, blue label, and top valve",
       },
     },
   },
@@ -249,8 +249,8 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
     id: "drinking-water-faucet",
     categoryId: "cartridges-and-parts",
     name: {
-      ar: "صنبور مياه شرب من الستانلس ستيل بتصميم منحني",
-      en: "Stainless steel gooseneck drinking water faucet",
+      ar: "صنبور مياه ستانلس ستيل منحني",
+      en: "Curved stainless steel drinking faucet",
     },
     image: {
       src: "/images/products/drinking-water-faucet.jpg",

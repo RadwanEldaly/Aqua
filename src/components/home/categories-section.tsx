@@ -81,14 +81,25 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                 {/* White Inner Image Panel with subtle hover scale (NO border) */}
                 <div className="relative w-full aspect-square rounded-2xl bg-white overflow-hidden p-6 mb-5 flex items-center justify-center">
                   {imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt={categoryName}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-contain p-2 transition-transform duration-200 ease-out group-hover:scale-105 feathered-image-mask"
-                      loading="lazy"
-                    />
+                    <div
+                      className="feathered-image-mask relative flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-105"
+                      style={{
+                        aspectRatio: sampleProduct ? `${sampleProduct.image.width} / ${sampleProduct.image.height}` : undefined,
+                        width: sampleProduct ? (sampleProduct.image.width >= sampleProduct.image.height ? "100%" : "auto") : "100%",
+                        height: sampleProduct ? (sampleProduct.image.height > sampleProduct.image.width ? "100%" : "auto") : "100%",
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                      }}
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={categoryName}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-contain"
+                        loading="lazy"
+                      />
+                    </div>
                   ) : null}
                 </div>
 

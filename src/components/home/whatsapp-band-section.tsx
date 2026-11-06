@@ -18,7 +18,7 @@ export function WhatsAppBandSection() {
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
       <div className="max-w-7xl mx-auto rounded-panel bg-brand-primary p-8 sm:p-14 lg:p-16 text-center flex flex-col items-center justify-center gap-6 sm:gap-8 shadow-elevated">
-        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight max-w-2xl">
+        <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-2xl">
           <bdi>{t("title")}</bdi>
         </h2>
 

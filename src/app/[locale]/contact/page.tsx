@@ -39,14 +39,14 @@ export default async function ContactPage({
       <div className="max-w-7xl mx-auto w-full flex flex-col gap-10 sm:gap-12">
         {/* Saturated Deep-Azure Page Header Panel (matches hero look & feel) */}
         <div className="relative w-full rounded-panel bg-brand-navy overflow-hidden shadow-elevated min-h-[280px] sm:min-h-[320px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 pt-28 sm:pt-32 text-center items-center">
-          {/* Subtle Deep Marine Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/95 via-brand-navy/90 to-brand-navy/70 pointer-events-none select-none" aria-hidden="true" />
+          {/* Solid Brand Navy Token Overlay (No Gradient) */}
+          <div className="absolute inset-0 bg-brand-navy pointer-events-none select-none" aria-hidden="true" />
 
           <div className="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto">
-            <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-aqua-200">
+            <span className="text-xs sm:text-sm font-semibold ltr:uppercase ltr:tracking-wider text-aqua-200">
               {t("eyebrow")}
             </span>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mt-2 sm:mt-3">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mt-2 sm:mt-3">
               <bdi>{t("title")}</bdi>
             </h1>
             <p className="text-aqua-100/90 text-base sm:text-lg lg:text-xl font-light leading-relaxed mt-3 sm:mt-4">

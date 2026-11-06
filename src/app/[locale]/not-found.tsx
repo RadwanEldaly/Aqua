@@ -10,7 +10,7 @@ export default function NotFound() {
     <section className="py-24 sm:py-32 flex-1 flex items-center justify-center text-center">
       <Container size="sm">
         <div className="p-8 sm:p-12 rounded-3xl bg-brand-surface border border-border shadow-card flex flex-col items-center gap-4">
-          <span className="text-6xl sm:text-7xl font-black text-brand-primary leading-none">
+          <span className="text-6xl sm:text-7xl font-bold text-brand-primary leading-none">
             404
           </span>
           <h1 className="text-xl sm:text-2xl font-bold text-brand-deep leading-[1.3]">

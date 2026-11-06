@@ -14,7 +14,7 @@ const sizeStyles = {
   sm: "text-sm",
   md: "text-base font-semibold",
   lg: "text-lg md:text-xl font-bold",
-  xl: "text-2xl md:text-3xl font-extrabold tracking-tight",
+  xl: "text-2xl md:text-3xl font-bold ltr:tracking-tight",
 };
 
 /**
@@ -59,7 +59,7 @@ export function Price({
       {/* Current Active Price */}
       <span className={cn("text-brand-deep flex items-baseline gap-1", sizeStyles[size])}>
         <span className="font-bold">{current.formattedNumber}</span>
-        <span className="text-xs font-medium text-text-subtle-accessible uppercase">{current.currencySymbol}</span>
+        <span className="text-xs font-medium text-text-subtle-accessible ltr:uppercase">{current.currencySymbol}</span>
       </span>
 
       {/* Compare-at / Original Price (if discounted) */}

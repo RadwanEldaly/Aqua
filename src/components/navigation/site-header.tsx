@@ -34,7 +34,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label={brandMark}
-            className="text-2xl sm:text-3xl font-black text-brand-deep hover:text-brand-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg px-1 leading-none tracking-tight"
+            className="text-2xl sm:text-3xl font-bold text-brand-deep hover:text-brand-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg px-1 leading-none ltr:tracking-tight"
           >
             <span>{brandMark}</span>
           </Link>

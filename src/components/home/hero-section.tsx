@@ -143,7 +143,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
           <div className="lg:col-span-7 flex flex-col items-start text-start">
             <h1
               className={cn(
-                "hero-text-elem text-4xl sm:text-6xl lg:text-7xl xl:text-[80px] font-black text-white leading-[1.2] sm:leading-[1.12]",
+                "hero-text-elem text-4xl sm:text-6xl lg:text-7xl xl:text-[80px] font-bold text-white leading-[1.2] sm:leading-[1.12]",
                 locale === "en" ? "tracking-tight" : "tracking-normal"
               )}
             >
@@ -187,7 +187,10 @@ export function HeroSection({ locale }: HeroSectionProps) {
           {/* Product Cutout Inset Card (Pure White Rounded Panel - NO border) */}
           <div className="hero-card-elem lg:col-span-5 w-full flex justify-center lg:justify-end">
             <div className="relative w-full max-w-md lg:max-w-lg aspect-[16/13] rounded-3xl bg-white p-6 sm:p-8 shadow-elevated overflow-hidden flex items-center justify-center">
-              <div className="relative w-full h-full">
+              <div
+                className="feathered-image-mask relative max-w-full max-h-full w-full h-full flex items-center justify-center"
+                style={{ aspectRatio: "1600 / 1340" }}
+              >
                 <Image
                   src="/images/home/tabletop-dispenser-trio.jpg"
                   alt={tHero("imageAlt")}
@@ -195,7 +198,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   priority
                   fetchPriority="high"
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 450px, 480px"
-                  className="object-contain feathered-image-mask"
+                  className="object-contain"
                 />
               </div>
             </div>

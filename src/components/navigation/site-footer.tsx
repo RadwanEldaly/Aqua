@@ -22,7 +22,7 @@ export function SiteFooter() {
         {/* Top Section: Oversized Wordmark, Tagline, COD Badge */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-white/10">
           <div className="flex flex-col gap-3">
-            <span className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
+            <span className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-none ltr:tracking-tight">
               {brandMark}
             </span>
             <p className="text-aqua-200/90 text-base sm:text-lg lg:text-xl font-medium max-w-md">

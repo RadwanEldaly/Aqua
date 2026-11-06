@@ -36,7 +36,7 @@ export function Skeleton({
       )}
       {...props}
     >
-      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent shimmer-active pointer-events-none" />
+      <div className="absolute inset-y-0 -left-full w-full bg-gradient-to-r from-transparent via-white/50 to-transparent shimmer-active pointer-events-none" />
     </div>
   );
 }
