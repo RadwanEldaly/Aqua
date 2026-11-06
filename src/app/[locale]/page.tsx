@@ -1,12 +1,28 @@
 import React from "react";
-import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import {
   HeroSection,
   CategoriesSection,
   FeaturedProductsSection,
+  BrandVideoBand,
   WhatsAppBandSection,
 } from "@/components/home";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default async function HomePage({
   params,
@@ -23,6 +39,7 @@ export default async function HomePage({
       <HeroSection locale={typedLocale} />
       <CategoriesSection locale={typedLocale} />
       <FeaturedProductsSection locale={typedLocale} />
+      <BrandVideoBand />
       <WhatsAppBandSection />
     </div>
   );
