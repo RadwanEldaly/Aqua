@@ -22,9 +22,9 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary:
     "bg-brand-mist text-brand-navy hover:bg-brand-ice active:bg-sky-200 border border-brand-ice/60",
   outline:
-    "bg-surface text-slate-800 border border-slate-300 hover:border-brand-primary hover:text-brand-primary hover:bg-brand-mist/50 active:bg-brand-ice",
+    "bg-surface text-brand-deep border border-border hover:border-brand-primary hover:text-brand-primary hover:bg-brand-mist/50 active:bg-brand-ice",
   ghost:
-    "bg-transparent text-slate-700 hover:bg-slate-100 hover:text-slate-900 active:bg-slate-200 border border-transparent",
+    "bg-transparent text-text-muted hover:bg-surface-muted hover:text-brand-deep active:bg-border border border-transparent",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

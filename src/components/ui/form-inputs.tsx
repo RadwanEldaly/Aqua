@@ -13,7 +13,7 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
 export function Label({ className, required, children, ...props }: LabelProps) {
   return (
     <label
-      className={cn("block text-xs sm:text-sm font-semibold text-slate-700 select-none", className)}
+      className={cn("block text-xs sm:text-sm font-semibold text-text-muted select-none", className)}
       {...props}
     >
       {children}
@@ -40,7 +40,7 @@ export function Hint({
   children: React.ReactNode;
 }) {
   return (
-    <p id={id} className={cn("text-xs text-slate-500 leading-normal", className)}>
+    <p id={id} className={cn("text-xs text-text-subtle-accessible leading-normal", className)}>
       {children}
     </p>
   );
@@ -105,11 +105,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={Boolean(error)}
           aria-describedby={describedBy}
           className={cn(
-            "w-full h-11 min-h-[44px] px-3.5 rounded-xl bg-white border font-sans text-sm text-slate-900 placeholder:text-slate-400",
+            "w-full h-11 min-h-[44px] px-3.5 rounded-xl bg-white border font-sans text-sm text-brand-deep placeholder:text-text-subtle-accessible",
             "transition-colors duration-150",
             "focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary",
-            "disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed",
-            error ? "border-rose-400 focus:ring-rose-400" : "border-slate-300",
+            "disabled:bg-surface-muted disabled:text-text-subtle-accessible disabled:cursor-not-allowed",
+            error ? "border-rose-400 focus:ring-rose-400" : "border-border",
             isLtrType && "text-start font-mono tracking-wide",
             className
           )}
@@ -147,11 +147,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-invalid={Boolean(error)}
           aria-describedby={describedBy}
           className={cn(
-            "w-full px-3.5 py-2.5 rounded-xl bg-white border font-sans text-sm text-slate-900 placeholder:text-slate-400",
+            "w-full px-3.5 py-2.5 rounded-xl bg-white border font-sans text-sm text-brand-deep placeholder:text-text-subtle-accessible",
             "transition-colors duration-150 resize-y",
             "focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary",
-            "disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed",
-            error ? "border-rose-400 focus:ring-rose-400" : "border-slate-300",
+            "disabled:bg-surface-muted disabled:text-text-subtle-accessible disabled:cursor-not-allowed",
+            error ? "border-rose-400 focus:ring-rose-400" : "border-border",
             className
           )}
           {...props}
@@ -189,18 +189,18 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={describedBy}
             className={cn(
-              "w-full h-11 min-h-[44px] px-3.5 pe-9 rounded-xl bg-white border font-sans text-sm text-slate-900 appearance-none cursor-pointer",
+              "w-full h-11 min-h-[44px] px-3.5 pe-9 rounded-xl bg-white border font-sans text-sm text-brand-deep appearance-none cursor-pointer",
               "transition-colors duration-150",
               "focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary",
-              "disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed",
-              error ? "border-rose-400 focus:ring-rose-400" : "border-slate-300",
+              "disabled:bg-surface-muted disabled:text-text-subtle-accessible disabled:cursor-not-allowed",
+              error ? "border-rose-400 focus:ring-rose-400" : "border-border",
               className
             )}
             {...props}
           >
             {children}
           </select>
-          <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-slate-400">
+          <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-text-subtle-accessible">
             <svg
               className="w-4 h-4"
               viewBox="0 0 20 20"

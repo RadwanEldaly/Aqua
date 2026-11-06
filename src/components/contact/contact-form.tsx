@@ -54,7 +54,7 @@ export function ContactForm({ locale }: ContactFormProps) {
     <div className="w-full max-w-xl mx-auto flex flex-col gap-8">
       {/* Direct WhatsApp Quick Contact Button (hidden when number is missing) */}
       {hasWhatsApp && (
-        <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-brand-surface border border-border text-center gap-3 shadow-subtle">
+        <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-brand-surface text-center gap-3 shadow-subtle">
           <p className="text-sm font-medium text-text-subtle-accessible">
             {t("description")}
           </p>
@@ -76,7 +76,7 @@ export function ContactForm({ locale }: ContactFormProps) {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-white border border-border shadow-subtle"
+        className="flex flex-col gap-6 p-6 sm:p-8 rounded-2xl bg-white shadow-subtle"
       >
         <div className="border-b border-border-subtle pb-4">
           <h2 className="text-lg sm:text-xl font-bold text-brand-deep">

@@ -18,9 +18,9 @@ export function SiteFooter() {
 
   return (
     <footer className="w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 pt-8 sm:pt-12">
-      <div className="max-w-7xl mx-auto rounded-[2rem] bg-brand-deep text-white p-8 sm:p-12 lg:p-16 shadow-elevated flex flex-col justify-between gap-10 sm:gap-14">
+      <div className="max-w-7xl mx-auto rounded-panel bg-brand-deep text-white p-8 sm:p-12 lg:p-16 shadow-elevated flex flex-col justify-between gap-10 sm:gap-14">
         {/* Top Section: Oversized Wordmark, Tagline, COD Badge */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-brand-navy/80">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-white/10">
           <div className="flex flex-col gap-3">
             <span className="text-4xl sm:text-6xl lg:text-7xl font-black text-white leading-none tracking-tight">
               {brandMark}
@@ -31,7 +31,7 @@ export function SiteFooter() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-brand-navy text-aqua-200 border border-brand-navy/80 shadow-subtle">
+            <span className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/10 text-aqua-100 shadow-subtle">
               <bdi>{tFooter("codNotice")}</bdi>
             </span>
           </div>

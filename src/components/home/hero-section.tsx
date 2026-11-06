@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { useGSAP, gsap } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
@@ -23,11 +24,12 @@ export function HeroSection({ locale }: HeroSectionProps) {
   const [canLoadVideo, setCanLoadVideo] = useState(false);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
-  // Guarantee: Video NEVER loads before window load AND idle/interaction
+  // Guarantee: Video NEVER loads before the window 'load' event
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    function enableVideo() {
+    function handleLoad() {
+      // Check reduced motion & saveData
       const prefersReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)"
       ).matches;
@@ -41,22 +43,11 @@ export function HeroSection({ locale }: HeroSectionProps) {
       }
     }
 
-    // Wait until idle after load
-    if ("requestIdleCallback" in window) {
-      const id = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
-        () => {
-          setTimeout(enableVideo, 1500);
-        },
-        { timeout: 4000 }
-      );
-      return () => {
-        if ("cancelIdleCallback" in window) {
-          (window as Window & { cancelIdleCallback: (handle: number) => void }).cancelIdleCallback(id);
-        }
-      };
+    if (document.readyState === "complete") {
+      handleLoad();
     } else {
-      const timer = setTimeout(enableVideo, 2500);
-      return () => clearTimeout(timer);
+      window.addEventListener("load", handleLoad, { once: true });
+      return () => window.removeEventListener("load", handleLoad);
     }
   }, []);
 
@@ -83,13 +74,35 @@ export function HeroSection({ locale }: HeroSectionProps) {
     return () => observer.disconnect();
   }, [canLoadVideo]);
 
-
+  // Subtle GSAP entrance animation with reduced-motion support
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".hero-text-elem", {
+          opacity: 0,
+          y: 20,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power2.out",
+        });
+        gsap.from(".hero-card-elem", {
+          opacity: 0,
+          scale: 0.96,
+          duration: 0.7,
+          ease: "power2.out",
+          delay: 0.1,
+        });
+      });
+    },
+    { scope: containerRef }
+  );
 
   return (
     <section className="w-full px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5">
       <div
         ref={containerRef}
-        className="relative max-w-7xl mx-auto rounded-[2rem] bg-brand-navy overflow-hidden shadow-elevated border border-brand-navy/80 min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
+        className="relative max-w-7xl mx-auto rounded-panel bg-brand-navy overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
       >
         {/* Background Layer: Poster Image (always present, zero CLS) */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
@@ -97,6 +110,8 @@ export function HeroSection({ locale }: HeroSectionProps) {
             src="/video/brand-water-poster.webp"
             alt=""
             fill
+            priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover opacity-35"
           />
@@ -169,18 +184,18 @@ export function HeroSection({ locale }: HeroSectionProps) {
             </div>
           </div>
 
-          {/* Product Cutout Inset Card (Pure White Rounded Panel) */}
+          {/* Product Cutout Inset Card (Pure White Rounded Panel - NO border) */}
           <div className="hero-card-elem lg:col-span-5 w-full flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-md lg:max-w-lg aspect-[16/13] rounded-3xl bg-white p-6 sm:p-8 shadow-elevated border border-white/80 overflow-hidden flex items-center justify-center">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-[16/13] rounded-3xl bg-white p-6 sm:p-8 shadow-elevated overflow-hidden flex items-center justify-center">
               <div className="relative w-full h-full">
                 <Image
-                  src="/images/home/tabletop-dispenser-trio-whitened.jpg"
+                  src="/images/home/tabletop-dispenser-trio.jpg"
                   alt={tHero("imageAlt")}
                   fill
                   priority
                   fetchPriority="high"
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 440px, 480px"
-                  className="object-contain"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 450px, 480px"
+                  className="object-contain feathered-image-mask"
                 />
               </div>
             </div>

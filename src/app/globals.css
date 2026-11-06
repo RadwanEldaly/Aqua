@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--border);
+  }
+
   :root {
     /* Brand - Water-Inspired Premium Blue Palette */
     --color-aqua-deep: #07172c;       /* Deep ocean midnight */
@@ -53,7 +57,8 @@
     --color-status-neutral-border: #cbd5e1;
 
     /* Semantic Tokens */
-    --background: #f8fafc;
+    --color-canvas: #f8fafc;
+    --background: var(--color-canvas);
     --foreground: #0f172a;
     --primary: var(--color-aqua-primary);
     --primary-hover: var(--color-aqua-primary-hover);
@@ -84,6 +89,7 @@
     --radius-lg: 0.75rem;
     --radius-xl: 1rem;
     --radius-2xl: 1.5rem;
+    --radius-panel: 2rem;
     --radius-full: 9999px;
 
     /* Transition Durations & Easings */
@@ -205,6 +211,16 @@
   --shadow-hover: var(--shadow-hover);
   --shadow-elevated: var(--shadow-elevated);
 
+  --color-canvas: var(--color-canvas);
+  --radius-panel: var(--radius-panel);
+
   --font-arabic: var(--font-arabic);
   --font-sans: var(--font-sans);
+}
+
+@layer utilities {
+  .feathered-image-mask {
+    mask-image: radial-gradient(ellipse 92% 92% at center, #000 84%, transparent 98%);
+    -webkit-mask-image: radial-gradient(ellipse 92% 92% at center, #000 84%, transparent 98%);
+  }
 }

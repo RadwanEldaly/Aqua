@@ -10,7 +10,7 @@ export interface ProductSpec {
 }
 
 /**
- * Filter stage descriptor (e.g., Sediment, Carbon Block, RO Membrane, Post Carbon)
+ * Filter stage descriptor
  */
 export interface FilterStage {
   stageNumber: number;
@@ -20,7 +20,7 @@ export interface FilterStage {
 }
 
 /**
- * Core product definition for water filters, RO devices, and cartridges
+ * Core product definition for water filtration devices and cartridges
  */
 export interface Product {
   id: string;

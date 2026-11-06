@@ -57,14 +57,14 @@ export function Price({
       {...props}
     >
       {/* Current Active Price */}
-      <span className={cn("text-slate-900 flex items-baseline gap-1", sizeStyles[size])}>
+      <span className={cn("text-brand-deep flex items-baseline gap-1", sizeStyles[size])}>
         <span className="font-bold">{current.formattedNumber}</span>
-        <span className="text-xs font-medium text-slate-500 uppercase">{current.currencySymbol}</span>
+        <span className="text-xs font-medium text-text-subtle-accessible uppercase">{current.currencySymbol}</span>
       </span>
 
       {/* Compare-at / Original Price (if discounted) */}
       {isDiscounted && original && (
-        <span className="inline-flex items-baseline gap-1 text-xs sm:text-sm text-slate-500 line-through">
+        <span className="inline-flex items-baseline gap-1 text-xs sm:text-sm text-text-subtle-accessible line-through">
           <span className="sr-only">
             {locale === "ar" ? "السعر الأصلي قبل الخصم:" : "Original price before discount:"}
           </span>

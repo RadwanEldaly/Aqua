@@ -83,7 +83,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Multi-cylinder water filtration unit with white tank and faucet",
     },
     image: {
-      src: "/images/products/under-sink-system-with-tank-whitened.jpg",
+      src: "/images/products/under-sink-system-with-tank.jpg",
       width: 1080,
       height: 1113,
       alt: {
@@ -100,7 +100,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Tabletop water dispenser in silver with three taps",
     },
     image: {
-      src: "/images/products/countertop-dispenser-silver-whitened.jpg",
+      src: "/images/products/countertop-dispenser-silver.jpg",
       width: 1080,
       height: 1238,
       alt: {
@@ -117,7 +117,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Tabletop water dispenser in black with three taps",
     },
     image: {
-      src: "/images/products/countertop-dispenser-black-whitened.jpg",
+      src: "/images/products/countertop-dispenser-black.jpg",
       width: 1080,
       height: 1290,
       alt: {
@@ -134,7 +134,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Countertop water purifier in black with digital display",
     },
     image: {
-      src: "/images/products/countertop-purifier-digital-whitened.jpg",
+      src: "/images/products/countertop-purifier-digital.jpg",
       width: 1080,
       height: 1069,
       alt: {
@@ -151,7 +151,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Triple-housing filtration unit on metal stand with pressure gauge",
     },
     image: {
-      src: "/images/products/triple-housing-filter-rack-whitened.jpg",
+      src: "/images/products/triple-housing-filter-rack.jpg",
       width: 1080,
       height: 1080,
       alt: {
@@ -168,7 +168,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Triple blue cylinder filtration unit on white frame with black horizontal top cylinder and tubing",
     },
     image: {
-      src: "/images/products/triple-housing-system-pump-whitened.jpg",
+      src: "/images/products/triple-housing-system-pump.jpg",
       width: 1080,
       height: 1065,
       alt: {
@@ -185,7 +185,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Triple-housing filtration unit with clear cylinder and pressure gauge",
     },
     image: {
-      src: "/images/products/triple-housing-system-gauge-whitened.jpg",
+      src: "/images/products/triple-housing-system-gauge.jpg",
       width: 1080,
       height: 1076,
       alt: {
@@ -202,7 +202,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Three-piece cylindrical filter cartridge set in white, blue, and brown",
     },
     image: {
-      src: "/images/products/replacement-cartridges-trio-whitened.jpg",
+      src: "/images/products/replacement-cartridges-trio.jpg",
       width: 1080,
       height: 1074,
       alt: {
@@ -219,7 +219,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Multi-colored cylindrical filter cartridges arranged in a single row",
     },
     image: {
-      src: "/images/products/replacement-cartridges-set-whitened.jpg",
+      src: "/images/products/replacement-cartridges-set.jpg",
       width: 1600,
       height: 822,
       alt: {
@@ -236,7 +236,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "White cylindrical water tank with base and top valve",
     },
     image: {
-      src: "/images/products/pressurized-storage-tank-whitened.jpg",
+      src: "/images/products/pressurized-storage-tank.jpg",
       width: 1600,
       height: 1398,
       alt: {
@@ -253,7 +253,7 @@ export const PROVISIONAL_PRODUCTS: readonly ProvisionalProduct[] = [
       en: "Stainless steel gooseneck drinking water faucet",
     },
     image: {
-      src: "/images/products/drinking-water-faucet-whitened.jpg",
+      src: "/images/products/drinking-water-faucet.jpg",
       width: 1080,
       height: 1074,
       alt: {

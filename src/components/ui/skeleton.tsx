@@ -30,7 +30,7 @@ export function Skeleton({
     <div
       aria-hidden="true"
       className={cn(
-        "relative overflow-hidden bg-slate-200/70",
+        "relative overflow-hidden bg-surface-muted",
         roundedStyles[rounded],
         className
       )}
@@ -77,7 +77,7 @@ export function ImageSkeleton({
   return (
     <Skeleton
       rounded="none"
-      className={cn("w-full bg-slate-100", aspect, className)}
+      className={cn("w-full bg-surface-muted", aspect, className)}
     />
   );
 }
@@ -101,7 +101,7 @@ export function ProductCardSkeleton({ className }: { className?: string }) {
       role="status"
       aria-busy="true"
       className={cn(
-        "flex flex-col rounded-2xl bg-white border border-slate-200/80 overflow-hidden",
+        "flex flex-col rounded-panel bg-white shadow-card overflow-hidden",
         className
       )}
     >
@@ -124,7 +124,7 @@ export function ProductCardSkeleton({ className }: { className?: string }) {
         </div>
 
         {/* Price & Action Row */}
-        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-slate-100">
+        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-border-subtle">
           <PriceSkeleton />
           <Skeleton className="h-9 w-20" rounded="full" />
         </div>
@@ -163,7 +163,7 @@ export function ProductDetailSkeleton({ className }: { className?: string }) {
         <Skeleton className="h-8 w-4/5" rounded="md" />
         <PriceSkeleton className="my-2" />
         <TextSkeleton lines={3} />
-        <div className="h-px bg-slate-100 my-2" />
+        <div className="h-px bg-border-subtle my-2" />
         <div className="flex flex-col gap-2">
           <Skeleton className="h-10 w-full" rounded="xl" />
           <Skeleton className="h-12 w-full" rounded="full" />

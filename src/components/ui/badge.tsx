@@ -14,7 +14,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   primary:
     "bg-sky-50 text-brand-primary border-brand-ice/80 font-medium",
   neutral:
-    "bg-slate-100 text-slate-700 border-slate-200 font-medium",
+    "bg-status-neutral-bg text-status-neutral-fg border-status-neutral-border font-medium",
   success:
     "bg-emerald-50 text-emerald-800 border-emerald-200 font-medium",
   warning:

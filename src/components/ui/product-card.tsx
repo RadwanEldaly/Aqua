@@ -45,13 +45,13 @@ export function ProductCard({
   return (
     <CardTag
       className={cn(
-        "group relative flex flex-col rounded-[2rem] bg-white border border-border-subtle/80 p-4 sm:p-5",
-        "transition-all duration-200 hover:shadow-elevated hover:border-brand-primary/40",
+        "group relative flex flex-col rounded-panel bg-white p-4 sm:p-5 shadow-card",
+        "transition-all duration-200 hover:shadow-hover",
         className
       )}
     >
-      {/* Visual Image Container with Pure White Inset Panel */}
-      <div className={cn("relative w-full overflow-hidden rounded-2xl bg-white border border-border-subtle/50 mb-4 flex items-center justify-center", PRODUCT_CARD_IMAGE_ASPECT)}>
+      {/* Visual Image Container with Pure White Inset Panel (NO border) */}
+      <div className={cn("relative w-full overflow-hidden rounded-2xl bg-white mb-4 flex items-center justify-center", PRODUCT_CARD_IMAGE_ASPECT)}>
         {badge && (
           <div className="absolute top-3 start-3 z-10 pointer-events-none">
             <Badge variant={badge.variant || "primary"} size="sm">
@@ -66,7 +66,7 @@ export function ProductCard({
             alt={imageAlt || name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-contain p-4 transition-transform duration-200 ease-out group-hover:scale-105"
+            className="object-contain p-4 transition-transform duration-200 ease-out group-hover:scale-105 feathered-image-mask"
             priority={priority}
             fetchPriority={priority ? "high" : "auto"}
             loading={priority ? undefined : "lazy"}

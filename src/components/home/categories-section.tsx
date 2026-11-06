@@ -73,20 +73,20 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                 href={`/products?category=${cat.id}`}
                 aria-label={t("viewCategoryAria", { name: categoryName })}
                 className={cn(
-                  "category-tile-elem group relative flex flex-col justify-between rounded-[2rem] bg-white border border-border-subtle/80 p-5 sm:p-6 shadow-card",
-                  "transition-all duration-200 hover:shadow-elevated hover:border-brand-primary/40 cursor-pointer",
+                  "category-tile-elem group relative flex flex-col justify-between rounded-panel bg-white p-5 sm:p-6 shadow-card",
+                  "transition-all duration-200 hover:shadow-hover cursor-pointer",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}
               >
-                {/* White Inner Image Panel with subtle hover scale */}
-                <div className="relative w-full aspect-square rounded-2xl bg-brand-surface border border-border-subtle/50 overflow-hidden p-6 mb-5 flex items-center justify-center">
+                {/* White Inner Image Panel with subtle hover scale (NO border) */}
+                <div className="relative w-full aspect-square rounded-2xl bg-white overflow-hidden p-6 mb-5 flex items-center justify-center">
                   {imageUrl ? (
                     <Image
                       src={imageUrl}
                       alt={categoryName}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-contain p-2 transition-transform duration-200 ease-out group-hover:scale-105"
+                      className="object-contain p-2 transition-transform duration-200 ease-out group-hover:scale-105 feathered-image-mask"
                       loading="lazy"
                     />
                   ) : null}

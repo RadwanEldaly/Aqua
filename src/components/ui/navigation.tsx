@@ -90,7 +90,7 @@ export function HeaderShell({
 }: HeaderShellProps) {
   return (
     <header className={cn("fixed top-3 sm:top-5 inset-x-0 z-40 px-3 sm:px-6 pointer-events-none flex justify-center", className)}>
-      <div className="pointer-events-auto w-full max-w-7xl h-14 sm:h-16 px-4 sm:px-7 rounded-full bg-white/95 backdrop-blur-md border border-border-subtle/80 shadow-card flex items-center justify-between gap-4">
+      <div className="pointer-events-auto w-full max-w-7xl h-14 sm:h-16 px-4 sm:px-7 rounded-full bg-white/95 backdrop-blur-md shadow-card flex items-center justify-between gap-4">
         {/* Brand Slot */}
         <div className="flex items-center gap-3 shrink-0">{brand}</div>
 

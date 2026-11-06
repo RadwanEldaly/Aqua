@@ -14,7 +14,7 @@ export const PLACEHOLDER_NAV_ITEMS = [
 
 export const PLACEHOLDER_CARD_DATA = {
   id: "placeholder-sample-01",
-  name: "جهاز تجريبي (PLACEHOLDER RO-UNIT)",
+  name: "جهاز تجريبي (PLACEHOLDER UNIT)",
   category: "فئة تجريبية (PLACEHOLDER)",
   price: 850,
   compareAtPrice: 1100,

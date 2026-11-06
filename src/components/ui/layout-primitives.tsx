@@ -140,14 +140,14 @@ export function Divider({
       <div
         role="separator"
         aria-orientation="vertical"
-        className={cn("w-px bg-slate-200 self-stretch my-1", className)}
+        className={cn("w-px bg-border self-stretch my-1", className)}
       />
     );
   }
 
   return (
     <hr
-      className={cn("w-full border-0 border-t border-slate-200 my-4", className)}
+      className={cn("w-full border-0 border-t border-border my-4", className)}
     />
   );
 }
@@ -170,10 +170,10 @@ export function LabelValue({
 }: LabelValueProps) {
   return (
     <div className={cn("flex items-center justify-between text-xs py-1", className)}>
-      <span className="text-slate-500 font-medium">
+      <span className="text-text-subtle-accessible font-medium">
         <bdi>{label}:</bdi>
       </span>
-      <span className="font-semibold text-slate-800">
+      <span className="font-semibold text-brand-deep">
         <bdi>{value}</bdi>
       </span>
     </div>
