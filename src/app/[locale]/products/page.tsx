@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ProductCatalog } from "@/components/products/product-catalog";
 import {
@@ -42,21 +41,26 @@ export default async function ProductsPage({
   const t = await getTranslations({ locale, namespace: "ProductsPage" });
 
   return (
-    <section className="py-12 sm:py-16 flex-1 flex flex-col">
-      <Container size="lg" className="flex flex-col gap-10">
-        <SectionHeading
-          titleAs="h1"
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          description={t("description")}
-        />
+    <div className="w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-16 sm:pb-24 flex-1 flex flex-col gap-10 sm:gap-14">
+      <div className="max-w-7xl mx-auto w-full flex flex-col gap-10 sm:gap-12">
+        {/* Rounded Tinted Page Header Panel */}
+        <div className="rounded-[2rem] bg-brand-surface border border-border-subtle/80 p-8 sm:p-12 lg:p-14 shadow-card">
+          <SectionHeading
+            titleAs="h1"
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            description={t("description")}
+            align="start"
+          />
+        </div>
 
+        {/* Product Catalog with Category Filter */}
         <ProductCatalog
           products={PROVISIONAL_PRODUCTS}
           categories={PROVISIONAL_CATEGORIES}
           locale={locale as "ar" | "en"}
         />
-      </Container>
-    </section>
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ContactForm } from "@/components/contact/contact-form";
 
@@ -37,18 +36,24 @@ export default async function ContactPage({
   const t = await getTranslations({ locale, namespace: "ContactPage" });
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 flex-1 flex flex-col justify-center">
-      <Container size="lg" className="flex flex-col gap-8 sm:gap-10">
-        <SectionHeading
-          titleAs="h1"
-          align="center"
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          description={t("description")}
-        />
+    <div className="w-full px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-24 sm:pb-28 flex-1 flex flex-col gap-10 sm:gap-12">
+      <div className="max-w-7xl mx-auto w-full flex flex-col gap-10 sm:gap-12">
+        {/* Rounded Tinted Page Header Panel */}
+        <div className="rounded-[2rem] bg-brand-surface border border-border-subtle/80 p-8 sm:p-12 lg:p-14 shadow-card text-center">
+          <SectionHeading
+            titleAs="h1"
+            align="center"
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            description={t("description")}
+          />
+        </div>
 
-        <ContactForm locale={locale as "ar" | "en"} />
-      </Container>
-    </section>
+        {/* Contact Form Card */}
+        <div className="w-full max-w-2xl mx-auto rounded-[2rem] bg-white border border-border-subtle/80 p-6 sm:p-10 lg:p-12 shadow-card">
+          <ContactForm locale={locale as "ar" | "en"} />
+        </div>
+      </div>
+    </div>
   );
 }
