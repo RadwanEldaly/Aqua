@@ -20,7 +20,7 @@ export interface FilterStage {
 }
 
 /**
- * Core product definition for water filtration devices and cartridges
+ * Core product definition for water filtration devices, packages, and cartridges
  */
 export interface Product {
   id: string;
@@ -33,7 +33,12 @@ export interface Product {
   currency: "SAR";
   images: string[];
   thumbnailImage: string;
-  category: string;
+  category: "packages" | "systems" | "dispensers" | "filters" | "accessories";
+  badge?: LocalizedString;
+  isOffer?: boolean;
+  warranty?: LocalizedString;
+  features?: LocalizedString[];
+  packageIncludes?: LocalizedString[];
   specs: ProductSpec[];
   inStock: boolean;
 }

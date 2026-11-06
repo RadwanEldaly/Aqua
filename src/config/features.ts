@@ -6,7 +6,7 @@
 
 export const FEATURES = {
   search: false,
-  cart: false,
+  cart: true,
 } as const;
 
 export type FeatureFlag = keyof typeof FEATURES;

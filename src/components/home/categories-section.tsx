@@ -56,8 +56,8 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
           align="start"
         />
 
-        {/* 4 Large Rounded Category Tiles (1 col @ 360, 2 col @ 768, 4 col @ 1440) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* 5 Large Rounded Category Tiles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6">
           {categories.map((cat) => {
             const matchingProducts = PROVISIONAL_PRODUCTS.filter(
               (p) => p.categoryId === cat.id
@@ -78,8 +78,8 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}
               >
-                {/* White Inner Image Panel with subtle hover scale (NO border) */}
-                <div className="relative w-full aspect-square rounded-2xl bg-white overflow-hidden p-6 mb-5 flex items-center justify-center">
+                {/* Inner Image Panel with subtle hover scale (NO border) */}
+                <div className="relative w-full aspect-square rounded-2xl bg-surface-subtle overflow-hidden p-5 mb-4 flex items-center justify-center">
                   {imageUrl ? (
                     <div
                       className="feathered-image-mask relative flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-105"
@@ -95,7 +95,7 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                         src={imageUrl}
                         alt={categoryName}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                         className="object-contain"
                         loading="lazy"
                       />

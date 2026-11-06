@@ -1,20 +1,31 @@
 import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { siteConfig } from "@/config/site";
+import { Mail, MessageCircle } from "lucide-react";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export function SiteFooter() {
   const locale = useLocale() as "ar" | "en";
+  const isAr = locale === "ar";
   const tCommon = useTranslations("Common");
   const tNav = useTranslations("Navigation");
   const tFooter = useTranslations("Footer");
 
-  const brandMark = locale === "ar" ? "أكوا" : "AQUA";
+  const brandMark = isAr ? "أكوا جارد" : "AQUA GUARD";
 
   const navLinks = [
     { href: "/" as const, label: tNav("home") },
     { href: "/products" as const, label: tNav("products") },
+    { href: "/checkout" as const, label: isAr ? "إتمام الطلب" : "Checkout" },
     { href: "/contact" as const, label: tNav("contact") },
   ];
+
+  const whatsappUrl = buildWhatsAppUrl(
+    isAr
+      ? "مرحباً أكوا جارد، أود الاستفسار عن منتجات وفلاتر المياه."
+      : "Hello Aqua Guard, I would like to inquire about water filters."
+  );
 
   return (
     <footer className="w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 pt-8 sm:pt-12">
@@ -22,15 +33,36 @@ export function SiteFooter() {
         {/* Top Section: Oversized Wordmark, Tagline, COD Badge */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-white/10">
           <div className="flex flex-col gap-3">
-            <span className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-none ltr:tracking-tight">
+            <span className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-none ltr:tracking-tight">
               {brandMark}
             </span>
-            <p className="text-aqua-200/90 text-base sm:text-lg lg:text-xl font-medium max-w-md">
+            <p className="text-aqua-200/90 text-base sm:text-lg font-medium max-w-md">
               <bdi>{tCommon("tagline")}</bdi>
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Contact Details Pill */}
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-aqua-100 transition-colors"
+            >
+              <Mail className="w-4 h-4 text-brand-primary" />
+              <span>{siteConfig.contact.email}</span>
+            </a>
+
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span dir="ltr">{siteConfig.contact.displayPhone}</span>
+              </a>
+            )}
+
             <span className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/10 text-aqua-100 shadow-subtle">
               <bdi>{tFooter("codNotice")}</bdi>
             </span>

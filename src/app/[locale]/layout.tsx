@@ -6,6 +6,8 @@ import { routing, type Locale } from "@/i18n/routing";
 import { fontArabic, fontSans } from "@/styles/fonts";
 import { SkipToContent } from "@/components/ui/navigation";
 import { SiteHeader, SiteFooter, FloatingActionButton } from "@/components/navigation";
+import { CartProvider } from "@/context/cart-context";
+import { CartDrawer } from "@/components/cart/cart-drawer";
 import "@/app/globals.css";
 
 export function generateStaticParams() {
@@ -33,7 +35,7 @@ export async function generateMetadata({
   return {
     title: {
       default: t("title"),
-      template: `%s | ${locale === "ar" ? "أكوا" : "AQUA"}`,
+      template: `%s | ${locale === "ar" ? "أكوا جارد" : "AQUA GUARD"}`,
     },
     description: t("description"),
     metadataBase: new URL(baseUrl),
@@ -84,13 +86,16 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col bg-canvas text-brand-deep selection:bg-brand-primary selection:text-white" dir={dir}>
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <SkipToContent />
-          <SiteHeader />
-          <main id="main-content" className="flex-1 flex flex-col">
-            {children}
-          </main>
-          <SiteFooter />
-          <FloatingActionButton />
+          <CartProvider>
+            <SkipToContent />
+            <SiteHeader />
+            <main id="main-content" className="flex-1 flex flex-col">
+              {children}
+            </main>
+            <SiteFooter />
+            <FloatingActionButton />
+            <CartDrawer />
+          </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

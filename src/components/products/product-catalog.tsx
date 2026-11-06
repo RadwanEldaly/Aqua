@@ -8,6 +8,7 @@ import {
   type ProductCategory,
 } from "@/data/provisional-products";
 import { ProductCard } from "@/components/ui/product-card";
+import { AddToCartButton } from "./add-to-cart-button";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
@@ -82,7 +83,6 @@ export function ProductCatalog({
                     : "bg-brand-surface text-text-subtle-accessible border border-border hover:text-brand-deep hover:border-brand-primary/40 hover:bg-brand-mist/40"
                 )}
               >
-                {/* Active state not conveyed by color alone: visible check icon indicator */}
                 {isSelected && (
                   <Check className="w-3.5 h-3.5 shrink-0 stroke-[2.5]" aria-hidden="true" />
                 )}
@@ -109,7 +109,7 @@ export function ProductCatalog({
         })}`}
       </div>
 
-      {/* 2. Products Responsive Grid (1 col @ 360, 2 col @ 768, 3-4 col @ 1440) */}
+      {/* 2. Products Responsive Grid */}
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product, index) => {
@@ -130,31 +130,36 @@ export function ProductCatalog({
                 id={product.id}
                 name={productName}
                 category={categoryLabel}
+                price={product.price}
+                compareAtPrice={product.compareAtPrice}
                 imageUrl={product.image.src}
                 imageAlt={product.image.alt[locale]}
                 imageWidth={product.image.width}
                 imageHeight={product.image.height}
+                href={`/products/${product.id}`}
                 locale={locale}
                 priority={index === 0}
+                badge={
+                  product.badge
+                    ? { text: product.badge[locale], variant: "primary" }
+                    : undefined
+                }
                 actions={
-                  whatsAppHref ? (
-                    <a
-                      href={whatsAppHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={t("inquireAria", { name: productName })}
-                      className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-full bg-brand-primary text-brand-surface text-xs font-semibold hover:bg-brand-primary-hover transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 cursor-pointer"
-                    >
-                      <MessageCircle
-                        className="w-3.5 h-3.5"
-                        aria-hidden="true"
-                      />
-                      <span>{t("inquire")}</span>
-                    </a>
-                  ) : (
-                    // Reserved slot when WhatsApp number is unconfigured: identical height, zero CLS
-                    <div className="h-9" aria-hidden="true" />
-                  )
+                  <div className="flex items-center gap-1.5">
+                    <AddToCartButton productId={product.id} locale={locale} size="sm" />
+                    {whatsAppHref && (
+                      <a
+                        href={whatsAppHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={t("inquireAria", { name: productName })}
+                        className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer shrink-0"
+                        title={locale === "ar" ? "طلب عبر واتساب" : "Order via WhatsApp"}
+                      >
+                        <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
                 }
               />
             );

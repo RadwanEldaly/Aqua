@@ -204,6 +204,28 @@ export function HeroSection({ locale }: HeroSectionProps) {
             </div>
           </div>
         </div>
+
+        {/* Hero Bottom Trust Strip */}
+        <div className="relative z-10 w-full border-t border-white/10 bg-black/20 backdrop-blur-md px-6 py-4">
+          <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs sm:text-sm font-semibold text-aqua-100">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-base">🚚</span>
+              <span>{locale === "ar" ? "توصيل وتركيب مجاني" : "Free Delivery & Install"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-base">🛡️</span>
+              <span>{locale === "ar" ? "ضمان شامل سنتين" : "2-Year Warranty"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-base">💵</span>
+              <span>{locale === "ar" ? "الدفع عند الاستلام" : "Cash on Delivery"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-base">💧</span>
+              <span>{locale === "ar" ? "قطع أصلية معتمدة 100%" : "100% Certified Parts"}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

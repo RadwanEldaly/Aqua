@@ -4,8 +4,10 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import {
   HeroSection,
+  SpecialOffersSection,
   CategoriesSection,
   FeaturedProductsSection,
+  WhyUsSection,
   BrandVideoBand,
   WhatsAppBandSection,
 } from "@/components/home";
@@ -45,8 +47,10 @@ export default async function HomePage({
   return (
     <div className="flex flex-col flex-1">
       <HeroSection locale={typedLocale} />
+      <SpecialOffersSection locale={typedLocale} />
       <CategoriesSection locale={typedLocale} />
       <FeaturedProductsSection locale={typedLocale} />
+      <WhyUsSection locale={typedLocale} />
       <BrandVideoBand />
       <WhatsAppBandSection />
     </div>

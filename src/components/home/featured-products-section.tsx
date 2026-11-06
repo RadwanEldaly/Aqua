@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ui/product-card";
+import { AddToCartButton } from "@/components/products/add-to-cart-button";
 import {
   PROVISIONAL_PRODUCTS,
   PROVISIONAL_CATEGORIES,
@@ -22,43 +23,57 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
   const tProducts = useTranslations("ProductsPage");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Take the first 4 products strictly from the data file
-  const featuredProducts = PROVISIONAL_PRODUCTS.slice(0, 4);
+  // Take the top 8 products to provide high density and rich choice
+  const featuredProducts = PROVISIONAL_PRODUCTS.slice(0, 8);
 
-  // Subtle ScrollTrigger card stagger with reduced-motion support
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".featured-card-elem", {
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 85%",
-            once: true,
-          },
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power2.out",
-        });
+        gsap.fromTo(
+          ".featured-card-elem",
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
       });
     },
     { scope: containerRef }
   );
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-28">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
       <div ref={containerRef} className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading */}
-        <SectionHeading
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          align="start"
-        />
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <SectionHeading
+            eyebrow={locale === "ar" ? "أجهزة وأنظمة معتمدة" : "Certified Systems"}
+            title={locale === "ar" ? "الأجهزة الأكثر طلباً ومبيعاً" : "Best Selling Purification Devices"}
+            align="start"
+          />
 
-        {/* 4-Item Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <Button
+            href="/products"
+            variant="outline"
+            size="md"
+            className="min-w-[150px] h-10 px-5 text-xs font-bold rounded-full border-border hover:bg-brand-mist/60 cursor-pointer self-start sm:self-auto"
+          >
+            {t("viewAllAction")}
+          </Button>
+        </div>
+
+        {/* 8-Item Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProducts.map((product) => {
             const productName = product.name[locale];
             const prefilledMessage = tProducts("whatsappPrefill", {
@@ -77,39 +92,40 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
                   id={product.id}
                   name={productName}
                   category={categoryLabel}
+                  price={product.price}
+                  compareAtPrice={product.compareAtPrice}
                   imageUrl={product.image.src}
                   imageAlt={product.image.alt[locale]}
+                  imageWidth={product.image.width}
+                  imageHeight={product.image.height}
+                  href={`/products/${product.id}`}
                   locale={locale}
+                  badge={
+                    product.badge
+                      ? { text: product.badge[locale], variant: "primary" }
+                      : undefined
+                  }
                   actions={
-                    whatsAppHref ? (
-                      <a
-                        href={whatsAppHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={tProducts("inquireAria", { name: productName })}
-                        className="inline-flex items-center gap-1.5 h-9 px-4 rounded-full bg-brand-primary text-white text-xs font-bold hover:bg-brand-primary-hover transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 cursor-pointer"
-                      >
-                        <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                        <span>{tProducts("inquire")}</span>
-                      </a>
-                    ) : undefined
+                    <div className="flex items-center gap-1.5">
+                      <AddToCartButton productId={product.id} locale={locale} size="sm" />
+                      {whatsAppHref && (
+                        <a
+                          href={whatsAppHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={tProducts("inquireAria", { name: productName })}
+                          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer shrink-0"
+                          title={locale === "ar" ? "طلب عبر واتساب" : "Order via WhatsApp"}
+                        >
+                          <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                        </a>
+                      )}
+                    </div>
                   }
                 />
               </div>
             );
           })}
-        </div>
-
-        {/* View All Button linking to /products */}
-        <div className="flex justify-center pt-2">
-          <Button
-            href="/products"
-            variant="outline"
-            size="lg"
-            className="min-w-[180px] h-12 px-8 text-sm font-bold rounded-full border-border hover:bg-brand-mist/60 cursor-pointer"
-          >
-            {t("viewAllAction")}
-          </Button>
         </div>
       </div>
     </section>
