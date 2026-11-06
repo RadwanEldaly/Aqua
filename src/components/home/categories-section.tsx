@@ -74,8 +74,8 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
           align="start"
         />
 
-        {/* 5 Distinct Category Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6">
+        {/* 5 Distinct Category Tiles (Side-by-side horizontal snap row on mobile, 5-col grid on desktop) */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 pb-2 sm:pb-0">
           {categories.map((cat) => {
             const matchingProducts = PROVISIONAL_PRODUCTS.filter(
               (p) => p.categoryId === cat.id
@@ -95,6 +95,7 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                 aria-label={t("viewCategoryAria", { name: categoryName })}
                 className={cn(
                   "category-tile-elem group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80",
+                  "w-[220px] xs:w-[240px] sm:w-auto shrink-0 sm:shrink snap-start",
                   "transition-all duration-300 hover:shadow-hover hover:-translate-y-1 cursor-pointer",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}
