@@ -36,15 +36,15 @@ export function SectionHeading({
       {...props}
     >
       {eyebrow && (
-        <span className="text-xs md:text-sm font-semibold tracking-wide text-brand-primary uppercase">
+        <span className="text-xs md:text-sm font-bold tracking-wider text-brand-primary uppercase">
           {eyebrow}
         </span>
       )}
-      <TitleTag className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
+      <TitleTag className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-deep leading-[1.2] tracking-tight">
         {title}
       </TitleTag>
       {description && (
-        <p className="text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+        <p className="text-base sm:text-lg text-text-subtle-accessible font-medium leading-relaxed max-w-xl">
           {description}
         </p>
       )}

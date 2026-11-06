@@ -45,13 +45,13 @@ export function ProductCard({
   return (
     <CardTag
       className={cn(
-        "group relative flex flex-col rounded-2xl bg-brand-surface border border-border",
-        "transition-all duration-200 hover:shadow-card hover:border-brand-primary/40 overflow-hidden",
+        "group relative flex flex-col rounded-[2rem] bg-white border border-border-subtle/80 p-4 sm:p-5",
+        "transition-all duration-200 hover:shadow-elevated hover:border-brand-primary/40",
         className
       )}
     >
-      {/* Visual Image Container with Pure White Panel (blends opaque JPEG cutouts seamlessly) */}
-      <div className={cn("relative w-full overflow-hidden bg-white border-b border-border-subtle/50", PRODUCT_CARD_IMAGE_ASPECT)}>
+      {/* Visual Image Container with Pure White Inset Panel */}
+      <div className={cn("relative w-full overflow-hidden rounded-2xl bg-white border border-border-subtle/50 mb-4 flex items-center justify-center", PRODUCT_CARD_IMAGE_ASPECT)}>
         {badge && (
           <div className="absolute top-3 start-3 z-10 pointer-events-none">
             <Badge variant={badge.variant || "primary"} size="sm">
@@ -66,7 +66,7 @@ export function ProductCard({
             alt={imageAlt || name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+            className="object-contain p-4 transition-transform duration-200 ease-out group-hover:scale-105"
             priority={priority}
             fetchPriority={priority ? "high" : "auto"}
             loading={priority ? undefined : "lazy"}
@@ -89,16 +89,16 @@ export function ProductCard({
       </div>
 
       {/* Card Content */}
-      <div className="flex flex-1 flex-col p-5 gap-3">
+      <div className="flex flex-1 flex-col gap-2.5">
         {category ? (
-          <span className="h-4 text-xs font-medium text-text-subtle-accessible uppercase tracking-wider leading-none">
+          <span className="text-xs font-semibold text-text-subtle-accessible uppercase tracking-wider leading-none">
             {category}
           </span>
         ) : (
-          <div className="h-4" aria-hidden="true" />
+          <div className="h-3" aria-hidden="true" />
         )}
 
-        <h3 className="min-h-[48px] text-base font-semibold text-brand-deep leading-6 group-hover:text-brand-primary transition-colors line-clamp-2">
+        <h3 className="min-h-[44px] text-base font-bold text-brand-deep leading-snug group-hover:text-brand-primary transition-colors line-clamp-2">
           {href ? (
             <Link href={href} className="focus:outline-none">
               <span className="absolute inset-0 z-0" aria-hidden="true" />
@@ -109,8 +109,8 @@ export function ProductCard({
           )}
         </h3>
 
-        {/* Price & Actions Row */}
-        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-border-subtle">
+        {/* Actions Row */}
+        <div className="mt-auto pt-3 flex items-center justify-between border-t border-border-subtle/70 min-h-[44px]">
           <div>
             {typeof price === "number" && (
               <Price
@@ -125,6 +125,7 @@ export function ProductCard({
           {actions ? (
             <div className="relative z-10 shrink-0">{actions}</div>
           ) : (
+            /* Slot reserved for future action (Add to order) to guarantee zero CLS */
             <div className="h-9 shrink-0" aria-hidden="true" />
           )}
         </div>

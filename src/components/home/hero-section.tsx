@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Container, Section } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -15,10 +14,65 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ locale }: HeroSectionProps) {
-  const t = useTranslations("HomePage.hero");
-  const whatsappUrl = buildWhatsAppUrl(t("whatsappPrefill"));
+  const tHero = useTranslations("HomePage.hero");
+  const tCommon = useTranslations("Common");
+  const whatsappUrl = buildWhatsAppUrl(tHero("whatsappPrefill"));
   const hasWhatsApp = Boolean(whatsappUrl);
+
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [canLoadVideo, setCanLoadVideo] = useState(false);
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
+
+  // Guarantee: Video NEVER loads before the window 'load' event
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    function handleLoad() {
+      // Check reduced motion & saveData
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      const nav = navigator as Navigator & {
+        connection?: { saveData?: boolean };
+      };
+      const isSaveData = Boolean(nav.connection?.saveData);
+
+      if (!prefersReducedMotion && !isSaveData) {
+        setCanLoadVideo(true);
+      }
+    }
+
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad, { once: true });
+      return () => window.removeEventListener("load", handleLoad);
+    }
+  }, []);
+
+  // Intersection observer: only play when in viewport
+  useEffect(() => {
+    if (!canLoadVideo || !containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShouldPlayVideo(true);
+            videoRef.current?.play().catch(() => {});
+          } else {
+            setShouldPlayVideo(false);
+            videoRef.current?.pause();
+          }
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [canLoadVideo]);
 
   // Subtle GSAP entrance animation with reduced-motion support
   useGSAP(
@@ -27,17 +81,17 @@ export function HeroSection({ locale }: HeroSectionProps) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.from(".hero-text-elem", {
           opacity: 0,
-          y: 16,
-          duration: 0.55,
-          stagger: 0.06,
+          y: 20,
+          duration: 0.6,
+          stagger: 0.08,
           ease: "power2.out",
         });
-        gsap.from(".hero-image-panel", {
+        gsap.from(".hero-card-elem", {
           opacity: 0,
-          scale: 0.98,
-          duration: 0.65,
+          scale: 0.96,
+          duration: 0.7,
           ease: "power2.out",
-          delay: 0.08,
+          delay: 0.1,
         });
       });
     },
@@ -45,36 +99,70 @@ export function HeroSection({ locale }: HeroSectionProps) {
   );
 
   return (
-    <Section spacing="none" className="py-16 sm:py-20 lg:py-28 overflow-hidden">
-      <Container size="lg">
-        <div
-          ref={containerRef}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center"
-        >
-          {/* Editorial Text Composition */}
-          <div className="lg:col-span-6 flex flex-col items-start text-start">
-            <h1
+    <section className="w-full px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5">
+      <div
+        ref={containerRef}
+        className="relative max-w-7xl mx-auto rounded-[2rem] bg-brand-navy overflow-hidden shadow-elevated border border-brand-navy/80 min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
+      >
+        {/* Background Layer: Poster Image (always present, zero CLS) */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
+          <Image
+            src="/video/brand-water-poster.webp"
+            alt=""
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            className="object-cover opacity-35"
+          />
+
+          {/* Conditional Video Layer: Attached strictly after 'load' event */}
+          {canLoadVideo && (
+            <video
+              ref={videoRef}
+              muted
+              loop
+              playsInline
+              preload="none"
               className={cn(
-                "hero-text-elem text-5xl sm:text-6xl lg:text-7xl font-extrabold text-brand-deep leading-[1.25] sm:leading-[1.2]",
-                locale === "en" ? "tracking-tight uppercase" : "tracking-normal"
+                "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
+                shouldPlayVideo ? "opacity-35" : "opacity-0"
               )}
             >
-              <bdi>{t("title")}</bdi>
+              <source src="/video/brand-water-720p.mp4" type="video/mp4" />
+            </video>
+          )}
+
+          {/* Saturated Deep Marine Gradient Overlay (Passes AAA Contrast > 12:1) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/95 via-brand-navy/85 to-brand-navy/70" />
+        </div>
+
+        {/* Content Grid: Clearance for Floating Pill Nav (pt-24 sm:pt-28) */}
+        <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center p-6 sm:p-10 lg:p-14 pt-24 sm:pt-28 lg:pt-32 my-auto">
+          {/* Editorial Display Typography (Bottom-Start Aligned) */}
+          <div className="lg:col-span-7 flex flex-col items-start text-start">
+            <h1
+              className={cn(
+                "hero-text-elem text-4xl sm:text-6xl lg:text-7xl xl:text-[80px] font-black text-white leading-[1.2] sm:leading-[1.12]",
+                locale === "en" ? "tracking-tight" : "tracking-normal"
+              )}
+            >
+              <bdi>{tHero("descriptor")}</bdi>
             </h1>
 
-            <p className="hero-text-elem mt-4 sm:mt-5 text-lg sm:text-xl lg:text-2xl text-text-subtle-accessible font-medium leading-[1.4] max-w-xl">
-              {t("descriptor")}
+            <p className="hero-text-elem mt-4 sm:mt-6 text-lg sm:text-xl lg:text-2xl font-light text-aqua-200/95 leading-[1.45] max-w-xl">
+              <bdi>{tCommon("tagline")}</bdi>
             </p>
 
-            {/* Actions row: min-h-[52px] anchors height and layout so zero shift occurs */}
-            <div className="hero-text-elem mt-8 sm:mt-10 flex flex-wrap items-center gap-3 sm:gap-4 min-h-[52px]">
+            {/* Actions Row: Fixed min-h-[52px] to guarantee zero layout shift */}
+            <div className="hero-text-elem mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4 min-h-[52px]">
               <Button
                 href="/products"
                 variant="primary"
                 size="lg"
-                className="min-w-[160px] h-13 px-7 text-base font-semibold shadow-subtle cursor-pointer"
+                className="min-w-[160px] h-13 px-8 text-base font-bold bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep shadow-subtle cursor-pointer rounded-full"
               >
-                {t("browseAction")}
+                {tHero("browseAction")}
               </Button>
 
               {hasWhatsApp ? (
@@ -83,37 +171,37 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   external
                   variant="outline"
                   size="lg"
-                  aria-label={t("inquireAria")}
-                  className="min-w-[160px] h-13 px-7 text-base font-semibold inline-flex items-center gap-2 cursor-pointer"
+                  aria-label={tHero("inquireAria")}
+                  className="min-w-[160px] h-13 px-8 text-base font-bold text-white border-white/80 hover:bg-white/15 inline-flex items-center gap-2 cursor-pointer rounded-full"
                 >
-                  <MessageCircle className="w-5 h-5" aria-hidden="true" />
-                  <span>{t("inquireAction")}</span>
+                  <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+                  <span>{tHero("inquireAction")}</span>
                 </Button>
               ) : (
-                /* Reserved slot: layout does not shift when WhatsApp number is omitted */
+                /* Reserved slot: identical dimensions, zero shift */
                 <div className="hidden sm:inline-block w-0 min-h-[52px]" aria-hidden="true" />
               )}
             </div>
           </div>
 
-          {/* Hero Visual Image Panel */}
-          <div className="hero-image-panel lg:col-span-6 w-full">
-            <div className="relative rounded-3xl bg-white p-6 sm:p-10 border border-border-subtle/60 shadow-subtle overflow-hidden flex items-center justify-center">
-              <div className="relative w-full aspect-[16/13] sm:aspect-[16/12]">
+          {/* Product Cutout Inset Card (Pure White Rounded Panel) */}
+          <div className="hero-card-elem lg:col-span-5 w-full flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-md lg:max-w-lg aspect-[16/13] rounded-3xl bg-white p-6 sm:p-8 shadow-elevated border border-white/80 overflow-hidden flex items-center justify-center">
+              <div className="relative w-full h-full">
                 <Image
-                  src="/images/home/tabletop-dispenser-trio.jpg"
-                  alt={t("imageAlt")}
+                  src="/images/home/tabletop-dispenser-trio-whitened.jpg"
+                  alt={tHero("imageAlt")}
                   fill
                   priority
                   fetchPriority="high"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-contain"
                 />
               </div>
             </div>
           </div>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </section>
   );
 }

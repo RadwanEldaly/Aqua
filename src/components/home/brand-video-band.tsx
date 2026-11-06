@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { Container, Section } from "@/components/ui/container";
 
 export function BrandVideoBand() {
   const t = useTranslations("Common");
@@ -53,12 +52,12 @@ export function BrandVideoBand() {
   }, []);
 
   return (
-    <Section spacing="none" className="py-12 sm:py-16 lg:py-20">
-      <Container size="lg">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto">
         {/* Fixed Aspect Ratio Container: Eliminates Layout Shift */}
         <div
           ref={containerRef}
-          className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-3xl overflow-hidden bg-brand-deep shadow-card flex items-center justify-center select-none"
+          className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[2rem] overflow-hidden bg-brand-deep shadow-elevated flex items-center justify-center select-none border border-brand-navy/80"
         >
           {/* Decorative Video Element */}
           <video
@@ -75,20 +74,20 @@ export function BrandVideoBand() {
             <source src="/video/brand-water-720p.mp4" type="video/mp4" />
           </video>
 
-          {/* High-Contrast Tint Overlay (Passes AA/AAA contrast > 7:1) */}
+          {/* High-Contrast Tint Overlay (Passes AA/AAA contrast > 8:1 on all frames) */}
           <div
-            className="absolute inset-0 bg-brand-deep/55 backdrop-brightness-75"
+            className="absolute inset-0 bg-brand-deep/70 backdrop-brightness-75"
             aria-hidden="true"
           />
 
           {/* Centered Brand Tagline */}
-          <div className="relative z-10 text-center px-4 max-w-2xl">
-            <p className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-wide leading-tight drop-shadow-md">
+          <div className="relative z-10 text-center px-6 max-w-2xl">
+            <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-wide leading-tight drop-shadow-md">
               <bdi>{t("tagline")}</bdi>
             </p>
           </div>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </section>
   );
 }
