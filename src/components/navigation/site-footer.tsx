@@ -13,7 +13,6 @@ export function SiteFooter() {
   const navLinks = [
     { href: "/" as const, label: tNav("home") },
     { href: "/products" as const, label: tNav("products") },
-    { href: "/about" as const, label: tNav("about") },
     { href: "/contact" as const, label: tNav("contact") },
   ];
 
