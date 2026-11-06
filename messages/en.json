@@ -57,5 +57,33 @@
     "whatsappPrefill": "Hello, I would like to inquire about: {name}",
     "showingCount": "{count, plural, =0 {No products} one {1 of {total} product} other {{count} of {total} products}}",
     "emptyState": "No products found in this category."
+  },
+  "HomePage": {
+    "hero": {
+      "title": "AQUA",
+      "descriptor": "Water filtration systems and filters",
+      "browseAction": "Browse Products",
+      "inquireAction": "Inquire via WhatsApp",
+      "inquireAria": "Inquire about AQUA products via WhatsApp",
+      "whatsappPrefill": "Hello, I would like to inquire about AQUA products",
+      "imageAlt": "Three countertop water dispensers in white, grey, and black"
+    },
+    "categories": {
+      "eyebrow": "Product Categories",
+      "title": "Browse by Category",
+      "viewCategoryAria": "Browse {name} category",
+      "productCount": "{count, plural, one {1 product} other {{count} products}}"
+    },
+    "featured": {
+      "eyebrow": "Selected Products",
+      "title": "Featured Filtration Solutions",
+      "viewAllAction": "View All Products"
+    },
+    "whatsappBand": {
+      "title": "Contact us on WhatsApp",
+      "chatAction": "Chat via WhatsApp",
+      "chatAria": "Chat with customer support via WhatsApp",
+      "whatsappPrefill": "Hello, I would like to contact AQUA customer support"
+    }
   }
 }

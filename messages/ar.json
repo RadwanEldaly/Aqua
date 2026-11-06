@@ -57,5 +57,33 @@
     "whatsappPrefill": "السلام عليكم، أود الاستفسار عن: {name}",
     "showingCount": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد من أصل {total}} two {منتجان من أصل {total}} few {{count} منتجات من أصل {total}} many {{count} منتجاً من أصل {total}} other {{count} منتج من أصل {total}}}",
     "emptyState": "لا توجد منتجات متطابقة في هذه الفئة."
+  },
+  "HomePage": {
+    "hero": {
+      "title": "أكوا",
+      "descriptor": "أنظمة وفلاتر تنقية المياه",
+      "browseAction": "تصفح المنتجات",
+      "inquireAction": "استفسر عبر واتساب",
+      "inquireAria": "استفسر عن منتجات أكوا عبر واتساب",
+      "whatsappPrefill": "السلام عليكم، أود الاستفسار عن منتجات أكوا",
+      "imageAlt": "ثلاثة أجهزة تنقية وموزعات مياه مكتبية بألوان أبيض ورمادي وأسود"
+    },
+    "categories": {
+      "eyebrow": "فئات المنتجات",
+      "title": "تصفح حسب الفئة",
+      "viewCategoryAria": "تصفح فئة {name}",
+      "productCount": "{count, plural, one {منتج واحد} two {منتجان} few {{count} منتجات} many {{count} منتجاً} other {{count} منتج}}"
+    },
+    "featured": {
+      "eyebrow": "منتجات مختارة",
+      "title": "أبرز حلول التنقية",
+      "viewAllAction": "عرض جميع المنتجات"
+    },
+    "whatsappBand": {
+      "title": "تواصل معنا عبر واتساب",
+      "chatAction": "محادثة عبر واتساب",
+      "chatAria": "محادثة خدمة العملاء عبر واتساب",
+      "whatsappPrefill": "السلام عليكم، أود التواصل مع خدمة عملاء أكوا"
+    }
   }
 }
