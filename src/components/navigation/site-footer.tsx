@@ -4,6 +4,8 @@ import { Link } from "@/i18n/routing";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { WaveDivider } from "@/components/ui/brand-patterns";
+import { SOCIAL_LINKS } from "@/components/ui/social-icons";
+import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   const locale = useLocale() as "ar" | "en";
@@ -73,21 +75,45 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Middle Section: Localized Navigation Links */}
-          <nav
-            aria-label="Footer Navigation"
-            className="relative z-10 flex flex-wrap items-center gap-4 sm:gap-8 text-sm sm:text-base font-semibold"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-brand-foam/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure rounded-lg px-2 py-1"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Middle Section: Navigation Links & Social Media Icons */}
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <nav
+              aria-label="Footer Navigation"
+              className="flex flex-wrap items-center gap-4 sm:gap-8 text-sm sm:text-base font-semibold"
+            >
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-brand-foam/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure rounded-lg px-2 py-1"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Social Media Links with Official Logos */}
+            <div
+              className="flex items-center gap-2.5"
+              aria-label={isAr ? "منصات التواصل الاجتماعي" : "Social Media Platforms"}
+            >
+              {SOCIAL_LINKS.map(({ id, label, href, Icon, colorClass }) => (
+                <a
+                  key={id}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className={cn(
+                    "w-10 h-10 rounded-full bg-white/10 text-brand-foam/85 hover:text-white flex items-center justify-center border border-white/10 transition-all duration-200 hover:scale-105 shadow-sm",
+                    colorClass
+                  )}
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+          </div>
 
           {/* Bottom Section: Copyright & Location */}
           <div className="relative z-10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-brand-foam/70 border-t border-white/10">

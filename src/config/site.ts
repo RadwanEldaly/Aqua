@@ -44,6 +44,11 @@ export const siteConfig = {
   contact: {
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
   },
+  social: {
+    facebook: "https://www.facebook.com/profile.php?id=61596223054770&mibextid=ZbWKwL",
+    threads: "https://www.threads.com/@aqua.guard9",
+    x: "https://x.com/aquaguaard99",
+  },
 } as const;
 
 export type SiteConfig = typeof siteConfig;

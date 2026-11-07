@@ -5,6 +5,7 @@ import { ContactForm } from "@/components/contact/contact-form";
 import { RippleRings } from "@/components/ui/brand-patterns";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { SOCIAL_LINKS } from "@/components/ui/social-icons";
 
 export async function generateMetadata({
   params,
@@ -83,6 +84,34 @@ export default async function ContactPage({
         {/* Message Form (Name + Message that opens WhatsApp) */}
         <div className="w-full max-w-2xl mx-auto rounded-panel bg-white p-6 sm:p-10 lg:p-12 shadow-card">
           <ContactForm locale={locale as "ar" | "en"} />
+        </div>
+
+        {/* Social Media Channels */}
+        <div className="w-full max-w-2xl mx-auto rounded-panel bg-white p-6 sm:p-8 shadow-card flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-start border border-border-subtle/80">
+          <div>
+            <h2 className="text-base font-bold text-brand-deep">
+              {isAr ? "تابعنا على منصات التواصل" : "Follow Us on Social Media"}
+            </h2>
+            <p className="text-xs sm:text-sm text-text-subtle mt-0.5">
+              {isAr
+                ? "ابقَ على اطلاع بأحدث عروضنا وأنظمة التحلية المنزلية"
+                : "Stay updated with our latest offers and water purification systems"}
+            </p>
+          </div>
+          <div className="flex items-center gap-2.5">
+            {SOCIAL_LINKS.map(({ id, label, href, Icon }) => (
+              <a
+                key={id}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="w-10 h-10 rounded-full bg-surface-subtle text-brand-deep hover:bg-brand-primary hover:text-white flex items-center justify-center border border-border-subtle transition-all duration-200 hover:scale-105 shadow-sm"
+              >
+                <Icon className="w-4 h-4" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>
