@@ -89,19 +89,46 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
               </div>
             </div>
 
-            {/* Big Cutout Image with mix-blend-multiply */}
+            {/* Visual Media (Video for Packages, Cutout Image for others) */}
             <div className="relative z-10 w-full aspect-square max-h-[260px] my-auto flex items-center justify-center">
-              {leadImage && (
-                <div className="feathered-image-mask relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105">
+              {leadCategory.id === "packages" ? (
+                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-subtle bg-brand-abyss flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105">
                   <Image
-                    src={leadImage}
+                    src="/video/alaman-package-poster.webp"
                     alt={leadCategory.label[locale]}
                     fill
                     sizes="(max-width: 768px) 80vw, 40vw"
-                    className="object-contain mix-blend-multiply p-2"
+                    className="object-cover"
                     loading="lazy"
                   />
+                  <video
+                    autoPlay
+                    playsInline
+                    loop
+                    muted
+                    preload="none"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    aria-hidden="true"
+                  >
+                    <source src="/video/alaman-package-commercial.mp4" type="video/mp4" />
+                  </video>
+                  <span className="absolute top-2 start-2 z-10 text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-primary text-white shadow-sm">
+                    {locale === "ar" ? "فيديو العرض" : "Offer Video"}
+                  </span>
                 </div>
+              ) : (
+                leadImage && (
+                  <div className="feathered-image-mask relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105">
+                    <Image
+                      src={leadImage}
+                      alt={leadCategory.label[locale]}
+                      fill
+                      sizes="(max-width: 768px) 80vw, 40vw"
+                      className="object-contain mix-blend-multiply p-2"
+                      loading="lazy"
+                    />
+                  </div>
+                )
               )}
             </div>
           </Link>

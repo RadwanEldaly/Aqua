@@ -66,9 +66,31 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}
               >
-                {/* Crisp Image Panel (Pure white inset on subtle surface, zero blur/feather) */}
-                <div className="relative w-full aspect-square rounded-2xl bg-surface-subtle overflow-hidden p-4 mb-4 flex items-center justify-center">
-                  {imageUrl ? (
+                {/* Crisp Image or Video Panel */}
+                <div className="relative w-full aspect-square rounded-2xl bg-surface-subtle overflow-hidden p-2 sm:p-3 mb-4 flex items-center justify-center">
+                  {cat.id === "packages" ? (
+                    <div className="relative w-full h-full rounded-xl overflow-hidden shadow-sm bg-brand-abyss flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105">
+                      <Image
+                        src="/video/alaman-package-poster.webp"
+                        alt={categoryName}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 20vw"
+                        className="object-cover"
+                        loading="lazy"
+                      />
+                      <video
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                        preload="none"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        aria-hidden="true"
+                      >
+                        <source src="/video/alaman-package-commercial.mp4" type="video/mp4" />
+                      </video>
+                    </div>
+                  ) : imageUrl ? (
                     <div className="relative w-full h-full flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105">
                       <Image
                         src={imageUrl}
