@@ -67,17 +67,45 @@ export function OffersSection({ locale }: OffersSectionProps) {
                   </span>
                 </div>
 
-                {/* Inset Cutout Photo */}
+                {/* Inset Cutout Photo or Product Video */}
                 <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl bg-white overflow-hidden p-2.5 sm:p-4 mb-3 sm:mb-4 flex items-center justify-center min-w-0">
                   <div className="feathered-image-mask relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={product.image.src}
-                      alt={product.image.alt[locale]}
-                      fill
-                      sizes="(max-width: 640px) 384px, (max-width: 1024px) 50vw, 25vw"
-                      className="object-contain p-1 sm:p-2"
-                      loading="lazy"
-                    />
+                    {product.id === "package-alaman" ? (
+                      <video
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                        preload="none"
+                        poster="/video/alaman-package-poster.webp"
+                        className="w-full h-full object-contain"
+                        aria-hidden="true"
+                      >
+                        <source src="/video/alaman-package-commercial.mp4" type="video/mp4" />
+                      </video>
+                    ) : product.id === "stand-7stages-filter" ? (
+                      <video
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                        preload="none"
+                        poster="/video/ro-stand-filter-poster.webp"
+                        className="w-full h-full object-contain"
+                        aria-hidden="true"
+                      >
+                        <source src="/video/ro-stand-filter-commercial.mp4" type="video/mp4" />
+                      </video>
+                    ) : (
+                      <Image
+                        src={product.image.src}
+                        alt={product.image.alt[locale]}
+                        fill
+                        sizes="(max-width: 640px) 384px, (max-width: 1024px) 50vw, 25vw"
+                        className="object-contain p-1 sm:p-2"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 </div>
 

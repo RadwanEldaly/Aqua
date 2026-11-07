@@ -89,16 +89,31 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
                     className="absolute bottom-6 w-3/5 h-3 rounded-full bg-brand-deep/8 blur-[3px] pointer-events-none"
                   />
 
-                  {/* Primary Product Photo (mix-blend-multiply onto pearl panel) */}
+                  {/* Primary Product Photo (or 3D Studio Video for Stand Filter) */}
                   <div className="feathered-image-mask relative z-1 w-full h-full flex items-center justify-center">
-                    <Image
-                      src={product.image.src}
-                      alt={product.image.alt[locale]}
-                      fill
-                      sizes="(max-width: 1024px) 90vw, 500px"
-                      className="object-contain mix-blend-multiply p-4"
-                      loading="lazy"
-                    />
+                    {product.id === "stand-7stages-filter" ? (
+                      <video
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                        preload="none"
+                        poster="/video/ro-stand-filter-poster.webp"
+                        className="w-full h-full object-contain p-2"
+                        aria-hidden="true"
+                      >
+                        <source src="/video/ro-stand-filter-commercial.mp4" type="video/mp4" />
+                      </video>
+                    ) : (
+                      <Image
+                        src={product.image.src}
+                        alt={product.image.alt[locale]}
+                        fill
+                        sizes="(max-width: 1024px) 90vw, 500px"
+                        className="object-contain mix-blend-multiply p-4"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
 
                   {/* Secondary Image: CSS Zoomed Detail Crop (No new imagery, object-position & scale only) */}
