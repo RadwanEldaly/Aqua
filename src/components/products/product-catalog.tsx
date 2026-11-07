@@ -9,6 +9,7 @@ import {
 } from "@/data/provisional-products";
 import { ProductCard } from "@/components/ui/product-card";
 import { AddToCartButton } from "./add-to-cart-button";
+import { Button } from "@/components/ui/button";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { FEATURES } from "@/config/features";
 import { cn } from "@/lib/utils";
@@ -44,6 +45,12 @@ export function ProductCatalog({
   locale,
 }: ProductCatalogProps) {
   const t = useTranslations("ProductsPage");
+  const tInquire = useTranslations("HomePage.inquireBanner");
+  const generalWhatsAppUrl = buildWhatsAppUrl(
+    locale === "ar"
+      ? "السلام عليكم، أود الاستفسار عن منتج غير معروض."
+      : "Hello, I would like to inquire about a product not listed."
+  );
   const [activeCategoryId, setActiveCategoryId] = useState<string>(() => {
     if (typeof window === "undefined") return "all";
     const params = new URLSearchParams(window.location.search);
@@ -230,43 +237,70 @@ export function ProductCatalog({
             const categoryLabel = categoryMatch?.label[locale];
 
             return (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                name={productName}
-                category={categoryLabel}
-                price={product.price}
-                compareAtPrice={product.compareAtPrice}
-                imageUrl={product.image.src}
-                imageAlt={product.image.alt[locale]}
-                imageWidth={product.image.width}
-                imageHeight={product.image.height}
-                href={`/products/${product.id}`}
-                locale={locale}
-                priority={index === 0}
-                badge={
-                  product.badge
-                    ? { text: product.badge[locale], variant: "primary" }
-                    : undefined
-                }
-                actions={
-                  <div className="flex items-center gap-1.5">
-                    <AddToCartButton productId={product.id} locale={locale} size="sm" />
-                    {whatsAppHref && (
-                      <a
-                        href={whatsAppHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={t("inquireAria", { name: productName })}
-                        className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer shrink-0"
-                        title={locale === "ar" ? "طلب عبر واتساب" : "Order via WhatsApp"}
-                      >
-                        <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                      </a>
-                    )}
+              <React.Fragment key={product.id}>
+                <ProductCard
+                  id={product.id}
+                  name={productName}
+                  index={index + 1}
+                  category={categoryLabel}
+                  price={product.price}
+                  compareAtPrice={product.compareAtPrice}
+                  imageUrl={product.image.src}
+                  imageAlt={product.image.alt[locale]}
+                  imageWidth={product.image.width}
+                  imageHeight={product.image.height}
+                  href={`/products/${product.id}`}
+                  locale={locale}
+                  priority={index === 0}
+                  badge={
+                    product.badge
+                      ? { text: product.badge[locale], variant: "primary" }
+                      : undefined
+                  }
+                  actions={
+                    <div className="flex items-center gap-1.5">
+                      <AddToCartButton productId={product.id} locale={locale} size="sm" />
+                      {whatsAppHref && (
+                        <a
+                          href={whatsAppHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={t("inquireAria", { name: productName })}
+                          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 cursor-pointer shrink-0"
+                          title={locale === "ar" ? "طلب عبر واتساب" : "Order via WhatsApp"}
+                        >
+                          <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                        </a>
+                      )}
+                    </div>
+                  }
+                />
+
+                {/* Full-width inquiry banner inserted after row 2 (index === 7) */}
+                {index === 7 && generalWhatsAppUrl && (
+                  <div className="col-span-full rounded-3xl bg-brand-ocean text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-card border border-white/10 my-2">
+                    <div className="flex flex-col gap-1 text-center sm:text-start">
+                      <h4 className="text-xl sm:text-2xl font-bold">
+                        {tInquire("title")}
+                      </h4>
+                      <p className="text-sm text-brand-foam/85 max-w-lg">
+                        {tInquire("desc")}
+                      </p>
+                    </div>
+                    <Button
+                      href={generalWhatsAppUrl}
+                      external
+                      variant="light"
+                      size="md"
+                      withOrbit
+                      className="shrink-0"
+                    >
+                      <MessageCircle className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                      <span>{tInquire("action")}</span>
+                    </Button>
                   </div>
-                }
-              />
+                )}
+              </React.Fragment>
             );
           })}
         </div>

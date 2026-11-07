@@ -1,39 +1,38 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Button,
-  Badge,
   Price,
   Container,
   Section,
   SectionHeading,
   ProductCard,
-  Input,
-  Textarea,
-  Select,
-  Label,
-  FieldError,
-  Hint,
   HeaderShell,
   NavLink,
   MobileDrawerShell,
   VisualLanguageSwitcher,
-  Skeleton,
   ProductCardSkeleton,
-  ProductDetailSkeleton,
-  Stack,
-  Grid,
-  Divider,
-  LabelValue,
 } from "@/components/ui";
+import {
+  RippleRings,
+  WaveDivider,
+  DropletGlyph,
+  DisplayNumeral,
+} from "@/components/ui/brand-patterns";
 import {
   PLACEHOLDER_CARD_DATA,
   PLACEHOLDER_NAV_ITEMS,
   SWATCH_FAMILIES,
 } from "@/dev/fixtures/products";
+import {
+  PLACEHOLDER_OFFER_PRODUCTS,
+  PLACEHOLDER_PACKAGES,
+} from "@/dev/fixtures";
+import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { cn } from "@/lib/utils";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import { Menu, Search, ShoppingBag, ArrowRight } from "lucide-react";
 
 export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -42,7 +41,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
 
   return (
     <div className="min-h-screen bg-canvas text-brand-deep pb-24 font-sans">
-      {/* 1. Header Shell Demonstration (Isolated Component Specimen) */}
+      {/* 1. Header Shell Demonstration */}
       <div className="bg-brand-surface border-b border-border-subtle py-2 px-4 text-center text-xs font-mono text-text-subtle-accessible">
         {isRtl
           ? "[عينة تجريبية لمكون HeaderShell في نظام التصميم — ترويسة العرض المعزولة]"
@@ -50,7 +49,6 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
       </div>
       <HeaderShell
         brand={
-          /* Plain text placeholder - No invented logo or mark */
           <span className="font-bold text-sm ltr:tracking-tight text-brand-deep select-none">
             أكوا (AQUA PLACEHOLDER)
           </span>
@@ -73,17 +71,17 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 window.location.href = isRtl ? "/en/dev/showcase" : "/dev/showcase";
               }}
             />
-            <Button variant="ghost" size="sm" iconOnly aria-label="Search">
+            <Button variant="quiet" size="sm" iconOnly aria-label="Search">
               <Search className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="sm" iconOnly aria-label="Cart">
+            <Button variant="quiet" size="sm" iconOnly aria-label="Cart">
               <ShoppingBag className="w-4 h-4" />
             </Button>
           </>
         }
         mobileTrigger={
           <Button
-            variant="ghost"
+            variant="quiet"
             size="sm"
             iconOnly
             aria-label="Open Menu"
@@ -130,7 +128,320 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
           </span>
         </div>
 
-        {/* 2. Color Swatches Section (Ordered Families) */}
+        {/* 2. Brand Patterns & Motifs Showcase */}
+        <Section spacing="none">
+          <SectionHeading
+            eyebrow="Patterns / أنماط العلامة"
+            title={isRtl ? "أنماط العلامة التجارية المائية" : "Brand Water Patterns & Motifs"}
+            description={
+              isRtl
+                ? "أشكال متجهة خفيفة (SVG) تعبّر عن تموجات الماء وانسيابيته بدون صور زخرفية ثقيلة."
+                : "Vector SVG motifs embodying water ripple and fluidity without heavy raster assets."
+            }
+          />
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Pattern 1: Ripple Rings */}
+            <div className="p-6 rounded-3xl bg-brand-ocean text-white flex flex-col items-center justify-center relative overflow-hidden h-64 border border-white/10 shadow-card">
+              <div className="absolute inset-0 flex items-center justify-center opacity-40">
+                <RippleRings className="w-56 h-56 text-brand-foam" animate />
+              </div>
+              <span className="relative z-10 font-bold text-sm">RippleRings</span>
+              <span className="relative z-10 text-xs text-brand-foam/75 mt-1 font-mono">11s pulse loop</span>
+            </div>
+
+            {/* Pattern 2: Wave Divider */}
+            <div className="p-6 rounded-3xl bg-brand-pearl border border-border-subtle flex flex-col justify-between h-64 shadow-subtle">
+              <span className="font-bold text-sm text-brand-deep">WaveDivider</span>
+              <div className="w-full text-brand-ocean my-auto">
+                <WaveDivider className="w-full h-8" />
+              </div>
+              <span className="text-xs text-text-subtle-accessible font-mono">Continuous bezier wave</span>
+            </div>
+
+            {/* Pattern 3: Droplet Glyph */}
+            <div className="p-6 rounded-3xl bg-white border border-border-subtle flex flex-col items-center justify-center h-64 shadow-subtle gap-3">
+              <DropletGlyph className="w-10 h-10 text-brand-azure" />
+              <span className="font-bold text-sm text-brand-deep">DropletGlyph</span>
+              <span className="text-xs text-text-subtle-accessible font-mono">Pure geometry SVG</span>
+            </div>
+
+            {/* Pattern 4: Display Numeral */}
+            <div className="p-6 rounded-3xl bg-brand-abyss text-brand-champagne flex flex-col items-center justify-center h-64 border border-white/10 shadow-card gap-2">
+              <DisplayNumeral number="01" className="text-4xl" />
+              <span className="font-bold text-xs text-white">DisplayNumeral (01)</span>
+              <span className="text-xs text-brand-champagne/70 font-mono">Champagne on Abyss (14.1:1)</span>
+            </div>
+          </div>
+        </Section>
+
+        {/* 3. Button Component Showcase (Orbit Buttons v2) */}
+        <Section spacing="none">
+          <SectionHeading
+            eyebrow="Buttons v2 / الأزرار التفاعلية"
+            title={isRtl ? "أزرار المدار (Orbit Buttons) مع شريحة الإزاحة" : "Orbit Buttons v2 with 4px Chip Nudge"}
+            description={
+              isRtl
+                ? "4 أنماط أساسية مع شريحة دائرية تنزاح 4px في التحويم، تنعكس تلقائياً في RTL، وهدف لمس أدنى 44px."
+                : "4 primary variants with orbiting chip nudging 4px on hover, flipping in RTL, and 44px min touch target."
+            }
+          />
+          <div className="mt-6 flex flex-wrap items-center gap-4 p-6 bg-white rounded-2xl border border-border">
+            <Button variant="primary" size="md" withOrbit>
+              <span>{isRtl ? "زر أساسي بالمدار" : "Primary Orbit"}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            </Button>
+
+            <div className="bg-brand-ocean p-2 rounded-xl inline-flex">
+              <Button variant="light" size="md" withOrbit>
+                <span>{isRtl ? "زر فاتح بالمدار" : "Light Orbit"}</span>
+                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+              </Button>
+            </div>
+
+            <Button variant="outline" size="md" withOrbit>
+              <span>{isRtl ? "زر إطار بالمدار" : "Outline Orbit"}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            </Button>
+
+            <Button variant="quiet" size="md">
+              <span>{isRtl ? "زر هادئ (Quiet)" : "Quiet Button"}</span>
+            </Button>
+
+            <Button
+              variant="primary"
+              size="md"
+              isLoading={isButtonLoading}
+              onClick={() => setIsButtonLoading(!isButtonLoading)}
+            >
+              {isButtonLoading
+                ? isRtl
+                  ? "جاري التحميل..."
+                  : "Loading..."
+                : isRtl
+                ? "تجربة حالة التحميل"
+                : "Click for Loading"}
+            </Button>
+
+            <Button variant="primary" size="md" disabled>
+              {isRtl ? "معطل" : "Disabled"}
+            </Button>
+          </div>
+        </Section>
+
+        {/* 4. Product Card v2 Showcase */}
+        <Section spacing="none">
+          <SectionHeading
+            eyebrow="Product Card v2 / بطاقة المنتج المطورة"
+            title={
+              isRtl
+                ? "بطاقة المنتج مع لوحة صور بلون اللؤلؤ وظل أرضي"
+                : "Product Card v2 with Pearl Tonal Panel & Floor Shadow"
+            }
+            description={
+              isRtl
+                ? "استخدام mix-blend-multiply مع خلفية اللؤلؤ وقناع التلاشي المستطيل لمنع المربعات البيضاء."
+                : "mix-blend-multiply over pearl tint with rectangular feather mask eliminates white bounding boxes."
+            }
+          />
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ProductCard
+              id={PLACEHOLDER_CARD_DATA.id}
+              name={PLACEHOLDER_CARD_DATA.name}
+              index={1}
+              category={PLACEHOLDER_CARD_DATA.category}
+              price={PLACEHOLDER_CARD_DATA.price}
+              compareAtPrice={PLACEHOLDER_CARD_DATA.compareAtPrice}
+              badge={PLACEHOLDER_CARD_DATA.badge}
+              href={PLACEHOLDER_CARD_DATA.href}
+              locale={locale}
+              actions={
+                <Button variant="primary" size="sm" withOrbit>
+                  <span>{isRtl ? "طلب" : "Order"}</span>
+                </Button>
+              }
+            />
+
+            <ProductCardSkeleton />
+          </div>
+        </Section>
+
+        {/* 5. Dev-Only Fixture: Offers Preview */}
+        <Section spacing="none">
+          <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 text-purple-900 text-xs font-mono font-bold mb-4">
+            DEV ONLY — PLACEHOLDER DATA FOR PREVIEW: OFFERS SECTION
+          </div>
+          <SectionHeading
+            eyebrow="Offers Preview / معاينة العروض"
+            title={isRtl ? "معاينة قسم العروض ببيانات تجريبية" : "Offers Section Preview (Fixture Data)"}
+            description={
+              isRtl
+                ? "يعتمد هذا القسم على وجود compareAtPrice > price حقيقي. يتم إخفاؤه تلقائياً في الإنتاج في حال عدم توفره."
+                : "Calculates real savings amount and percentage. Hidden in production when no discounted items exist."
+            }
+          />
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PLACEHOLDER_OFFER_PRODUCTS.map((product) => {
+              const price = product.price!;
+              const compareAt = product.compareAtPrice!;
+              const savings = compareAt - price;
+              const percent = Math.round((savings / compareAt) * 100);
+
+              return (
+                <article
+                  key={product.id}
+                  className="relative rounded-3xl bg-brand-ocean text-white border border-white/10 p-6 shadow-card flex flex-col justify-between overflow-hidden"
+                >
+                  <div className="absolute -top-10 -end-10 w-48 h-48 opacity-25 pointer-events-none">
+                    <RippleRings className="w-full h-full text-brand-foam/20" />
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-brand-champagne/20 text-brand-champagne border border-brand-champagne/40">
+                      {isRtl
+                        ? `وفر ${savings} ر.س (${percent}%)`
+                        : `Save ${savings} SAR (${percent}%)`}
+                    </span>
+                  </div>
+
+                  <div className="relative w-full aspect-square rounded-2xl bg-white overflow-hidden p-4 mb-4 flex items-center justify-center">
+                    <div className="feathered-image-mask relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={product.image.src}
+                        alt={product.image.alt[locale]}
+                        fill
+                        sizes="280px"
+                        className="object-contain p-2"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2 flex-1">
+                    <h3 className="text-base font-bold text-white line-clamp-2">
+                      <bdi>{product.name[locale]}</bdi>
+                    </h3>
+
+                    <div className="mt-auto pt-4 flex items-center justify-between border-t border-white/10">
+                      <Price
+                        amount={price}
+                        compareAtAmount={compareAt}
+                        locale={locale}
+                        size="md"
+                        tone="light"
+                      />
+                      <Button variant="light" size="sm">
+                        <span>{isRtl ? "طلب" : "Order"}</span>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </Section>
+
+        {/* 6. Dev-Only Fixture: Packages Preview */}
+        <Section spacing="none">
+          <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 text-purple-900 text-xs font-mono font-bold mb-4">
+            DEV ONLY — PLACEHOLDER DATA FOR PREVIEW: PACKAGES SECTION
+          </div>
+          <SectionHeading
+            eyebrow="Packages Preview / معاينة البكجات"
+            title={isRtl ? "معاينة قسم البكجات ببيانات تجريبية" : "Packages Section Preview (Fixture Data)"}
+            description={
+              isRtl
+                ? "يجمع البكج عدة منتجات ويحسب الخصم مقارنة بسعر المنتجات الفردية تلقائياً."
+                : "Bundles multiple items and calculates composite bundle savings dynamically."
+            }
+          />
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PLACEHOLDER_PACKAGES.map((pkg) => {
+              const resolvedItems = pkg.items.map((it) => {
+                const product = PROVISIONAL_PRODUCTS.find(
+                  (p) => p.id === it.productId
+                ) || {
+                  id: it.productId,
+                  name: { ar: "منتج البكج", en: "Package Item" },
+                  image: { src: "/images/products/tabletop-dispenser-black.jpg", alt: { ar: "", en: "" } },
+                  price: 790,
+                };
+                return { ...it, product };
+              });
+
+              return (
+                <article
+                  key={pkg.id}
+                  className="relative rounded-3xl bg-white p-6 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center -space-x-3 rtl:space-x-reverse mb-6">
+                      {resolvedItems.slice(0, 4).map((it) => (
+                        <div
+                          key={it.productId}
+                          className="relative w-14 h-14 rounded-2xl bg-white shadow-subtle border-2 border-white overflow-hidden shrink-0"
+                        >
+                          <Image
+                            src={it.product.image.src}
+                            alt=""
+                            fill
+                            sizes="60px"
+                            className="object-contain p-1"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <h3 className="text-xl font-bold text-brand-deep mb-2">
+                      <bdi>{pkg.name[locale]}</bdi>
+                    </h3>
+
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 mb-4">
+                      {isRtl ? "وفر 790 ر.س" : "Save 790 SAR"}
+                    </span>
+
+                    <div className="mt-4 pt-4 border-t border-border-subtle">
+                      <p className="text-xs font-bold text-text-subtle-accessible mb-2">
+                        {isRtl ? "محتويات البكج:" : "Package Contents:"}
+                      </p>
+                      <ul className="flex flex-col gap-1.5 text-xs text-brand-deep">
+                        {resolvedItems.map((it) => (
+                          <li key={it.productId} className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-brand-azure shrink-0" />
+                            <span>
+                              {it.qty} × {it.product.name[locale]}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 pt-4 border-t border-border-subtle flex items-center justify-between gap-4">
+                    <Price
+                      amount={pkg.price!}
+                      compareAtAmount={2789}
+                      locale={locale}
+                      size="md"
+                    />
+
+                    <Button
+                      type="button"
+                      variant="primary"
+                      size="md"
+                      withOrbit
+                      className="min-h-[44px]"
+                    >
+                      <ShoppingBag className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      <span>{isRtl ? "إضافة البكج" : "Add Package"}</span>
+                    </Button>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </Section>
+
+        {/* 7. Color Swatches Section */}
         <Section spacing="none">
           <SectionHeading
             eyebrow="Tokens / الألوان"
@@ -141,9 +452,7 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 : "Full ordered scales per family with hex codes and contrast ratios against foreground text."
             }
           />
-
           <div className="mt-8 flex flex-col gap-8">
-            {/* Family 1: Blue Scale (50 - 950) */}
             <div className="flex flex-col gap-3">
               <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
                 1. Aqua Blue Scale (50–950):
@@ -172,7 +481,6 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
               </div>
             </div>
 
-            {/* Family 2: Neutral Scale (50 - 900) */}
             <div className="flex flex-col gap-3">
               <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
                 2. Neutral Slate Scale (50–900):
@@ -200,352 +508,6 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
                 ))}
               </div>
             </div>
-
-            {/* Family 3: Status Family */}
-            <div className="flex flex-col gap-3">
-              <span className="text-xs font-bold text-text-muted ltr:uppercase ltr:tracking-wider">
-                3. Status Colors Family:
-              </span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {SWATCH_FAMILIES.statusScale.map((swatch) => (
-                  <div
-                    key={swatch.name}
-                    className="flex flex-col rounded-xl overflow-hidden border border-border bg-white shadow-subtle"
-                  >
-                    <div
-                      className={cn(
-                        "h-14 w-full flex items-center justify-center font-bold text-xs p-1",
-                        swatch.bgClass,
-                        swatch.textClass
-                      )}
-                    >
-                      {swatch.name}
-                    </div>
-                    <div className="p-2.5 flex flex-col gap-0.5">
-                      <span className="text-xs font-mono text-text-muted">
-                        {swatch.bg} / {swatch.fg}
-                      </span>
-                      <span className="text-xs font-semibold text-text-subtle-accessible">{swatch.contrast}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* 3. Button Component Showcase */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Buttons / الأزرار"
-            title={isRtl ? "مكون الزر التفاعلي" : "Button Component States & Variants"}
-            description={
-              isRtl
-                ? "يدعم الأزرار الأساسية والثانوية والمفرغة وحالات التحميل والتعطيل مع هدف لمس أدنى 44px."
-                : "Primary, secondary, outline, ghost variants with loading, disabled, and 44px min touch targets."
-            }
-          />
-          <div className="mt-6 flex flex-wrap items-center gap-4 p-6 bg-white rounded-2xl border border-border">
-            <Button variant="primary" size="lg">
-              {isRtl ? "زر أساسي كبير" : "Primary Large"}
-            </Button>
-            <Button variant="primary" size="md">
-              {isRtl ? "زر أساسي عادي" : "Primary Medium"}
-            </Button>
-            <Button variant="primary" size="sm">
-              {isRtl ? "زر أساسي صغير" : "Primary Small"}
-            </Button>
-            <Button variant="secondary" size="md">
-              {isRtl ? "زر ثانوي" : "Secondary"}
-            </Button>
-            <Button variant="outline" size="md">
-              {isRtl ? "زر مفرغ" : "Outline"}
-            </Button>
-            <Button variant="ghost" size="md">
-              {isRtl ? "زر شبحي" : "Ghost"}
-            </Button>
-            <Button
-              variant="primary"
-              size="md"
-              isLoading={isButtonLoading}
-              onClick={() => setIsButtonLoading(!isButtonLoading)}
-            >
-              {isButtonLoading
-                ? isRtl
-                  ? "جاري التحميل..."
-                  : "Loading..."
-                : isRtl
-                ? "اضغط لتجربة التحميل"
-                : "Click for Loading"}
-            </Button>
-            <Button variant="primary" size="md" disabled>
-              {isRtl ? "معطل" : "Disabled"}
-            </Button>
-          </div>
-        </Section>
-
-        {/* 4. Badges & Price Primitives */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Badges & Price / الشارات والأسعار"
-            title={isRtl ? "الشارات وتنسيق العملة السعودية" : "Badges & SAR Price Formatting"}
-            description={
-              isRtl
-                ? "شارات بحالات متعددة وأسعار بنظام أرقام جدولية مع سعر الشطب قبل الخصم."
-                : "Semantic status badges and tabular-numeric SAR price display with compare-at strike."
-            }
-          />
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Badges Box */}
-            <div className="p-6 bg-white rounded-2xl border border-border flex flex-col gap-4">
-              <span className="text-xs font-semibold text-text-subtle-accessible">BADGE VARIANTS:</span>
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="primary">PRIMARY (PLACEHOLDER)</Badge>
-                <Badge variant="neutral">NEUTRAL (PLACEHOLDER)</Badge>
-                <Badge variant="success">SUCCESS (PLACEHOLDER)</Badge>
-                <Badge variant="warning">WARNING (PLACEHOLDER)</Badge>
-                <Badge variant="error">ERROR (PLACEHOLDER)</Badge>
-              </div>
-            </div>
-
-            {/* Price Box */}
-            <div className="p-6 bg-white rounded-2xl border border-border flex flex-col gap-4">
-              <span className="text-xs font-semibold text-text-subtle-accessible">PRICE FORMATTING (SAR):</span>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-text-muted">{isRtl ? "سعر مع خصم (كبير):" : "Discounted (Lg):"}</span>
-                  <Price amount={850} compareAtAmount={1100} locale={locale} size="lg" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-text-muted">{isRtl ? "سعر عادي (متوسط):" : "Regular (Md):"}</span>
-                  <Price amount={450} locale={locale} size="md" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-text-muted">{isRtl ? "سعر صغير:" : "Small:"}</span>
-                  <Price amount={120} locale={locale} size="sm" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* 5. Zero-CLS Skeleton vs Real Card Comparison */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Zero-CLS Skeletons / الهياكل المتطابقة"
-            title={
-              isRtl
-                ? "مقارنة حية: بطاقة المنتج الحقيقية مقابل الهيكل التحميلي (CLS = 0.00)"
-                : "Live Comparison: Real ProductCard vs Skeleton (Zero CLS)"
-            }
-            description={
-              isRtl
-                ? "تتطابق أبعاد ومساحات الهيكل تماماً مع البطاقة الحقيقية لمنع أي إزاحة تخطيطية."
-                : "Identical bounding boxes, padding, and aspect ratios guarantee zero Cumulative Layout Shift."
-            }
-          />
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Real Card */}
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md w-fit">
-                {isRtl ? "البطاقة الحقيقية" : "Real Component"}
-              </span>
-              <ProductCard
-                id={PLACEHOLDER_CARD_DATA.id}
-                name={PLACEHOLDER_CARD_DATA.name}
-                category={PLACEHOLDER_CARD_DATA.category}
-                price={PLACEHOLDER_CARD_DATA.price}
-                compareAtPrice={PLACEHOLDER_CARD_DATA.compareAtPrice}
-                badge={PLACEHOLDER_CARD_DATA.badge}
-                href={PLACEHOLDER_CARD_DATA.href}
-                locale={locale}
-                actions={
-                  <Button variant="secondary" size="sm">
-                    {isRtl ? "معاينة" : "View"}
-                  </Button>
-                }
-              />
-            </div>
-
-            {/* Skeleton Card */}
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-text-muted bg-surface-muted px-2 py-0.5 rounded-md w-fit">
-                {isRtl ? "الهيكل التحميلي (Skeleton)" : "Matching Skeleton"}
-              </span>
-              <ProductCardSkeleton />
-            </div>
-
-            {/* Real Card 2 */}
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md w-fit">
-                {isRtl ? "بطاقة بدون شارة" : "Without Badge"}
-              </span>
-              <ProductCard
-                id="placeholder-sample-02"
-                name="منتج تجريبي 2 (PLACEHOLDER ITEM 02)"
-                category="فئة تجريبية (PLACEHOLDER)"
-                price={180}
-                href="#"
-                locale={locale}
-                actions={
-                  <Button variant="secondary" size="sm">
-                    {isRtl ? "معاينة" : "View"}
-                  </Button>
-                }
-              />
-            </div>
-
-            {/* Skeleton Card 2 */}
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-text-muted bg-surface-muted px-2 py-0.5 rounded-md w-fit">
-                {isRtl ? "هيكل تحميلي ثانٍ" : "Matching Skeleton 2"}
-              </span>
-              <ProductCardSkeleton />
-            </div>
-          </div>
-        </Section>
-
-        {/* 6. Form Inputs & RTL Punctuation */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Forms & Direction / النماذج ومحاذاة النصوص"
-            title={
-              isRtl
-                ? "حقول الإدخال والتعامل الآمن مع اتجاه اللغات"
-                : "Form Inputs & Direction-Safe Fields"
-            }
-            description={
-              isRtl
-                ? "حقول الهاتف والبريد تحتفظ باتجاه LTR تلقائياً لمنع قلب الأرقام داخل صفحات RTL."
-                : "Phone and numeric fields automatically enforce LTR orientation inside RTL layouts."
-            }
-          />
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-2xl border border-border">
-            <div className="flex flex-col gap-4">
-              <div>
-                <Label htmlFor="demo-name" required>
-                  {isRtl ? "الاسم الكامل" : "Full Name"}
-                </Label>
-                <Input id="demo-name" placeholder={isRtl ? "أدخل اسمك" : "Enter name"} />
-              </div>
-
-              <div>
-                <Label htmlFor="demo-phone" required>
-                  {isRtl ? "رقم الجوال (اتجاه LTR إجباري)" : "Phone Number (Forces LTR)"}
-                </Label>
-                <Input
-                  id="demo-phone"
-                  type="tel"
-                  placeholder="+966 50 000 0000"
-                  hint={isRtl ? "يتم التحقق تلقائياً من الصيغة السعودية" : "Saudi mobile format"}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="demo-city">{isRtl ? "المدينة" : "City"}</Label>
-                <Select id="demo-city">
-                  <option value="riyadh">{isRtl ? "الرياض" : "Riyadh"}</option>
-                  <option value="jeddah">{isRtl ? "جدة" : "Jeddah"}</option>
-                  <option value="dammam">{isRtl ? "الدمام" : "Dammam"}</option>
-                </Select>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <div>
-                <Label htmlFor="demo-error">{isRtl ? "حقل مع خطأ تحقق" : "Field with Error"}</Label>
-                <Input
-                  id="demo-error"
-                  defaultValue="invalid-input"
-                  error={isRtl ? "هذا الحقل غير صالح" : "This field is invalid"}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="demo-notes">{isRtl ? "ملاحظات العنوان" : "Address Notes"}</Label>
-                <Textarea id="demo-notes" placeholder={isRtl ? "اكتب أية ملاحظات إضافية..." : "Notes..."} />
-                <Hint className="mt-1">{isRtl ? "ملاحظات للتوصيل" : "Optional delivery instructions"}</Hint>
-              </div>
-
-              {/* Direction-Safe LabelValue Demo */}
-              <div className="p-4 rounded-xl bg-canvas border border-border-subtle flex flex-col gap-1">
-                <span className="text-xs font-bold text-text-subtle-accessible mb-1">
-                  DIRECTION-SAFE LABELVALUE (<bdi>{"<bdi>"}</bdi> Isolation):
-                </span>
-                <LabelValue
-                  label="KEY (PLACEHOLDER 01)"
-                  value="VALUE (PLACEHOLDER 01)"
-                />
-                <LabelValue
-                  label="KEY (PLACEHOLDER 02)"
-                  value="VALUE (PLACEHOLDER 02)"
-                />
-                <FieldError className="mt-1">
-                  {isRtl ? "رسالة خطأ تجريبية للتحقق" : "Sample field error message"}
-                </FieldError>
-              </div>
-            </div>
-          </div>
-        </Section>
-
-        {/* 7. Layout Primitives & Standalone Skeletons */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Layout & Primitives / التخطيط والمكونات الأساسية"
-            title={isRtl ? "مكونات التخطيط والعناصر المنفصلة" : "Layout Primitives (Stack, Grid, Divider)"}
-            description={
-              isRtl
-                ? "مكونات مرنة لبناء التخطيطات مع محاذاة منطقية كاملة."
-                : "Flexible structural layout primitives with responsive logical spacing."
-            }
-          />
-          <div className="mt-6 p-6 bg-white rounded-2xl border border-border flex flex-col gap-6">
-            <Stack direction="row" spacing="md" align="center" justify="between" wrap>
-              <span className="text-sm font-semibold text-brand-deep">
-                {isRtl ? "مكدس أفقي مع فاصل (Stack Horizontal):" : "Stack Horizontal Row:"}
-              </span>
-              <Badge variant="primary">Stack Item 1</Badge>
-              <Badge variant="neutral">Stack Item 2</Badge>
-              <Badge variant="success">Stack Item 3</Badge>
-            </Stack>
-
-            <Divider />
-
-            <Grid cols={3} gap="sm">
-              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
-                Grid Col 1
-              </div>
-              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
-                Grid Col 2
-              </div>
-              <div className="p-3 rounded-lg bg-canvas border border-border-subtle text-xs text-center font-medium">
-                Grid Col 3
-              </div>
-            </Grid>
-
-            <Divider />
-
-            <div className="flex flex-col gap-2">
-              <span className="text-xs font-semibold text-text-subtle-accessible">Standalone Shimmer Skeletons:</span>
-              <Skeleton className="h-6 w-1/3" rounded="md" />
-              <Skeleton className="h-4 w-2/3" rounded="sm" />
-            </div>
-          </div>
-        </Section>
-
-        {/* 8. Product Detail Skeleton Preview */}
-        <Section spacing="none">
-          <SectionHeading
-            eyebrow="Complex Skeleton / تفاصيل المنتج"
-            title={isRtl ? "هيكل صفحة تفاصيل المنتج" : "Product Detail Composite Skeleton"}
-            description={
-              isRtl
-                ? "هيكل مركب يتضمن المعرض الفني والمواصفات وزر الشراء قبل وصول البيانات."
-                : "Full composite preview of the upcoming product detail loading state."
-            }
-          />
-          <div className="mt-6 p-8 bg-white rounded-2xl border border-border">
-            <ProductDetailSkeleton />
           </div>
         </Section>
       </Container>
