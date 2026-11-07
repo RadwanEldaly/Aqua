@@ -26,7 +26,7 @@ export function CartTrigger({ className }: CartTriggerProps) {
       href="/cart"
       aria-label={label}
       className={cn(
-        "relative w-10 h-10 rounded-full flex items-center justify-center text-brand-navy hover:text-brand-primary hover:bg-brand-mist/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary cursor-pointer shrink-0",
+        "relative w-11 h-11 rounded-full flex items-center justify-center text-brand-navy hover:text-brand-primary hover:bg-brand-mist/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary cursor-pointer shrink-0",
         className
       )}
     >

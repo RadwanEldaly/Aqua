@@ -63,7 +63,6 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
               <Link
                 key={cat.id}
                 href={`/products?category=${cat.id}`}
-                aria-label={t("viewCategoryAria", { name: categoryName })}
                 className={cn(
                   "category-tile-elem group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80 opacity-100",
                   "w-[240px] shrink-0 snap-start sm:w-full sm:shrink",

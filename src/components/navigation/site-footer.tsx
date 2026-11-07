@@ -74,7 +74,7 @@ export function SiteFooter() {
         </nav>
 
         {/* Bottom Section: Copyright & Location */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-text-subtle-accessible/80 border-t border-brand-navy/40">
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-aqua-100/70 border-t border-brand-navy/40">
           <p>
             © {new Date().getFullYear()} {brandMark}. <bdi>{tFooter("rights")}</bdi>
           </p>

@@ -39,9 +39,6 @@ export function AddToCartButton({
     <button
       type="button"
       onClick={handleClick}
-      aria-label={
-        isAr ? "أضف المنتج إلى الطلب" : "Add product to order"
-      }
       className={cn(
         "inline-flex items-center justify-center gap-1.5 font-bold rounded-full transition-all active:scale-95 cursor-pointer shadow-subtle shrink-0",
         size === "sm" ? "h-9 px-3.5 text-xs" : "h-11 px-5 text-sm",

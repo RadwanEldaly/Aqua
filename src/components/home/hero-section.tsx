@@ -64,7 +64,6 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   external
                   variant="outline"
                   size="lg"
-                  aria-label={tHero("inquireAria")}
                   className="min-w-[160px] h-13 px-8 text-base font-bold text-white border-white/80 hover:bg-white/15 inline-flex items-center gap-2 cursor-pointer rounded-full"
                 >
                   <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />

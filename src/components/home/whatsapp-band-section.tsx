@@ -27,7 +27,6 @@ export function WhatsAppBandSection() {
           external
           variant="primary"
           size="lg"
-          aria-label={t("chatAria")}
           className="min-w-[220px] h-14 px-8 text-base font-bold bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep inline-flex items-center gap-2.5 shadow-subtle cursor-pointer rounded-full"
         >
           <MessageCircle className="w-5 h-5 shrink-0 text-brand-primary" aria-hidden="true" />

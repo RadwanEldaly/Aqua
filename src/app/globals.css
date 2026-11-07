@@ -15,8 +15,8 @@
     --color-aqua-deep: #07172c;       /* Deep ocean midnight */
     --color-aqua-navy: #0b2545;       /* Oceanic authority */
     --color-aqua-marine: #134074;     /* Deep marine */
-    --color-aqua-primary: #0284c7;    /* Crystal clear azure (Sky 600) */
-    --color-aqua-primary-hover: #0369a1; /* Deep azure (Sky 700) */
+    --color-aqua-primary: #0369a1;    /* High-contrast accessible azure (Sky 700, > 5.2:1 AA) */
+    --color-aqua-primary-hover: #075985; /* Deep ocean azure (Sky 800) */
     --color-aqua-cyan: #06b6d4;       /* Pure mineral cyan */
     --color-aqua-ice: #e0f2fe;        /* Glacial ice tint (Sky 100) */
     --color-aqua-mist: #f0f9ff;       /* Pure water mist surface (Sky 50) */

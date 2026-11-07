@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 export function CartDrawer() {
   const locale = useLocale();
   const isAr = locale === "ar";
+  const drawerRef = React.useRef<HTMLDivElement>(null);
   const {
     items,
     isOpen,
@@ -23,13 +24,39 @@ export function CartDrawer() {
     removeItem,
   } = useCart();
 
-  // Close on Escape key
+  // Focus trap & Escape key handler
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
         closeCart();
+        return;
+      }
+
+      if (e.key === "Tab" && drawerRef.current) {
+        const focusables = drawerRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            last.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === last) {
+            first.focus();
+            e.preventDefault();
+          }
+        }
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, closeCart]);
@@ -62,7 +89,12 @@ export function CartDrawer() {
   const whatsappUrl = buildWhatsAppUrl(whatsappMsg);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-50 overflow-hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cart-drawer-title"
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-brand-deep/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
@@ -72,6 +104,7 @@ export function CartDrawer() {
 
       <div className="fixed inset-y-0 end-0 max-w-full flex">
         <div
+          ref={drawerRef}
           className={cn(
             "w-screen max-w-md bg-white shadow-elevated flex flex-col transform transition ease-in-out duration-300",
             "animate-in slide-in-from-right rtl:slide-in-from-left"
@@ -84,7 +117,7 @@ export function CartDrawer() {
                 <ShoppingBag className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-brand-deep">
+                <h2 id="cart-drawer-title" className="text-lg font-bold text-brand-deep">
                   {isAr ? "سلة المشتريات" : "Shopping Cart"}
                 </h2>
                 <p className="text-xs text-text-subtle">
