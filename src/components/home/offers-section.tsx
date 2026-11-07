@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
-import { RippleRings } from "@/components/ui/brand-patterns";
 import { Price } from "@/components/ui/price";
 
 interface OffersSectionProps {
@@ -54,13 +53,9 @@ export function OffersSection({ locale }: OffersSectionProps) {
             return (
               <article
                 key={product.id}
+                data-product-card="true"
                 className="relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full"
               >
-                {/* Background Ripple Accent */}
-                <div className="absolute -top-10 -end-10 w-64 h-64 opacity-25 pointer-events-none">
-                  <RippleRings className="w-full h-full text-brand-foam/20" />
-                </div>
-
                 {/* Savings Badge COMPUTED directly from real prices */}
                 <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 min-w-0">
                   <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-brand-champagne/20 text-brand-champagne border border-brand-champagne/40 truncate">

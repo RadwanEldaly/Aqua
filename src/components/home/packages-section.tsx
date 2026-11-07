@@ -82,6 +82,7 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
             return (
               <article
                 key={pkg.id}
+                data-product-card="true"
                 className="relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full"
               >
                 <div className="min-w-0 w-full">

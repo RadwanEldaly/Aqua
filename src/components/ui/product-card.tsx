@@ -52,6 +52,7 @@ export function ProductCard({
 
   return (
     <CardTag
+      data-product-card="true"
       className={cn(
         "group relative flex flex-col h-full rounded-panel bg-white p-3 sm:p-5 shadow-card border border-border-subtle/80",
         "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover min-w-0 w-full overflow-hidden",
