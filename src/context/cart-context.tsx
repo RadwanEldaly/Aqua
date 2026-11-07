@@ -23,6 +23,11 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface CartToastData {
+  product: ProvisionalProduct;
+  id: number;
+}
+
 interface CartContextValue {
   items: CartItem[];
   totalCount: number;
@@ -30,6 +35,8 @@ interface CartContextValue {
   hasPriceForAll: boolean;
   isOpen: boolean;
   isMounted: boolean;
+  lastAddedToast: CartToastData | null;
+  dismissToast: () => void;
   addItem: (product: ProvisionalProduct, quantity?: number) => void;
   removeItem: (productId: string) => void;
   setQuantity: (productId: string, quantity: number) => void;
@@ -89,6 +96,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const storedEntries = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const isMounted = useSyncExternalStore(emptySubscribe, isClientSnapshot, isServerSnapshot);
   const [isOpen, setIsOpen] = useState(false);
+  const [lastAddedToast, setLastAddedToast] = useState<CartToastData | null>(null);
+
+  const dismissToast = useCallback(() => setLastAddedToast(null), []);
 
   // Initialize from localStorage once on client, dropping unknown product IDs
   useEffect(() => {
@@ -160,6 +170,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       ];
     }
     saveEntries(next);
+    setLastAddedToast({ product, id: Date.now() });
   }, []);
 
   const removeItem = useCallback((productId: string) => {
@@ -197,6 +208,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         hasPriceForAll,
         isOpen,
         isMounted,
+        lastAddedToast,
+        dismissToast,
         addItem,
         removeItem,
         setQuantity,

@@ -6,8 +6,10 @@ import { routing, type Locale } from "@/i18n/routing";
 import { fontArabic, fontSans } from "@/styles/fonts";
 import { SkipToContent } from "@/components/ui/navigation";
 import { SiteHeader, SiteFooter, FloatingActionButton } from "@/components/navigation";
+import { MobileBottomBar } from "@/components/navigation/mobile-bottom-bar";
 import { CartProvider } from "@/context/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { CartToast } from "@/components/ui/cart-toast";
 import "@/app/globals.css";
 
 export function generateStaticParams() {
@@ -89,11 +91,13 @@ export default async function LocaleLayout({
           <CartProvider>
             <SkipToContent />
             <SiteHeader />
-            <main id="main-content" className="flex-1 flex flex-col">
+            <main id="main-content" className="flex-1 flex flex-col pb-16 md:pb-0">
               {children}
             </main>
             <SiteFooter />
             <FloatingActionButton />
+            <MobileBottomBar />
+            <CartToast />
             <CartDrawer />
           </CartProvider>
         </NextIntlClientProvider>

@@ -29,7 +29,7 @@ export function FloatingActionButton({ className }: FloatingActionButtonProps) {
         aria-label={t("title")}
         className={cn(
           "fixed z-40 w-14 h-14 rounded-full bg-brand-primary hover:bg-brand-primary-hover text-white shadow-elevated",
-          "flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95",
+          "hidden md:flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2",
           "bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] end-[calc(1.5rem+env(safe-area-inset-right,0px))]",
           className
