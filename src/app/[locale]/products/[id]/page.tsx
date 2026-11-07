@@ -343,16 +343,6 @@ export default async function ProductDetailPage({
                   </dd>
                 </div>
               ))}
-              {product.warranty && (
-                <div className="py-3 flex justify-between items-center text-sm">
-                  <dt className="text-text-subtle font-medium">
-                    {isAr ? "الضمان" : "Warranty"}
-                  </dt>
-                  <dd className="font-bold text-emerald-700 text-end">
-                    {product.warranty[isAr ? "ar" : "en"]}
-                  </dd>
-                </div>
-              )}
             </dl>
           </div>
         </div>

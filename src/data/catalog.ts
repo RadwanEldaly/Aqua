@@ -50,8 +50,8 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       en: "Complete home water purification bundle with smart tabletop dispenser.",
     },
     fullDescription: {
-      ar: "بكج الأمان المتكامل يوفر لك حلاً متكاملاً لنقاء مياه الشرب والطهي؛ يشمل جهاز تحلية 7 مراحل بنظام التناضح العكسي RO عالي الكفاءة، برادة مياه طاولة ذكية أنيقة، خزان ضغط صحي لحفظ المياه، وصنبور فاخر من الستانلس ستيل المقاوم للصدأ. يشمل العرض التوصيل والتركيب المجاني وضمان لمدة سنتين.",
-      en: "The complete Al-Aman package delivers pure drinking water for your home. Includes a 7-stage RO system, smart tabletop water dispenser, pressurized storage tank, and premium stainless steel faucet. Free delivery and installation included with a 2-year warranty.",
+      ar: "بكج الأمان المتكامل يوفر لك حلاً متكاملاً لنقاء مياه الشرب والطهي؛ يشمل جهاز تحلية 7 مراحل بنظام التناضح العكسي RO عالي الكفاءة، برادة مياه طاولة ذكية أنيقة، خزان ضغط صحي لحفظ المياه، وصنبور فاخر من الستانلس ستيل المقاوم للصدأ. ",
+      en: "The complete Al-Aman package delivers pure drinking water for your home. Includes a 7-stage RO system, smart tabletop water dispenser, pressurized storage tank, and premium stainless steel faucet. ",
     },
     price: 1999,
     compareAtPrice: 2899,
@@ -68,16 +68,12 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       en: "Best Offer - Al-Aman Bundle",
     },
     isOffer: true,
-    warranty: {
-      ar: "ضمان سنتين شامل التركيب المجاني",
-      en: "2-Year Warranty with Free Installation",
-    },
     features: [
       { ar: "جهاز تحلية 7 مراحل بتقنية التناضح العكسي RO", en: "7-Stage RO purification system" },
       { ar: "برادة مياه طاولة ذكية 3 صنابير (بارد، فاتر، حار)", en: "Smart tabletop dispenser with 3 taps" },
       { ar: "خزان ضغط صحي سعة 19 لتر مقاوم للبكتيريا", en: "19L antibacterial pressurized tank" },
       { ar: "صنبور فاخر من الفولاذ المقاوم للصدأ 304", en: "Luxury 304 stainless steel faucet" },
-      { ar: "شامل التوصيل والتركيب الفوري وضريبة القيمة المضافة", en: "Includes free installation, delivery & VAT" },
+      { ar: "شامل جميع الملحقات والتوصيلات الأساسية", en: "Includes all standard fittings and accessories" },
     ],
     packageIncludes: [
       { ar: "وحدة تنقية 7 مراحل متطورة", en: "7-stage advanced purifier unit" },
@@ -90,7 +86,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       { id: "stages", label: { ar: "عدد المراحل", en: "Stages" }, value: { ar: "7 مراحل تنقية", en: "7 Stages" } },
       { id: "capacity", label: { ar: "الإنتاجية اليومية", en: "Daily Capacity" }, value: { ar: "حتى 280 لتر/يوم", en: "Up to 280 L/day" } },
       { id: "tank", label: { ar: "سعة الخزان", en: "Tank Capacity" }, value: { ar: "19 لتر (5 جالون)", en: "19 L (5 Gal)" } },
-      { id: "warranty", label: { ar: "الضمان", en: "Warranty" }, value: { ar: "سنتين على القطع الكهربائية", en: "2 Years on Electrical Parts" } },
     ],
     inStock: true,
   },
@@ -125,16 +120,12 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       en: "Special Offer - Smart Filter",
     },
     isOffer: true,
-    warranty: {
-      ar: "ضمان سنتين شامل التركيب المجاني",
-      en: "2-Year Warranty with Free Installation",
-    },
     features: [
       { ar: "تصميم مدمج بدون خزان يوفر مساحة المطبخ", en: "Compact tankless design saves kitchen space" },
       { ar: "شاشة رقمية ديجيتال ذكية لقياس نسبة الأملاح TDS", en: "Digital smart screen for TDS monitoring" },
       { ar: "إنتاجية فائقة تصل إلى 1600 لتر من المياه النقية يومياً", en: "Massive output up to 1600 liters per day" },
       { ar: "يزيل الشوائب والرواسب والكلور والأملاح الزائدة بنسبة 99%", en: "Removes 99% of sediments, chlorine and excess salts" },
-      { ar: "ضمان سنتين على القطع الكهربائية وتركيب مجاني", en: "2-year warranty on electrics & free installation" },
+      { ar: "قطع كهربائية أصلية معتمدة", en: "Original certified electrical components" },
     ],
     specs: [
       { id: "stages", label: { ar: "عدد المراحل", en: "Stages" }, value: { ar: "6 مراحل مدمجة", en: "6 Integrated Stages" } },
@@ -220,20 +211,15 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       en: "Full Bundle - Save 550 SAR",
     },
     isOffer: true,
-    warranty: {
-      ar: "ضمان سنتين مع تركيب مجاني",
-      en: "2-Year Warranty with Free Installation",
-    },
     features: [
       { ar: "فلتر نانو سيلفر 7 مراحل متكامل", en: "7-Stage Nano Silver purifier" },
       { ar: "برادة بيور تاب سوداء فاخرة بـ 3 صنابير", en: "Luxury black Pure Tap dispenser" },
       { ar: "حنفية ستانلس ستيل فاخرة وخزان تخزين", en: "Stainless steel faucet & storage tank" },
-      { ar: "توصيل وتركيب مجاني بواسطة فنيين مختصين", en: "Free delivery and installation by experts" },
+      { ar: "فحص الجودة والمطابقة قبل التسليم", en: "Quality tested before dispatch" },
     ],
     specs: [
       { id: "stages", label: { ar: "مراحل الفلتر", en: "Stages" }, value: { ar: "7 مراحل RO", en: "7 RO Stages" } },
       { id: "dispenser", label: { ar: "نوع البرادة", en: "Dispenser" }, value: { ar: "طاولة 3 صنابير", en: "Tabletop 3 Taps" } },
-      { id: "warranty", label: { ar: "الضمان", en: "Warranty" }, value: { ar: "سنتين شامل", en: "2 Years Comprehensive" } },
     ],
     inStock: true,
   },
@@ -261,7 +247,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/stand-7stages-filter.jpg",
     category: "systems",
     badge: { ar: "الأكثر متانة", en: "Heavy Duty" },
-    warranty: { ar: "ضمان سنتين وتركيب مجاني", en: "2-Year Warranty with Free Installation" },
     features: [
       { ar: "قاعدة ستاند أرضية متينة مطلية ضد الصدأ", en: "Heavy-duty rustproof floor stand" },
       { ar: "مضخة ديناميكية قوية لرفع كفاءة التحلية", en: "Powerful booster pump for maximum efficiency" },
@@ -298,7 +283,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/pure-7stages-complete.jpg",
     category: "systems",
     badge: { ar: "الأكثر مبيعاً", en: "Best Seller" },
-    warranty: { ar: "ضمان سنتين وتركيب مجاني", en: "2-Year Warranty with Free Installation" },
     features: [
       { ar: "7 مراحل تنقية تشمل التناضح العكسي والمعادن", en: "7 stages including RO and remineralization" },
       { ar: "خزان حفظ مياه صحي محكم الإغلاق", en: "Hygienic sealed storage tank" },
@@ -334,7 +318,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/jumbo-triple-rack.jpg",
     category: "filters",
     badge: { ar: "تنقية مركزية", en: "Whole House" },
-    warranty: { ar: "ضمان سنتين على الهيكل والمحابس", en: "2-Year Structural Warranty" },
     features: [
       { ar: "3 أسطوانات زرقاء عملاقة 20 بوصة عالية التحمل", en: "3 heavy-duty 20-inch jumbo housings" },
       { ar: "حماية كامل شبكة المنزل والمواسير وسخانات المياه", en: "Protects plumbing, heaters and washing machines" },
@@ -370,7 +353,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/jumbo-triple-white.jpg",
     category: "filters",
     badge: { ar: "للفلل والمنازل", en: "For Villas" },
-    warranty: { ar: "ضمان سنتين", en: "2-Year Warranty" },
     features: [
       { ar: "هيكل حديدي مطلي ومقاوم للعوامل الجوية", en: "Weatherproof powder-coated metal frame" },
       { ar: "تدفق مياه عالي لا يقلل من ضغط شبكة المنزل", en: "High flow rate maintains house pressure" },
@@ -405,7 +387,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/triple-housing-clear.jpg",
     category: "filters",
     badge: { ar: "سهل المراقبة", en: "Easy View" },
-    warranty: { ar: "ضمان سنة", en: "1-Year Warranty" },
     features: [
       { ar: "أسطوانة شفافة لمعاينة الشمعة بدون فتح", en: "Clear housing for quick inspection" },
       { ar: "حجم مناسب يسهل تركيبه في أي مكان", en: "Compact size fits anywhere" },
@@ -440,7 +421,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/digital-round-dispenser.jpg",
     category: "dispensers",
     badge: { ar: "ديجيتال فاخر", en: "Premium Digital" },
-    warranty: { ar: "ضمان سنتين على الكمبروسر", en: "2-Year Compressor Warranty" },
     features: [
       { ar: "شاشة تحكم رقمية دائرية تعرض درجات الحرارة", en: "Circular digital display showing temperatures" },
       { ar: "صنابير مياه باردة وساخنة مع قفل أمان للأطفال", en: "Hot and cold taps with child safety lock" },
@@ -476,7 +456,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/tabletop-dispenser-silver.jpg",
     category: "dispensers",
     badge: { ar: "الأكثر طلباً", en: "Popular" },
-    warranty: { ar: "ضمان سنتين شامل", en: "2-Year Warranty" },
     features: [
       { ar: "3 صنابير (بارد، فاتر، حار) لتلبية جميع الاستخدامات", en: "3 taps (cold, normal, hot) for all needs" },
       { ar: "توفير كامل لتكلفة ومساحة قوارير المياه", en: "Saves 100% bottle costs and floor space" },
@@ -512,7 +491,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/tabletop-dispenser-black.jpg",
     category: "dispensers",
     badge: { ar: "تصميم عصري", en: "Modern Design" },
-    warranty: { ar: "ضمان سنتين شامل", en: "2-Year Warranty" },
     features: [
       { ar: "لون أسود ملكي مقاوم للخدوش والبصمات", en: "Scratch-resistant royal black finish" },
       { ar: "تبريد سريع وهادئ بدون ضوضاء", en: "Quiet rapid cooling compressor" },
@@ -548,7 +526,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/water-tank-19l.jpg",
     category: "accessories",
     badge: { ar: "صحي ومعتمد", en: "Food Grade" },
-    warranty: { ar: "ضمان سنتين", en: "2-Year Warranty" },
     features: [
       { ar: "سعة 19 لتر لحفظ مخزون وافر من المياه النقية", en: "19L capacity ensures constant water backup" },
       { ar: "مبطن بمادة البولي بروبيلين الصحية المقاومة للروائح", en: "Food-grade polypropylene lining" },
@@ -583,7 +560,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/luxury-faucet-304.jpg",
     category: "accessories",
     badge: { ar: "ستانلس 304", en: "SUS 304" },
-    warranty: { ar: "ضمان سنتين ضد الصدأ والتهريب", en: "2-Year Leakproof Warranty" },
     features: [
       { ar: "مصنوع بالكامل من الفولاذ 304 غير قابل للصدأ", en: "100% SUS 304 lead-free stainless steel" },
       { ar: "دوران 360 درجة لمرونة كاملة في الاستخدام", en: "360-degree swivel rotation" },
@@ -618,7 +594,6 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     thumbnailImage: "/images/products/cartridges-7stages.jpg",
     category: "accessories",
     badge: { ar: "طقم متكامل", en: "Full 7-Pack" },
-    warranty: { ar: "قطع أصلية مضمونة", en: "100% Genuine Guaranteed" },
     features: [
       { ar: "7 شمعات كاملة تشمل الممبرين والبوست كربون", en: "All 7 stages including RO membrane" },
       { ar: "متوافقة مع جميع أجهزة الفلترة المنزلية القياسية", en: "Universally fits all standard home purifiers" },
