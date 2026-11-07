@@ -6,5 +6,6 @@ export { FeaturedProductsSection } from "./featured-products-section";
 export { OffersSection } from "./offers-section";
 export { PackagesSection } from "./packages-section";
 export { HowOrderingWorks } from "./how-ordering-works";
+export { WhyUsSection } from "./why-us-section";
 export { BrandVideoBand } from "./brand-video-band";
 export { WhatsAppBandSection } from "./whatsapp-band-section";

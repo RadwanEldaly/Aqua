@@ -10,6 +10,7 @@ import {
   FeaturedProductsSection,
   OffersSection,
   PackagesSection,
+  WhyUsSection,
   HowOrderingWorks,
   BrandVideoBand,
   WhatsAppBandSection,
@@ -74,6 +75,7 @@ export default async function HomePage({
       <FeaturedProductsSection locale={typedLocale} />
       <OffersSection locale={typedLocale} />
       <PackagesSection locale={typedLocale} />
+      <WhyUsSection locale={typedLocale} />
       <HowOrderingWorks />
       <BrandVideoBand />
       <WhatsAppBandSection />
