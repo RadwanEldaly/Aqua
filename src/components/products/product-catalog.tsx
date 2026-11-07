@@ -251,7 +251,7 @@ export function ProductCatalog({
                   imageHeight={product.image.height}
                   href={`/products/${product.id}`}
                   locale={locale}
-                  priority={index === 0}
+                  priority={index < 2}
                   badge={
                     product.badge
                       ? { text: product.badge[locale], variant: "primary" }

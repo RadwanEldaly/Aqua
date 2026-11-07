@@ -4,7 +4,6 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { Price } from "./price";
 import { Badge } from "./badge";
-import { RippleRings } from "./brand-patterns";
 
 export const PRODUCT_CARD_IMAGE_ASPECT = "aspect-square";
 
@@ -59,18 +58,13 @@ export function ProductCard({
         className
       )}
     >
-      {/* Tonal Inset Image Panel (foam/pearl tint with ripple mark & mix-blend-multiply) */}
+      {/* Tonal Inset Image Panel (foam/pearl tint with mix-blend-multiply) */}
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-2xl bg-brand-pearl mb-4 flex items-center justify-center p-4 select-none",
           PRODUCT_CARD_IMAGE_ASPECT
         )}
       >
-        {/* Subtle Background Ripple Rings */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-40 pointer-events-none">
-          <RippleRings className="w-[130%] h-[130%] text-brand-ocean/15" />
-        </div>
-
         {/* Optional Badge */}
         {badge && (
           <div className="absolute top-3 start-3 z-10 pointer-events-none">
@@ -89,12 +83,6 @@ export function ProductCard({
             {formattedIndex}
           </span>
         )}
-
-        {/* Soft Elliptical Floor Shadow */}
-        <div
-          aria-hidden="true"
-          className="absolute bottom-3 w-3/5 h-2.5 rounded-full bg-brand-deep/8 blur-[2px] pointer-events-none"
-        />
 
         {/* Product Image: mix-blend-multiply melts pure white JPEG into pearl panel */}
         {imageUrl ? (

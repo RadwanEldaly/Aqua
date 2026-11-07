@@ -1,9 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ProductCatalog } from "@/components/products/product-catalog";
-import { ProductCardSkeleton } from "@/components/ui/skeleton";
-import { RippleRings } from "@/components/ui/brand-patterns";
 import {
   PROVISIONAL_PRODUCTS,
   PROVISIONAL_CATEGORIES,
@@ -46,11 +44,6 @@ export default async function ProductsPage({
       <div className="max-w-7xl mx-auto w-full flex flex-col gap-10 sm:gap-12">
         {/* Saturated Deep-Azure Page Header Panel (matches hero look & feel) */}
         <div className="relative w-full rounded-panel bg-brand-ocean overflow-hidden shadow-elevated min-h-[280px] sm:min-h-[320px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 pt-28 sm:pt-32">
-          {/* Subtle Ambient Ripple Rings */}
-          <div className="absolute -top-16 -end-16 w-[440px] h-[440px] opacity-25 pointer-events-none select-none" aria-hidden="true">
-            <RippleRings className="w-full h-full text-brand-foam/30" />
-          </div>
-
           <div className="relative z-10 flex flex-col items-start text-start max-w-3xl">
             <span className="text-xs sm:text-sm font-semibold ltr:uppercase ltr:tracking-wider text-aqua-200">
               {t("eyebrow")}
@@ -64,22 +57,12 @@ export default async function ProductsPage({
           </div>
         </div>
 
-        {/* Product Catalog with Category Filter & Search (Wrapped in Suspense) */}
-        <Suspense
-          fallback={
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <ProductCardSkeleton key={i} />
-              ))}
-            </div>
-          }
-        >
-          <ProductCatalog
-            products={PROVISIONAL_PRODUCTS}
-            categories={PROVISIONAL_CATEGORIES}
-            locale={locale as "ar" | "en"}
-          />
-        </Suspense>
+        {/* Product Catalog with Category Filter & Search */}
+        <ProductCatalog
+          products={PROVISIONAL_PRODUCTS}
+          categories={PROVISIONAL_CATEGORIES}
+          locale={locale as "ar" | "en"}
+        />
       </div>
     </div>
   );
