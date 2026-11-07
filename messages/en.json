@@ -51,6 +51,12 @@
     "description": "Sorry, the page you are looking for could not be found.",
     "homeAction": "Return Home"
   },
+  "ErrorPage": {
+    "title": "An unexpected error occurred",
+    "description": "We apologize for the inconvenience. Please try again or return to the homepage.",
+    "retryAction": "Try Again",
+    "homeAction": "Back to Home"
+  },
   "CartPage": {
     "title": "Order Cart",
     "eyebrow": "Orders",
