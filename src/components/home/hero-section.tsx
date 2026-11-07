@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -18,61 +18,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
   const tCommon = useTranslations("Common");
   const whatsappUrl = buildWhatsAppUrl(tHero("whatsappPrefill"));
   const hasWhatsApp = Boolean(whatsappUrl);
-
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [canLoadVideo, setCanLoadVideo] = useState(false);
-  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
-
-  // Guarantee: Video NEVER loads before the window 'load' event
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    function handleLoad() {
-      // Check reduced motion & saveData
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      const nav = navigator as Navigator & {
-        connection?: { saveData?: boolean };
-      };
-      const isSaveData = Boolean(nav.connection?.saveData);
-
-      if (!prefersReducedMotion && !isSaveData) {
-        setCanLoadVideo(true);
-      }
-    }
-
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad, { once: true });
-      return () => window.removeEventListener("load", handleLoad);
-    }
-  }, []);
-
-  // Intersection observer: only play when in viewport
-  useEffect(() => {
-    if (!canLoadVideo || !containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShouldPlayVideo(true);
-            videoRef.current?.play().catch(() => {});
-          } else {
-            setShouldPlayVideo(false);
-            videoRef.current?.pause();
-          }
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [canLoadVideo]);
 
   // Subtle GSAP entrance animation with reduced-motion support
   useGSAP(
@@ -104,37 +50,9 @@ export function HeroSection({ locale }: HeroSectionProps) {
         ref={containerRef}
         className="relative max-w-7xl mx-auto rounded-panel bg-brand-navy overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
       >
-        {/* Background Layer: Poster Image (always present, zero CLS) */}
+        {/* Saturated Deep Marine Gradient Background (Passes AAA Contrast > 12:1) */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
-          <Image
-            src="/video/brand-water-poster.webp"
-            alt=""
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            className="object-cover opacity-35"
-          />
-
-          {/* Conditional Video Layer: Attached strictly after 'load' event */}
-          {canLoadVideo && (
-            <video
-              ref={videoRef}
-              muted
-              loop
-              playsInline
-              preload="none"
-              className={cn(
-                "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
-                shouldPlayVideo ? "opacity-35" : "opacity-0"
-              )}
-            >
-              <source src="/video/brand-water-720p.mp4" type="video/mp4" />
-            </video>
-          )}
-
-          {/* Saturated Deep Marine Gradient Overlay (Passes AAA Contrast > 12:1) */}
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep/95 via-brand-navy/85 to-brand-navy/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-navy to-brand-navy/90" />
         </div>
 
         {/* Content Grid: Clearance for Floating Pill Nav (pt-24 sm:pt-28) */}
@@ -201,28 +119,6 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   className="object-contain"
                 />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Bottom Trust Strip */}
-        <div className="relative z-10 w-full border-t border-white/10 bg-black/20 backdrop-blur-md px-6 py-4">
-          <div className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center text-xs sm:text-sm font-semibold text-aqua-100">
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-base">🚚</span>
-              <span>{locale === "ar" ? "توصيل وتركيب مجاني" : "Free Delivery & Install"}</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-base">🛡️</span>
-              <span>{locale === "ar" ? "ضمان شامل سنتين" : "2-Year Warranty"}</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-base">💵</span>
-              <span>{locale === "ar" ? "الدفع عند الاستلام" : "Cash on Delivery"}</span>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-base">💧</span>
-              <span>{locale === "ar" ? "قطع أصلية معتمدة 100%" : "100% Certified Parts"}</span>
             </div>
           </div>
         </div>

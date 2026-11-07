@@ -23,8 +23,11 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
   const tProducts = useTranslations("ProductsPage");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Take the top 8 products to provide high density and rich choice
-  const featuredProducts = PROVISIONAL_PRODUCTS.slice(0, 8);
+  // Select 4 distinct products (one from each category) from provisional products
+  const categoryIds = ["home-systems", "dispensers", "filters", "cartridges-and-parts"];
+  const featuredProducts = categoryIds
+    .map((catId) => PROVISIONAL_PRODUCTS.find((p) => p.categoryId === catId))
+    .filter((p): p is (typeof PROVISIONAL_PRODUCTS)[number] => Boolean(p));
 
   useGSAP(
     () => {
@@ -58,8 +61,8 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
         {/* Section Heading */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <SectionHeading
-            eyebrow={locale === "ar" ? "أجهزة وأنظمة معتمدة" : "Certified Systems"}
-            title={locale === "ar" ? "الأجهزة الأكثر طلباً ومبيعاً" : "Best Selling Purification Devices"}
+            eyebrow={t("eyebrow")}
+            title={t("title")}
             align="start"
           />
 

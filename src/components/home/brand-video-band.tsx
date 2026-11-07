@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export function BrandVideoBand() {
   const t = useTranslations("Common");
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [canLoadVideo, setCanLoadVideo] = useState(false);
+  const [showPoster, setShowPoster] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    const container = containerRef.current;
-    if (!video || !container) return;
+    if (typeof window === "undefined") return;
 
     // Check reduced motion & saveData
     const prefersReducedMotion = window.matchMedia(
@@ -22,20 +22,36 @@ export function BrandVideoBand() {
     };
     const isSaveData = Boolean(nav.connection?.saveData);
 
-    // If reduced motion or saveData is requested, leave paused on poster
+    // If reduced motion or saveData is requested, show poster only
     if (prefersReducedMotion || isSaveData) {
-      video.pause();
+      setShowPoster(true);
       return;
     }
+
+    // Guarantee: video makes no network request before load event
+    function handleLoad() {
+      setCanLoadVideo(true);
+    }
+
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad, { once: true });
+      return () => window.removeEventListener("load", handleLoad);
+    }
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container || !canLoadVideo) return;
 
     // Play only while in viewport using IntersectionObserver
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Autoplay policy restrictions handled gracefully
-            });
+            video.play().catch(() => {});
           } else {
             video.pause();
           }
@@ -49,7 +65,7 @@ export function BrandVideoBand() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [canLoadVideo]);
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
@@ -66,12 +82,14 @@ export function BrandVideoBand() {
             loop
             playsInline
             preload="none"
-            poster="/video/brand-water-poster.webp"
+            poster={showPoster ? "/video/brand-water-poster.webp" : undefined}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             aria-hidden="true"
             tabIndex={-1}
           >
-            <source src="/video/brand-water-720p.mp4" type="video/mp4" />
+            {canLoadVideo && (
+              <source src="/video/brand-water-720p.mp4" type="video/mp4" />
+            )}
           </video>
 
           {/* High-Contrast Tint Overlay (Passes AA/AAA contrast > 8:1 on all frames) */}
