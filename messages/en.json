@@ -94,7 +94,11 @@
     "inquireAria": "Inquire about {name} via WhatsApp",
     "whatsappPrefill": "Hello, I would like to inquire about: {name}",
     "showingCount": "{count, plural, =0 {No products} one {1 of {total} product} other {{count} of {total} products}}",
-    "emptyState": "No products found in this category."
+    "emptyState": "No products found in this category.",
+    "searchPlaceholder": "Search products or filters...",
+    "searchAria": "Search products",
+    "clearSearch": "Clear search",
+    "noSearchResults": "No products found matching your search."
   },
   "HomePage": {
     "hero": {

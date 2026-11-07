@@ -5,7 +5,7 @@
  */
 
 export const FEATURES = {
-  search: false,
+  search: true,
   cart: true,
 } as const;
 
