@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Plus, Minus, ShoppingBag, MessageCircle, Check } from "lucide-react";
 import { useCart } from "@/context/cart-context";
+import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { Product } from "@/types/product";
 import { cn } from "@/lib/utils";
@@ -19,7 +20,19 @@ export function ProductDetailActions({ product, locale }: ProductDetailActionsPr
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
-    addItem(product, quantity);
+    const provProduct = PROVISIONAL_PRODUCTS.find((p) => p.id === product.id) || {
+      id: product.id,
+      categoryId: product.category,
+      name: product.name,
+      price: product.price,
+      image: {
+        src: product.thumbnailImage || product.images[0] || "",
+        width: 800,
+        height: 800,
+        alt: product.name,
+      },
+    };
+    addItem(provProduct, quantity);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   };

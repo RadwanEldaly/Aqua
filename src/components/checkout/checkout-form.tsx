@@ -1,28 +1,49 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import {
   CheckCircle2,
-  ShieldCheck,
-  Truck,
-  Wrench,
   MessageCircle,
   ShoppingBag,
   ArrowRight,
   ArrowLeft,
   ChevronDown,
+  Copy,
+  Check,
 } from "lucide-react";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/config/site";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
+/**
+ * Normalizes a Saudi mobile phone input:
+ * - Converts Arabic-Indic numerals (٠-٩) to Western (0-9)
+ * - Accepts 05XXXXXXXX, 5XXXXXXXX, +9665XXXXXXXX, 009665XXXXXXXX
+ * - Normalizes to standard 9665XXXXXXXX format
+ */
+export function normalizeSaudiPhone(raw: string): { valid: boolean; normalized: string } {
+  const arabicIndic = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+  let s = raw.trim();
+  for (let i = 0; i < 10; i++) {
+    s = s.replaceAll(arabicIndic[i], String(i));
+  }
+  s = s.replace(/[^\d+]/g, "");
+  if (s.startsWith("+")) s = s.slice(1);
+  if (s.startsWith("00")) s = s.slice(2);
+  if (s.startsWith("05")) s = "966" + s.slice(1);
+  else if (s.startsWith("5")) s = "966" + s;
+
+  const valid = /^9665\d{8}$/.test(s);
+  return { valid, normalized: s };
+}
+
 export function CheckoutForm() {
   const locale = useLocale();
   const isAr = locale === "ar";
-  const { items, subtotal, clearCart } = useCart();
+  const { items, totalPrice, hasPriceForAll, clear, isMounted } = useCart();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -32,26 +53,62 @@ export function CheckoutForm() {
     notes: "",
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
-  const [validated, setValidated] = useState(false);
+  const [whatsappHref, setWhatsappHref] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const fullNameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
+  const addressRef = useRef<HTMLInputElement>(null);
 
   const cities = siteConfig.commerce.supportCities;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setValidated(true);
 
-    if (!formData.fullName || !formData.phone || !formData.address) {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = isAr ? "الاسم الكامل مطلوب" : "Full name is required";
+    }
+
+    const phoneCheck = normalizeSaudiPhone(formData.phone);
+    if (!phoneCheck.valid) {
+      newErrors.phone = isAr
+        ? "رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام"
+        : "Phone must start with 05 and contain 10 digits";
+    }
+
+    if (!formData.address.trim()) {
+      newErrors.address = isAr ? "العنوان مطلوب" : "Address is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      // Focus first invalid element
+      if (newErrors.fullName) {
+        fullNameRef.current?.focus();
+      } else if (newErrors.phone) {
+        phoneRef.current?.focus();
+      } else if (newErrors.address) {
+        addressRef.current?.focus();
+      }
       return;
     }
 
@@ -63,118 +120,166 @@ export function CheckoutForm() {
       formData.city;
 
     const itemsSummary = items
-      .map(
-        (item, idx) =>
-          `${idx + 1}. ${item.product.name[isAr ? "ar" : "en"]} (${item.quantity}x) - ${
-            item.product.price * item.quantity
-          } ر.س`
-      )
+      .map((item, idx) => {
+        const priceStr =
+          typeof item.product.price === "number"
+            ? ` - ${item.product.price * item.quantity} ر.س`
+            : "";
+        return `${idx + 1}. ${item.product.name[isAr ? "ar" : "en"]} (${item.quantity}x)${priceStr}`;
+      })
       .join("\n");
 
+    const totalStr =
+      hasPriceForAll && typeof totalPrice === "number"
+        ? `\n*المجموع:* ${totalPrice} ر.س\n`
+        : "\n";
+
     const message = isAr
-      ? `*طلب جديد من موقع أكوا جارد* 💧\n\n` +
+      ? `*طلب جديد* 💧\n\n` +
         `*رقم الطلب:* #${generatedOrderNum}\n` +
-        `*اسم العميل:* ${formData.fullName}\n` +
-        `*رقم الجوال:* ${formData.phone}\n` +
+        `*الاسم:* ${formData.fullName.trim()}\n` +
+        `*الجوال:* ${phoneCheck.normalized}\n` +
         `*المدينة:* ${cityName}\n` +
-        `*العنوان:* ${formData.address}\n` +
-        (formData.notes ? `*ملاحظات:* ${formData.notes}\n` : "") +
-        `\n*المنتجات المطلوبة:*\n${itemsSummary}\n\n` +
-        `*المجموع الكلي:* ${subtotal} ر.س\n` +
-        `*طريقة الدفع:* الدفع عند الاستلام (شامل التوصيل والتركيب المجاني)\n` +
-        `يرجى تأكيد موعد وصول الفني للتركيب.`
-      : `*New Order from Aqua Guard Website* 💧\n\n` +
+        `*العنوان:* ${formData.address.trim()}\n` +
+        (formData.notes.trim() ? `*ملاحظات:* ${formData.notes.trim()}\n` : "") +
+        `\n*المنتجات:*\n${itemsSummary}\n` +
+        totalStr +
+        `*طريقة الدفع:* الدفع عند الاستلام`
+      : `*New Order* 💧\n\n` +
         `*Order ID:* #${generatedOrderNum}\n` +
-        `*Customer Name:* ${formData.fullName}\n` +
-        `*Phone:* ${formData.phone}\n` +
+        `*Name:* ${formData.fullName.trim()}\n` +
+        `*Phone:* ${phoneCheck.normalized}\n` +
         `*City:* ${cityName}\n` +
-        `*Address:* ${formData.address}\n` +
-        (formData.notes ? `*Notes:* ${formData.notes}\n` : "") +
-        `\n*Items Ordered:*\n${itemsSummary}\n\n` +
-        `*Grand Total:* ${subtotal} SAR\n` +
-        `*Payment Method:* Cash on Delivery (Free Delivery & Installation)\n` +
-        `Please confirm technician installation schedule.`;
+        `*Address:* ${formData.address.trim()}\n` +
+        (formData.notes.trim() ? `*Notes:* ${formData.notes.trim()}\n` : "") +
+        `\n*Items:*\n${itemsSummary}\n` +
+        (hasPriceForAll && typeof totalPrice === "number"
+          ? `\n*Total:* ${totalPrice} SAR\n`
+          : "\n") +
+        `*Payment:* Cash on Delivery`;
 
-    const whatsappUrl = buildWhatsAppUrl(message);
+    const url = buildWhatsAppUrl(message);
+    setWhatsappHref(url || "");
 
-    if (whatsappUrl) {
-      window.open(whatsappUrl, "_blank");
+    if (url) {
+      window.open(url, "_blank", "noopener");
     }
 
     setIsSubmitted(true);
-    clearCart();
   };
 
-  // If order is completed successfully
+  const handleCopyOrder = () => {
+    if (!whatsappHref) return;
+    const msg = decodeURIComponent(whatsappHref.split("text=")[1] || "");
+    navigator.clipboard.writeText(msg).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    });
+  };
+
+  // Loading skeleton
+  if (!isMounted) {
+    return (
+      <div className="w-full max-w-4xl mx-auto py-12 animate-pulse space-y-6">
+        <div className="h-8 w-48 bg-surface-subtle rounded-xl" />
+        <div className="h-48 bg-white rounded-3xl" />
+      </div>
+    );
+  }
+
+  // Confirmation screen with "I sent the order" to clear cart
   if (isSubmitted) {
     return (
       <div className="max-w-2xl mx-auto bg-white rounded-3xl p-8 sm:p-12 shadow-card text-center border border-border-subtle">
-        <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-10 h-10" />
+        <div className="w-16 h-16 rounded-full bg-brand-mist text-brand-primary flex items-center justify-center mx-auto mb-5">
+          <CheckCircle2 className="w-8 h-8" />
         </div>
 
-        <span className="inline-block px-4 py-1.5 rounded-full bg-brand-mist text-brand-primary text-xs font-bold mb-3">
-          {isAr ? "تم تسجيل طلبك بنجاح!" : "Order Placed Successfully!"}
-        </span>
-
-        <h2 className="text-2xl sm:text-3xl font-bold text-brand-deep mb-2">
-          {isAr ? "شكراً لثقتك بأكوا جارد" : "Thank you for trusting Aqua Guard"}
+        <h2 className="text-2xl font-bold text-brand-deep mb-2">
+          {isAr ? "تم إرسال الطلب بنجاح" : "Order Submitted Successfully"}
         </h2>
 
-        <p className="text-text-subtle text-sm sm:text-base max-w-md mx-auto mb-6">
+        <p className="text-text-subtle-accessible text-sm max-w-md mx-auto mb-6">
           {isAr
-            ? `رقم طلبك هو #${orderNumber}. سيقوم فريق خدمة العملاء بالتواصل معك لتأكيد موعد التوصيل والتركيب المجاني.`
-            : `Your order number is #${orderNumber}. Our customer service team will contact you shortly to confirm installation.`}
+            ? `رقم طلبك هو #${orderNumber}. سيتم التواصل معك لتأكيد تفاصيل الطلب.`
+            : `Your order reference is #${orderNumber}. We will contact you to confirm the details.`}
         </p>
 
-        <div className="p-4 rounded-2xl bg-surface-subtle border border-border-subtle max-w-md mx-auto mb-8 text-start text-xs space-y-2">
+        <div className="p-4 rounded-2xl bg-surface-subtle border border-border-subtle max-w-md mx-auto mb-6 text-start text-xs space-y-2">
           <div className="flex justify-between">
-            <span className="text-text-subtle">{isAr ? "رقم الطلب:" : "Order ID:"}</span>
+            <span className="text-text-subtle-accessible">{isAr ? "رقم الطلب:" : "Order:"}</span>
             <span className="font-bold text-brand-deep">#{orderNumber}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-subtle">{isAr ? "المستلم:" : "Recipient:"}</span>
+            <span className="text-text-subtle-accessible">{isAr ? "الاسم:" : "Name:"}</span>
             <span className="font-semibold text-brand-deep">{formData.fullName}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-subtle">{isAr ? "طريقة الدفع:" : "Payment:"}</span>
-            <span className="font-semibold text-emerald-700">
+            <span className="text-text-subtle-accessible">{isAr ? "طريقة الدفع:" : "Payment:"}</span>
+            <span className="font-semibold text-brand-deep">
               {isAr ? "الدفع عند الاستلام" : "Cash on Delivery"}
             </span>
           </div>
         </div>
 
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 py-3 px-8 rounded-button bg-brand-primary hover:bg-brand-primary-hover text-white font-bold transition-all"
+        {/* Fallback actions if WhatsApp didn't open */}
+        {whatsappHref && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-brand-primary text-white font-medium text-sm hover:bg-brand-primary-hover transition-colors"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>{isAr ? "فتح واتساب مرة أخرى" : "Open WhatsApp Again"}</span>
+            </a>
+            <button
+              type="button"
+              onClick={handleCopyOrder}
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-full border border-border-subtle text-brand-deep font-medium text-sm hover:bg-surface-subtle transition-colors"
+            >
+              {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+              <span>{copied ? (isAr ? "تم النسخ" : "Copied") : (isAr ? "نسخ نص الطلب" : "Copy Order Text")}</span>
+            </button>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => {
+            clear();
+            window.location.href = isAr ? "/" : "/en";
+          }}
+          className="inline-flex items-center gap-2 py-3 px-8 rounded-full bg-brand-navy hover:bg-brand-deep text-white font-bold text-sm transition-all cursor-pointer"
         >
-          <span>{isAr ? "العودة للرئيسية" : "Back to Home"}</span>
+          <span>{isAr ? "أرسلت الطلب - إنهاء وإفراغ السلة" : "I Sent the Order - Finish & Clear Cart"}</span>
           {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-        </Link>
+        </button>
       </div>
     );
   }
 
-  // If cart is empty
+  // Empty Cart State
   if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 sm:p-12 shadow-card text-center border border-border-subtle">
-        <div className="w-20 h-20 rounded-full bg-surface-subtle text-text-subtle-accessible flex items-center justify-center mx-auto mb-6">
-          <ShoppingBag className="w-10 h-10 stroke-[1.5]" />
+        <div className="w-16 h-16 rounded-full bg-surface-subtle text-text-subtle-accessible flex items-center justify-center mx-auto mb-5">
+          <ShoppingBag className="w-8 h-8 stroke-[1.5]" />
         </div>
-        <h2 className="text-2xl font-bold text-brand-deep mb-3">
-          {isAr ? "سلة المشتريات فارغة" : "Your cart is currently empty"}
+        <h2 className="text-xl font-bold text-brand-deep mb-2">
+          {isAr ? "سلة المشتريات فارغة" : "Your order is empty"}
         </h2>
-        <p className="text-text-subtle text-sm mb-8">
+        <p className="text-text-subtle-accessible text-sm mb-6">
           {isAr
-            ? "يرجى إضافة المنتجات أو باقات التحلية إلى سلة الشراء للمتابعة إلى صفحة الدفع."
-            : "Please add products or filtration bundles to your cart before proceeding to checkout."}
+            ? "يرجى إضافة منتجات إلى السلة قبل المتابعة إلى صفحة تأكيد الطلب."
+            : "Please add products to your order before proceeding to checkout."}
         </p>
         <Link
           href="/products"
-          className="inline-flex items-center gap-2 py-3 px-8 rounded-button bg-brand-primary hover:bg-brand-primary-hover text-white font-bold transition-all"
+          className="inline-flex items-center gap-2 py-3 px-8 rounded-full bg-brand-primary hover:bg-brand-primary-hover text-white font-medium text-sm transition-all"
         >
-          <span>{isAr ? "تصفح العروض والمنتجات" : "Browse Products"}</span>
+          <span>{isAr ? "تصفح المنتجات" : "Browse Products"}</span>
           {isAr ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
         </Link>
       </div>
@@ -184,71 +289,80 @@ export function CheckoutForm() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
       {/* Checkout Form (7 cols) */}
-      <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-border-subtle/60">
-        <h2 className="text-xl sm:text-2xl font-bold text-brand-deep mb-2">
-          {isAr ? "معلومات التوصيل والتركيب" : "Delivery & Installation Details"}
+      <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-border-subtle/80">
+        <h2 className="text-xl font-bold text-brand-deep mb-1">
+          {isAr ? "بيانات الطلب والتوصيل" : "Order & Delivery Details"}
         </h2>
-        <p className="text-xs sm:text-sm text-text-subtle mb-6">
+        <p className="text-xs text-text-subtle-accessible mb-6">
           {isAr
-            ? "يرجى إدخال بياناتك بدقة للتنسيق الفوري مع الفني المختص"
-            : "Please enter your details accurately for technician scheduling"}
+            ? "يرجى إدخال البيانات لتأكيد الطلب وتحديد موعد التسليم"
+            : "Please enter your details to confirm your order"}
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} noValidate className="space-y-4">
           {/* Full Name */}
           <div>
-            <label className="block text-xs font-bold text-brand-deep mb-1.5">
+            <label htmlFor="checkout-fullName" className="block text-xs font-bold text-brand-deep mb-1.5">
               {isAr ? "الاسم الكامل *" : "Full Name *"}
             </label>
             <input
+              ref={fullNameRef}
+              id="checkout-fullName"
               type="text"
               name="fullName"
               required
+              aria-invalid={Boolean(errors.fullName)}
+              aria-describedby={errors.fullName ? "error-fullName" : undefined}
               value={formData.fullName}
               onChange={handleChange}
-              placeholder={isAr ? "مثال: عبدالله محمد" : "e.g. Abdullah Mohammed"}
-              className="w-full h-12 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all"
+              placeholder={isAr ? "مثال: محمد عبدالله" : "e.g. Mohammed Abdullah"}
+              className="w-full h-11 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all"
             />
-            {validated && !formData.fullName && (
-              <span className="text-xs text-red-500 mt-1 block">
-                {isAr ? "الاسم مطلوب" : "Name is required"}
+            {errors.fullName && (
+              <span id="error-fullName" className="text-xs text-red-600 mt-1 block">
+                {errors.fullName}
               </span>
             )}
           </div>
 
           {/* Phone Number */}
           <div>
-            <label className="block text-xs font-bold text-brand-deep mb-1.5">
-              {isAr ? "رقم الجوال (واتساب) *" : "Mobile Phone (WhatsApp) *"}
+            <label htmlFor="checkout-phone" className="block text-xs font-bold text-brand-deep mb-1.5">
+              {isAr ? "رقم الجوال *" : "Mobile Phone *"}
             </label>
             <input
+              ref={phoneRef}
+              id="checkout-phone"
               type="tel"
               name="phone"
               required
               dir="ltr"
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? "error-phone" : undefined}
               value={formData.phone}
               onChange={handleChange}
               placeholder="05XXXXXXXX"
-              className="w-full h-12 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all text-start"
+              className="w-full h-11 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all text-start"
             />
-            {validated && !formData.phone && (
-              <span className="text-xs text-red-500 mt-1 block">
-                {isAr ? "رقم الجوال مطلوب" : "Phone is required"}
+            {errors.phone && (
+              <span id="error-phone" className="text-xs text-red-600 mt-1 block">
+                {errors.phone}
               </span>
             )}
           </div>
 
           {/* City Selection */}
           <div>
-            <label className="block text-xs font-bold text-brand-deep mb-1.5">
+            <label htmlFor="checkout-city" className="block text-xs font-bold text-brand-deep mb-1.5">
               {isAr ? "المدينة *" : "City *"}
             </label>
             <div className="relative">
               <select
+                id="checkout-city"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className="w-full h-12 px-4 pe-10 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all bg-white appearance-none cursor-pointer"
+                className="w-full h-11 px-4 pe-10 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all bg-white appearance-none cursor-pointer"
               >
                 {cities.map((city) => (
                   <option key={city.id} value={city.id}>
@@ -256,163 +370,127 @@ export function CheckoutForm() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="w-4 h-4 text-text-subtle absolute top-4 end-3 pointer-events-none" />
+              <ChevronDown className="w-4 h-4 text-text-subtle-accessible absolute top-3.5 end-3 pointer-events-none" />
             </div>
           </div>
 
-          {/* Detailed Address */}
+          {/* Address */}
           <div>
-            <label className="block text-xs font-bold text-brand-deep mb-1.5">
-              {isAr ? "الحي واسم الشارع *" : "District & Street Address *"}
+            <label htmlFor="checkout-address" className="block text-xs font-bold text-brand-deep mb-1.5">
+              {isAr ? "العنوان بالتفصيل *" : "Detailed Address *"}
             </label>
             <input
+              ref={addressRef}
+              id="checkout-address"
               type="text"
               name="address"
               required
+              aria-invalid={Boolean(errors.address)}
+              aria-describedby={errors.address ? "error-address" : undefined}
               value={formData.address}
               onChange={handleChange}
-              placeholder={isAr ? "مثال: حي النرجس، شارع أنس بن مالك" : "e.g. Al-Narjis District"}
-              className="w-full h-12 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all"
+              placeholder={isAr ? "الحي، اسم الشارع" : "District, Street"}
+              className="w-full h-11 px-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all"
             />
-            {validated && !formData.address && (
-              <span className="text-xs text-red-500 mt-1 block">
-                {isAr ? "العنوان مطلوب" : "Address is required"}
+            {errors.address && (
+              <span id="error-address" className="text-xs text-red-600 mt-1 block">
+                {errors.address}
               </span>
             )}
           </div>
 
-          {/* Additional Notes */}
+          {/* Notes */}
           <div>
-            <label className="block text-xs font-bold text-brand-deep mb-1.5">
-              {isAr ? "ملاحظات إضافية أو وقت الزيارة المفضل" : "Preferred Installation Time / Notes"}
+            <label htmlFor="checkout-notes" className="block text-xs font-bold text-brand-deep mb-1.5">
+              {isAr ? "ملاحظات إضافية (اختياري)" : "Additional Notes (Optional)"}
             </label>
             <textarea
+              id="checkout-notes"
               name="notes"
-              rows={3}
+              rows={2}
               value={formData.notes}
               onChange={handleChange}
-              placeholder={isAr ? "مثال: يفضل التركيب في الفترة المسائية بعد العصر" : "e.g. Afternoon visit preferred"}
-              className="w-full p-4 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all resize-none"
+              className="w-full p-3 rounded-xl border border-border focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 text-sm outline-none transition-all resize-none"
             />
           </div>
 
-          {/* Payment Method Badge */}
-          <div className="pt-4 border-t border-border-subtle">
-            <h3 className="text-xs font-bold text-brand-deep mb-2">
-              {isAr ? "طريقة الدفع المعتمدة" : "Payment Method"}
-            </h3>
-            <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-500/40 flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-              <div>
-                <span className="text-sm font-bold text-emerald-900 block">
-                  {isAr ? "الدفع عند الاستلام (COD)" : "Cash on Delivery (COD)"}
-                </span>
-                <p className="text-xs text-emerald-700 mt-0.5">
-                  {isAr
-                    ? "ادفع نقداً أو عبر بطاقة مدى/فيزا بعد استلام الجهاز وتثبيته وفحصه والتأكد من جودة المياه بنسبة 100%."
-                    : "Pay by cash or card after installation, testing, and full verification."}
-                </p>
-              </div>
+          {/* Payment Method Line */}
+          <div className="pt-2">
+            <div className="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle flex items-center justify-between text-xs">
+              <span className="font-semibold text-text-subtle-accessible">
+                {isAr ? "طريقة الدفع:" : "Payment Method:"}
+              </span>
+              <span className="font-bold text-brand-deep">
+                {isAr ? "الدفع عند الاستلام" : "Cash on Delivery"}
+              </span>
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Action */}
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-4 px-6 rounded-button bg-brand-primary hover:bg-brand-primary-hover text-white font-bold text-base shadow-elevated transition-all active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-brand-primary hover:bg-brand-primary-hover text-white font-bold text-sm shadow-subtle transition-all cursor-pointer"
             >
-              <MessageCircle className="w-5 h-5" />
-              <span>{isAr ? "تأكيد الطلب عبر واتساب" : "Confirm Order via WhatsApp"}</span>
+              <MessageCircle className="w-4 h-4" />
+              <span>{isAr ? "إرسال الطلب عبر واتساب" : "Submit Order via WhatsApp"}</span>
             </button>
-            <p className="text-center text-[11px] text-text-subtle mt-2">
-              {isAr
-                ? "سيتم فتح محادثة واتساب الرسمية مع خدمة عملاء أكوا جارد بتفاصيل طلبك"
-                : "Will open official Aqua Guard WhatsApp chat with pre-filled order"}
-            </p>
           </div>
         </form>
       </div>
 
       {/* Order Summary Sidebar (5 cols) */}
-      <div className="lg:col-span-5 space-y-6">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-card border border-border-subtle/60">
-          <h3 className="text-lg font-bold text-brand-deep mb-4 pb-3 border-b border-border-subtle flex items-center justify-between">
+      <div className="lg:col-span-5 space-y-4">
+        <div className="bg-white rounded-3xl p-6 shadow-card border border-border-subtle/80">
+          <h3 className="text-base font-bold text-brand-deep mb-4 pb-3 border-b border-border-subtle flex items-center justify-between">
             <span>{isAr ? "ملخص الطلب" : "Order Summary"}</span>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-mist text-brand-primary">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-mist text-brand-primary">
               {items.length} {isAr ? "منتجات" : "items"}
             </span>
           </h3>
 
           {/* Products List */}
-          <div className="divide-y divide-border-subtle max-h-80 overflow-y-auto mb-6">
+          <div className="divide-y divide-border-subtle max-h-80 overflow-y-auto mb-4" role="list">
             {items.map((item) => (
               <div key={item.product.id} className="py-3 flex items-center gap-3">
-                <div className="relative w-16 h-16 rounded-xl bg-surface-subtle p-2 shrink-0 flex items-center justify-center overflow-hidden">
+                <div className="relative w-14 h-14 rounded-xl bg-surface-subtle p-1 shrink-0 flex items-center justify-center overflow-hidden">
                   <Image
-                    src={item.product.thumbnailImage}
+                    src={item.product.image.src}
                     alt={item.product.name[isAr ? "ar" : "en"]}
                     fill
                     className="object-contain p-1"
-                    sizes="64px"
+                    sizes="56px"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-xs font-bold text-brand-deep truncate">
                     {item.product.name[isAr ? "ar" : "en"]}
                   </h4>
-                  <div className="text-xs text-text-subtle mt-0.5">
+                  <div className="text-xs text-text-subtle-accessible mt-0.5">
                     {isAr ? "الكمية:" : "Qty:"} {item.quantity}
                   </div>
                 </div>
-                <div className="text-sm font-bold text-brand-deep shrink-0">
-                  {item.product.price * item.quantity} {isAr ? "ر.س" : "SAR"}
-                </div>
+                {typeof item.product.price === "number" ? (
+                  <div className="text-xs font-bold text-brand-deep shrink-0">
+                    {item.product.price * item.quantity} {isAr ? "ر.س" : "SAR"}
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>
 
-          {/* Price Breakdown */}
-          <div className="space-y-3 pt-3 border-t border-border-subtle text-sm">
-            <div className="flex justify-between text-text-subtle">
-              <span>{isAr ? "المجموع الفرعي:" : "Subtotal:"}</span>
-              <span className="font-semibold text-brand-deep">{subtotal} {isAr ? "ر.س" : "SAR"}</span>
-            </div>
-            <div className="flex justify-between text-emerald-700">
-              <span>{isAr ? "التوصيل والتركيب المنزلي:" : "Delivery & Installation:"}</span>
-              <span className="font-bold">{isAr ? "مجاني" : "Free"}</span>
-            </div>
-            <div className="flex justify-between text-text-subtle">
-              <span>{isAr ? "ضريبة القيمة المضافة:" : "VAT:"}</span>
-              <span className="font-semibold text-brand-deep">{isAr ? "مشمولة" : "Included"}</span>
-            </div>
-
-            <div className="flex justify-between items-baseline pt-4 border-t-2 border-border-subtle">
-              <span className="text-base font-bold text-brand-deep">
-                {isAr ? "المجموع الكلي:" : "Grand Total:"}
+          {/* Total Row (Appears ONLY if EVERY item has a price) */}
+          {hasPriceForAll && typeof totalPrice === "number" ? (
+            <div className="flex justify-between items-baseline pt-3 border-t border-border-subtle">
+              <span className="text-sm font-bold text-brand-deep">
+                {isAr ? "المجموع الكلي:" : "Total:"}
               </span>
-              <div className="text-2xl font-bold text-brand-primary">
-                {subtotal}{" "}
-                <span className="text-sm font-semibold">{isAr ? "ر.س" : "SAR"}</span>
+              <div className="text-lg font-bold text-brand-primary">
+                {totalPrice}{" "}
+                <span className="text-xs font-semibold">{isAr ? "ر.س" : "SAR"}</span>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Guarantees Box */}
-        <div className="bg-surface-subtle rounded-2xl p-5 border border-border-subtle space-y-3 text-xs">
-          <div className="flex items-center gap-2.5 font-bold text-brand-deep">
-            <ShieldCheck className="w-4 h-4 text-brand-primary" />
-            <span>{isAr ? "ضمان شامل لمدة سنتين" : "2-Year Comprehensive Warranty"}</span>
-          </div>
-          <div className="flex items-center gap-2.5 font-bold text-brand-deep">
-            <Truck className="w-4 h-4 text-emerald-600" />
-            <span>{isAr ? "توصيل سريع خلال 24 - 48 ساعة" : "Fast 24-48h Delivery"}</span>
-          </div>
-          <div className="flex items-center gap-2.5 font-bold text-brand-deep">
-            <Wrench className="w-4 h-4 text-brand-navy" />
-            <span>{isAr ? "فريق فني معتمد للتركيب المباشر" : "Certified Installation Technicians"}</span>
-          </div>
+          ) : null}
         </div>
       </div>
     </div>
