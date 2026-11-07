@@ -125,7 +125,7 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       { ar: "شاشة رقمية ديجيتال ذكية لقياس نسبة الأملاح TDS", en: "Digital smart screen for TDS monitoring" },
       { ar: "إنتاجية فائقة تصل إلى 1600 لتر من المياه النقية يومياً", en: "Massive output up to 1600 liters per day" },
       { ar: "يزيل الشوائب والرواسب والكلور والأملاح الزائدة بنسبة 99%", en: "Removes 99% of sediments, chlorine and excess salts" },
-      { ar: "قطع كهربائية أصلية معتمدة", en: "Original certified electrical components" },
+      { ar: "قطع كهربائية أصلية", en: "Original electrical components" },
     ],
     specs: [
       { id: "stages", label: { ar: "عدد المراحل", en: "Stages" }, value: { ar: "6 مراحل مدمجة", en: "6 Integrated Stages" } },
@@ -269,8 +269,8 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
       en: "Pure Nano 7-Stage Under-Sink RO System with Tank & Faucet",
     },
     shortDescription: {
-      ar: "النظام القياسي المعتمد لمياه الشرب المنزلية النقية بنقاء 100%.",
-      en: "Certified standard home RO drinking water system for 100% pure water.",
+      ar: "نظام قياسي لمياه الشرب المنزلية النقية.",
+      en: "Standard home RO drinking water system.",
     },
     fullDescription: {
       ar: "نظام التحلية المنزلي بيور نانو 7 مراحل يوفر مياهاً نقية تماماً خالية من الأملاح الزائدة والميكروبات والكلور، مزود بخزان ضغط صحي وحنفية ستيل ومرحلة لإضافة المعادن المفيدة للجسم.",
@@ -508,8 +508,8 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     id: "water-tank-19l",
     slug: "water-tank-19l",
     name: {
-      ar: "خزان ضغط مياه التحلية سعة 19 لتر (تانك لايف معتمد)",
-      en: "Certified 19L Pressurized RO Water Storage Tank (TankLife)",
+      ar: "خزان ضغط مياه التحلية سعة 19 لتر (تانك لايف)",
+      en: "19L Pressurized RO Water Storage Tank (TankLife)",
     },
     shortDescription: {
       ar: "خزان صحي مغلق يحفظ نقاء المياه بضغط هوائي قوي وتدفق سريع.",
@@ -525,7 +525,7 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     images: ["/images/products/water-tank-19l.jpg"],
     thumbnailImage: "/images/products/water-tank-19l.jpg",
     category: "accessories",
-    badge: { ar: "صحي ومعتمد", en: "Food Grade" },
+    badge: { ar: "صحي وآمن", en: "Food Grade" },
     features: [
       { ar: "سعة 19 لتر لحفظ مخزون وافر من المياه النقية", en: "19L capacity ensures constant water backup" },
       { ar: "مبطن بمادة البولي بروبيلين الصحية المقاومة للروائح", en: "Food-grade polypropylene lining" },

@@ -1,8 +1,7 @@
 import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { siteConfig } from "@/config/site";
-import { Mail, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export function SiteFooter() {
@@ -12,7 +11,7 @@ export function SiteFooter() {
   const tNav = useTranslations("Navigation");
   const tFooter = useTranslations("Footer");
 
-  const brandMark = isAr ? "أكوا جارد" : "AQUA GUARD";
+  const brandMark = isAr ? "أكوا" : "AQUA";
 
   const navLinks = [
     { href: "/" as const, label: tNav("home") },
@@ -23,8 +22,8 @@ export function SiteFooter() {
 
   const whatsappUrl = buildWhatsAppUrl(
     isAr
-      ? "مرحباً أكوا جارد، أود الاستفسار عن منتجات وفلاتر المياه."
-      : "Hello Aqua Guard, I would like to inquire about water filters."
+      ? "السلام عليكم، أود الاستفسار عن منتجات وفلاتر المياه."
+      : "Hello, I would like to inquire about water filters."
   );
 
   return (
@@ -41,16 +40,8 @@ export function SiteFooter() {
             </p>
           </div>
 
-          {/* Contact Details Pill */}
+          {/* Action Badges */}
           <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={`mailto:${siteConfig.contact.email}`}
-              className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-aqua-100 transition-colors"
-            >
-              <Mail className="w-4 h-4 text-brand-primary" />
-              <span>{siteConfig.contact.email}</span>
-            </a>
-
             {whatsappUrl && (
               <a
                 href={whatsappUrl}
@@ -59,7 +50,7 @@ export function SiteFooter() {
                 className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 transition-colors"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
-                <span dir="ltr">{siteConfig.contact.displayPhone}</span>
+                <span>{isAr ? "محادثة عبر واتساب" : "WhatsApp Chat"}</span>
               </a>
             )}
 

@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 import { CATALOG_PRODUCTS, getProductById } from "@/data/catalog";
 import { ProductDetailActions } from "@/components/products/product-detail-actions";
 import { ProductCard } from "@/components/ui/product-card";
-import { ShieldCheck, Wrench, Truck, CheckCircle2, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function generateStaticParams() {
   const params: Array<{ locale: string; id: string }> = [];
@@ -167,7 +167,7 @@ export default async function ProductDetailPage({
           <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
             <div>
               {/* Category & Rating */}
-              <div className="flex items-center justify-between gap-4 mb-3">
+              <div className="flex items-center gap-4 mb-3">
                 <span className="text-xs font-bold text-brand-primary uppercase tracking-wider bg-brand-mist/60 px-3 py-1 rounded-full">
                   {product.category === "packages"
                     ? isAr ? "باقة خاصة" : "Special Bundle"
@@ -179,17 +179,6 @@ export default async function ProductDetailPage({
                     ? isAr ? "فلتر جامبو" : "Jumbo Filter"
                     : isAr ? "قطع غيار" : "Accessory"}
                 </span>
-
-                <div className="flex items-center gap-1.5 text-amber-500">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400 stroke-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-xs font-bold text-text-subtle">
-                    4.9 {isAr ? "(تقييم العملاء)" : "(Customer Reviews)"}
-                  </span>
-                </div>
               </div>
 
               {/* Title */}
@@ -226,57 +215,6 @@ export default async function ProductDetailPage({
 
               {/* Interactive Cart and WhatsApp Action Buttons */}
               <ProductDetailActions product={product} locale={locale as "ar" | "en"} />
-            </div>
-
-            {/* Reassurance Grid */}
-            <div className="pt-6 border-t border-border-subtle grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 rounded-full bg-blue-50 text-brand-primary flex items-center justify-center">
-                  <Truck className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-bold text-brand-deep">
-                  {isAr ? "شحن مجاني" : "Free Shipping"}
-                </span>
-                <span className="text-[11px] text-text-subtle">
-                  {isAr ? "لجميع المدن" : "All SA cities"}
-                </span>
-              </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                  <Wrench className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-bold text-brand-deep">
-                  {isAr ? "تركيب مجاني" : "Free Installation"}
-                </span>
-                <span className="text-[11px] text-text-subtle">
-                  {isAr ? "فنيين معتمدين" : "Certified techs"}
-                </span>
-              </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-bold text-brand-deep">
-                  {isAr ? "ضمان سنتين" : "2-Year Warranty"}
-                </span>
-                <span className="text-[11px] text-text-subtle">
-                  {isAr ? "شامل القطع" : "Full coverage"}
-                </span>
-              </div>
-
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-bold text-brand-deep">
-                  {isAr ? "دفع عند الاستلام" : "Cash on Delivery"}
-                </span>
-                <span className="text-[11px] text-text-subtle">
-                  {isAr ? "بعد التجربة" : "Pay after test"}
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -357,8 +295,8 @@ export default async function ProductDetailPage({
                 </h2>
                 <p className="text-sm text-text-subtle mt-1">
                   {isAr
-                    ? "اختر من حلول التحلية والفلترة المعتمدة لمنزلك"
-                    : "Choose from our trusted water purification solutions"}
+                    ? "حلول تحلية وفلترة المياه للمنزل"
+                    : "Water purification and filtration solutions"}
                 </p>
               </div>
 

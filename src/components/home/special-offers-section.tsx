@@ -85,12 +85,12 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
           <span>{isAr ? "عروض حصرية لفترة محدودة" : "Exclusive Limited-Time Offers"}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-deep tracking-tight">
-          {isAr ? "باقات وعروض أكوا جارد الخاصة" : "Aqua Guard Featured Packages & Offers"}
+          {isAr ? "باقات وعروض أكوا الخاصة" : "AQUA Featured Packages & Offers"}
         </h2>
         <p className="text-base sm:text-lg text-text-subtle mt-3">
           {isAr
-            ? "حلول شاملة متكاملة لمياه شرب نقية وصحية مع تركيب وضمان سنتين والدفع عند الاستلام"
-            : "Complete bundled solutions for pure drinking water with free installation & 2-year warranty"}
+            ? "حلول شاملة متكاملة لمياه شرب نقية وصحية مع الدفع عند الاستلام"
+            : "Complete bundled solutions for pure drinking water with cash on delivery"}
         </p>
       </div>
 
@@ -237,8 +237,8 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
               </h4>
               <p className="text-xs text-text-subtle line-clamp-2">
                 {isAr
-                  ? "شاشة رقمية ذكية وإنتاجية تصل إلى 1600 لتر يومياً مع ضمان سنتين وتركيب مجاني."
-                  : "Smart digital screen, 1600L/day capacity, 2-year warranty & free installation."}
+                  ? "شاشة رقمية ذكية وإنتاجية تصل إلى 1600 لتر يومياً وتصميم مدمج."
+                  : "Smart digital screen, 1600L/day capacity, and compact design."}
               </p>
             </div>
           </div>

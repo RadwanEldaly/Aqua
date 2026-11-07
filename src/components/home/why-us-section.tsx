@@ -43,29 +43,29 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
       icon: Droplets,
       title: isAr ? "نقاء فائق بنسبة 100%" : "100% Pure Drinking Water",
       desc: isAr
-        ? "تقنية التناضح العكسي RO المتقدمة لإزالة الكلور والشوائب والأملاح الثقيلة بنقاء معتمد."
+        ? "تقنية التناضح العكسي RO لإزالة الكلور والشوائب والأملاح الثقيلة."
         : "Advanced RO technology removing chlorine, sediments, and heavy metals.",
       color: "bg-blue-50 text-brand-primary",
     },
     {
       icon: Wrench,
-      title: isAr ? "توصيل وتركيب فوري مجاني" : "Free Delivery & Installation",
+      title: isAr ? "تركيب وتجهيز فني" : "Professional Installation",
       desc: isAr
-        ? "فريق فنيين معتمدين ومحترفين لتركيب الأجهزة وفحص نسبة الأملاح وتجربة الماء أمامك."
-        : "Certified professional technicians for fast installation and water testing.",
+        ? "فريق فنيين لتركيب الأجهزة وفحص نسبة الأملاح وتجربة الماء أمامك."
+        : "Technicians for device setup and water testing.",
       color: "bg-emerald-50 text-emerald-600",
     },
     {
       icon: ShieldCheck,
-      title: isAr ? "ضمان شامل لمدة سنتين" : "2-Year Full Warranty",
+      title: isAr ? "دعم ومتابعة" : "Ongoing Support",
       desc: isAr
-        ? "ضمان ذهبي معتمد يغطي القطع الكهربائية والكمبروسر مع خدمة صيانة ومتابعة دورية."
-        : "Certified warranty covering electrical parts and compressors with scheduled maintenance.",
+        ? "متابعة دورية وخدمة صيانة للأجهزة والفلاتر."
+        : "Scheduled maintenance and follow-up.",
       color: "bg-purple-50 text-purple-600",
     },
     {
       icon: Headphones,
-      title: isAr ? "خدمة عملاء ودعم مستمر" : "Dedicated Customer Support",
+      title: isAr ? "تواصل مباشر" : "Direct Contact",
       desc: isAr
         ? "فريقنا معك عبر واتساب والاتصال الهاتفي للرد الفوري على استفساراتك وخدمات ما بعد البيع."
         : "Instant assistance and after-sales support via WhatsApp and phone.",

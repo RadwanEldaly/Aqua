@@ -2,16 +2,16 @@ import type { Locale } from "@/types/locale";
 
 export const siteConfig = {
   name: {
-    ar: "أكوا جارد لتنقية المياه",
-    en: "Aqua Guard Water Filtration",
+    ar: "أكوا لتنقية المياه",
+    en: "AQUA Water Filtration",
   },
   shortName: {
-    ar: "أكوا جارد",
-    en: "Aqua Guard",
+    ar: "أكوا",
+    en: "AQUA",
   },
   tagline: {
-    ar: "حلول متقدمة لأنظمة وفلاتر وبرادات المياه في المملكة العربية السعودية",
-    en: "Advanced water filtration and purification solutions in Saudi Arabia",
+    ar: "أنظمة وفلاتر تنقية المياه في المملكة العربية السعودية",
+    en: "Water filtration systems and filters in Saudi Arabia",
   },
   targetMarket: {
     country: "Saudi Arabia",
@@ -42,9 +42,7 @@ export const siteConfig = {
     ],
   },
   contact: {
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "966577842370",
-    displayPhone: "+966 57 784 2370",
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "Aquaguaard9@gmail.com",
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
   },
 } as const;
 
