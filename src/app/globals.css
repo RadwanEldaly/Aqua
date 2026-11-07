@@ -22,6 +22,16 @@
     --color-aqua-mist: #f0f9ff;       /* Pure water mist surface (Sky 50) */
     --color-aqua-surface: #ffffff;    /* Crisp pure white */
 
+    /* Brand System Roles */
+    --color-abyss: #030b15;           /* Deepest abyss midnight navy for dark panels */
+    --color-ocean: #08213e;           /* Oceanic authority panel tone */
+    --color-azure: #0369a1;           /* Primary crystal azure (Sky 700) */
+    --color-azure-hover: #075985;     /* Deep ocean azure hover (Sky 800) */
+    --color-lagoon: #0284c7;          /* Mineral cyan accent */
+    --color-foam: #e0f2fe;            /* Crisp glacial water tint (Sky 100) */
+    --color-pearl: #fdfbf7;           /* Warm off-white surface for variety */
+    --color-champagne: #e2c992;       /* Muted warm metallic accent ONLY on dark panels */
+
     /* Blue Primitives Scale (50–950) */
     --color-aqua-50: var(--color-aqua-mist);
     --color-aqua-100: var(--color-aqua-ice);
@@ -178,6 +188,15 @@
   --color-brand-mist: var(--color-aqua-mist);
   --color-brand-surface: var(--color-aqua-surface);
 
+  --color-brand-abyss: var(--color-abyss);
+  --color-brand-ocean: var(--color-ocean);
+  --color-brand-azure: var(--color-azure);
+  --color-brand-azure-hover: var(--color-azure-hover);
+  --color-brand-lagoon: var(--color-lagoon);
+  --color-brand-foam: var(--color-foam);
+  --color-brand-pearl: var(--color-pearl);
+  --color-brand-champagne: var(--color-champagne);
+
   --color-aqua-50: var(--color-aqua-50);
   --color-aqua-100: var(--color-aqua-100);
   --color-aqua-200: var(--color-aqua-200);
@@ -229,5 +248,63 @@
     -webkit-mask-composite: source-in;
     mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent), linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
     mask-composite: intersect;
+  }
+
+  /* Ripple rings pulse loop (11s smooth, CSS-only, transform and opacity only) */
+  @keyframes ripple-pulse {
+    0%, 100% {
+      transform: scale(0.97);
+      opacity: 0.18;
+    }
+    50% {
+      transform: scale(1.03);
+      opacity: 0.32;
+    }
+  }
+
+  .animate-ripple-pulse {
+    animation: ripple-pulse 11s ease-in-out infinite;
+  }
+
+  /* Marquee track animations (CSS-only, pauses on hover/focus, static under reduced-motion) */
+  @keyframes marquee-scroll-ltr {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-scroll-rtl {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(50%);
+    }
+  }
+
+  .marquee-track[dir="ltr"] {
+    animation: marquee-scroll-ltr 34s linear infinite;
+  }
+
+  .marquee-track[dir="rtl"],
+  [dir="rtl"] .marquee-track {
+    animation: marquee-scroll-rtl 34s linear infinite;
+  }
+
+  .marquee-container:hover .marquee-track,
+  .marquee-container:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ripple-pulse,
+    .marquee-track,
+    [dir="rtl"] .marquee-track {
+      animation: none !important;
+      transform: none !important;
+    }
   }
 }

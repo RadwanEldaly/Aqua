@@ -4,12 +4,14 @@ import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { Price } from "./price";
 import { Badge } from "./badge";
+import { RippleRings } from "./brand-patterns";
 
 export const PRODUCT_CARD_IMAGE_ASPECT = "aspect-square";
 
 export interface ProductCardProps {
   id: string;
   name: string;
+  index?: number;
   category?: string;
   price?: number;
   compareAtPrice?: number;
@@ -30,6 +32,7 @@ export interface ProductCardProps {
 
 export function ProductCard({
   name,
+  index,
   category,
   price,
   compareAtPrice,
@@ -45,17 +48,30 @@ export function ProductCard({
   priority = false,
 }: ProductCardProps) {
   const CardTag = href ? "div" : "article";
+  const formattedIndex =
+    typeof index === "number" ? String(index).padStart(2, "0") : undefined;
 
   return (
     <CardTag
       className={cn(
-        "group relative flex flex-col rounded-panel bg-white p-4 sm:p-5 shadow-card",
-        "transition-all duration-200 hover:shadow-hover",
+        "group relative flex flex-col h-full rounded-panel bg-white p-4 sm:p-5 shadow-card border border-border-subtle/80",
+        "transition-transform duration-200 hover:-translate-y-1.5 hover:shadow-hover",
         className
       )}
     >
-      {/* Visual Image Container with Pure White Inset Panel (NO border) */}
-      <div className={cn("relative w-full overflow-hidden rounded-2xl bg-white mb-4 flex items-center justify-center p-3", PRODUCT_CARD_IMAGE_ASPECT)}>
+      {/* Tonal Inset Image Panel (foam/pearl tint with ripple mark & mix-blend-multiply) */}
+      <div
+        className={cn(
+          "relative w-full overflow-hidden rounded-2xl bg-brand-pearl mb-4 flex items-center justify-center p-4 select-none",
+          PRODUCT_CARD_IMAGE_ASPECT
+        )}
+      >
+        {/* Subtle Background Ripple Rings */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-40 pointer-events-none">
+          <RippleRings className="w-[130%] h-[130%] text-brand-ocean/15" />
+        </div>
+
+        {/* Optional Badge */}
         {badge && (
           <div className="absolute top-3 start-3 z-10 pointer-events-none">
             <Badge variant={badge.variant || "primary"} size="sm">
@@ -64,13 +80,43 @@ export function ProductCard({
           </div>
         )}
 
+        {/* Small Top-End Index Numeral */}
+        {formattedIndex && (
+          <span
+            aria-hidden="true"
+            className="absolute top-3 end-3 z-10 text-[11px] font-extrabold text-brand-azure/60 font-sans tracking-tight select-none"
+          >
+            {formattedIndex}
+          </span>
+        )}
+
+        {/* Soft Elliptical Floor Shadow */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-3 w-3/5 h-2.5 rounded-full bg-brand-deep/8 blur-[2px] pointer-events-none"
+        />
+
+        {/* Product Image: mix-blend-multiply melts pure white JPEG into pearl panel */}
         {imageUrl ? (
           <div
-            className="feathered-image-mask relative flex items-center justify-center transition-transform duration-200 ease-out group-hover:scale-105"
+            className="feathered-image-mask relative z-1 flex items-center justify-center transition-transform duration-300 ease-out group-hover:scale-105"
             style={{
-              aspectRatio: imageWidth && imageHeight ? `${imageWidth} / ${imageHeight}` : undefined,
-              width: imageWidth && imageHeight ? (imageWidth >= imageHeight ? "100%" : "auto") : "100%",
-              height: imageWidth && imageHeight ? (imageHeight > imageWidth ? "100%" : "auto") : "100%",
+              aspectRatio:
+                imageWidth && imageHeight
+                  ? `${imageWidth} / ${imageHeight}`
+                  : undefined,
+              width:
+                imageWidth && imageHeight
+                  ? imageWidth >= imageHeight
+                    ? "100%"
+                    : "auto"
+                  : "100%",
+              height:
+                imageWidth && imageHeight
+                  ? imageHeight > imageWidth
+                    ? "100%"
+                    : "auto"
+                  : "100%",
               maxWidth: "100%",
               maxHeight: "100%",
             }}
@@ -80,7 +126,7 @@ export function ProductCard({
               alt={imageAlt || name}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              className="object-contain"
+              className="object-contain mix-blend-multiply"
               priority={priority}
               fetchPriority={priority ? "high" : "auto"}
               loading={priority ? undefined : "lazy"}
@@ -104,7 +150,8 @@ export function ProductCard({
       </div>
 
       {/* Card Content */}
-      <div className="flex flex-1 flex-col gap-2.5">
+      <div className="flex flex-1 flex-col gap-2">
+        {/* Category Tag */}
         {category ? (
           <span className="text-xs font-semibold text-text-subtle-accessible ltr:uppercase ltr:tracking-wider leading-none">
             {category}
@@ -113,7 +160,8 @@ export function ProductCard({
           <div className="h-3" aria-hidden="true" />
         )}
 
-        <h3 className="min-h-[44px] text-base font-bold text-brand-deep leading-snug group-hover:text-brand-primary transition-colors line-clamp-2">
+        {/* Title */}
+        <h3 className="min-h-[44px] text-base font-bold text-brand-deep leading-snug group-hover:text-brand-azure transition-colors line-clamp-2">
           {href ? (
             <Link href={href} className="focus:outline-none">
               <span className="absolute inset-0 z-0" aria-hidden="true" />
@@ -124,8 +172,8 @@ export function ProductCard({
           )}
         </h3>
 
-        {/* Actions Row */}
-        <div className="mt-auto pt-3 flex items-center justify-between border-t border-border-subtle/70 min-h-[44px]">
+        {/* Actions Row Pinned to Bottom (every card exactly uniform) */}
+        <div className="mt-auto pt-3 flex items-center justify-between border-t border-border-subtle/80 min-h-[44px]">
           <div>
             {typeof price === "number" && (
               <Price
@@ -140,7 +188,7 @@ export function ProductCard({
           {actions ? (
             <div className="relative z-10 shrink-0">{actions}</div>
           ) : (
-            /* Slot reserved for future action (Add to order) to guarantee zero CLS */
+            /* Slot reserved for zero layout shift */
             <div className="h-9 shrink-0" aria-hidden="true" />
           )}
         </div>
