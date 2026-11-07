@@ -3,9 +3,8 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ContactForm } from "@/components/contact/contact-form";
 import { RippleRings } from "@/components/ui/brand-patterns";
-import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { SOCIAL_LINKS } from "@/components/ui/social-icons";
+import { SOCIAL_LINKS, WhatsAppIcon } from "@/components/ui/social-icons";
 
 export async function generateMetadata({
   params,
@@ -74,7 +73,7 @@ export default async function ContactPage({
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 h-12 px-7 rounded-full bg-white text-brand-deep font-bold text-sm shadow-subtle hover:bg-aqua-100 transition-all cursor-pointer"
               >
-                <MessageCircle className="w-5 h-5 text-emerald-600" aria-hidden="true" />
+                <WhatsAppIcon className="w-5 h-5 text-[#25D366] shrink-0" aria-hidden="true" />
                 <span>{t("directAction")}</span>
               </a>
             )}

@@ -1,10 +1,9 @@
 import React from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { WaveDivider } from "@/components/ui/brand-patterns";
-import { SOCIAL_LINKS } from "@/components/ui/social-icons";
+import { SOCIAL_LINKS, WhatsAppIcon } from "@/components/ui/social-icons";
 import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
@@ -64,7 +63,7 @@ export function SiteFooter() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 transition-colors"
                 >
-                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
                   <span>{isAr ? "محادثة عبر واتساب" : "WhatsApp Chat"}</span>
                 </a>
               )}

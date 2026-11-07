@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { MessageCircle, Send } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { Label, Input, Textarea } from "@/components/ui/form-inputs";
-import { Button } from "@/components/ui/button";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 interface ContactFormProps {
   locale: "ar" | "en";
@@ -19,6 +19,30 @@ export function ContactForm({ locale }: ContactFormProps) {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ name?: string; message?: string }>({});
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred() || !containerRef.current) return;
+      const elements = containerRef.current.children;
+      if (!elements || elements.length === 0) return;
+
+      gsap.fromTo(
+        elements,
+        { opacity: 0, y: 35, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.15,
+          ease: "power3.out",
+          clearProps: "opacity,transform",
+        }
+      );
+    },
+    { scope: containerRef }
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -51,24 +75,23 @@ export function ContactForm({ locale }: ContactFormProps) {
   }
 
   return (
-    <div className="w-full max-w-xl mx-auto flex flex-col gap-8">
+    <div ref={containerRef} className="w-full max-w-xl mx-auto flex flex-col gap-8">
       {/* Direct WhatsApp Quick Contact Button (hidden when number is missing) */}
       {hasWhatsApp && (
         <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-brand-surface text-center gap-3 shadow-subtle">
           <p className="text-sm font-medium text-text-subtle-accessible">
             {t("description")}
           </p>
-          <Button
+          <a
             href={directWhatsAppUrl!}
-            external
-            variant="primary"
-            size="lg"
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label={t("directActionAria")}
-            className="w-full sm:w-auto min-w-[220px] inline-flex items-center justify-center gap-2"
+            className="w-full sm:w-auto min-w-[220px] h-12 px-6 rounded-xl font-bold bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-card hover:shadow-hover inline-flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
           >
-            <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+            <WhatsAppIcon className="w-5 h-5 shrink-0" aria-hidden="true" />
             <span>{t("directAction")}</span>
-          </Button>
+          </a>
         </div>
       )}
 
@@ -123,16 +146,14 @@ export function ContactForm({ locale }: ContactFormProps) {
 
         {/* Submit Button */}
         <div>
-          <Button
+          <button
             type="submit"
-            variant="primary"
-            size="lg"
             disabled={!hasWhatsApp}
-            className="w-full inline-flex items-center justify-center gap-2"
+            className="w-full h-12 px-6 rounded-xl font-bold bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-card hover:shadow-hover inline-flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.01] active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
           >
-            <Send className="w-4 h-4 rtl:rotate-180 shrink-0" aria-hidden="true" />
+            <WhatsAppIcon className="w-5 h-5 shrink-0" aria-hidden="true" />
             <span>{t("submitAction")}</span>
-          </Button>
+          </button>
           {!hasWhatsApp && (
             <p className="mt-2 text-xs text-center text-text-subtle-accessible">
               {t("whatsappOffline")}

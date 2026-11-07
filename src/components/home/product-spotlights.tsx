@@ -62,16 +62,16 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
       if (heading) {
         gsap.fromTo(
           heading,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: heading,
-              start: "top 85%",
+              start: "top 82%",
               toggleActions: "play none none none",
               once: true,
             },
@@ -83,16 +83,17 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
       panels?.forEach((panel) => {
         gsap.fromTo(
           panel,
-          { opacity: 0, y: 36 },
+          { opacity: 0, y: 52, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.85,
+            ease: "power3.out",
             clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: panel,
-              start: "top 82%",
+              start: "top 80%",
               toggleActions: "play none none none",
               once: true,
             },

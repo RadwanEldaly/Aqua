@@ -54,7 +54,7 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -63,12 +63,12 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
       if (heading) {
         tl.fromTo(
           heading,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           }
         );
@@ -77,31 +77,33 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
       if (heroTile) {
         tl.fromTo(
           heroTile,
-          { opacity: 0, y: 32 },
+          { opacity: 0, y: 50, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          heading ? "-=0.35" : 0
+          heading ? "-=0.4" : 0
         );
       }
 
       if (secondaryTiles && secondaryTiles.length > 0) {
         tl.fromTo(
           secondaryTiles,
-          { opacity: 0, y: 32 },
+          { opacity: 0, y: 46, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.55,
-            stagger: 0.08,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          heroTile ? "-=0.4" : 0
+          heroTile ? "-=0.45" : 0
         );
       }
     },

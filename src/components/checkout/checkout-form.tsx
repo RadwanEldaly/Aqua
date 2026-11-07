@@ -6,7 +6,6 @@ import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import {
   CheckCircle2,
-  MessageCircle,
   ShoppingBag,
   ArrowRight,
   ArrowLeft,
@@ -14,6 +13,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/config/site";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -229,9 +229,9 @@ export function CheckoutForm() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-brand-primary text-white font-medium text-sm hover:bg-brand-primary-hover transition-colors"
+              className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors shadow-subtle"
             >
-              <MessageCircle className="w-4 h-4" />
+              <WhatsAppIcon className="w-4 h-4" />
               <span>{isAr ? "فتح واتساب مرة أخرى" : "Open WhatsApp Again"}</span>
             </a>
             <button
@@ -430,9 +430,9 @@ export function CheckoutForm() {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-brand-primary hover:bg-brand-primary-hover text-white font-bold text-sm shadow-subtle transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-subtle hover:shadow-glow-cyan transition-all cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4" />
+              <WhatsAppIcon className="w-5 h-5" />
               <span>{isAr ? "إرسال الطلب عبر واتساب" : "Submit Order via WhatsApp"}</span>
             </button>
           </div>

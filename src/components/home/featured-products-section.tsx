@@ -34,7 +34,7 @@ export function FeaturedProductsSection({
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -43,12 +43,12 @@ export function FeaturedProductsSection({
       if (header) {
         tl.fromTo(
           header,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           }
         );
@@ -57,16 +57,17 @@ export function FeaturedProductsSection({
       if (cards && cards.length > 0) {
         tl.fromTo(
           cards,
-          { opacity: 0, y: 32 },
+          { opacity: 0, y: 48, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          header ? "-=0.35" : 0
+          header ? "-=0.4" : 0
         );
       }
     },

@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { MessageCircle, Check, Search, X } from "lucide-react";
+import { Check, Search, X } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 import {
   type ProvisionalProduct,
   type ProductCategory,
@@ -65,6 +67,30 @@ export function ProductCatalog({
   });
 
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred() || !gridRef.current) return;
+      const cards = gridRef.current.children;
+      if (!cards || cards.length === 0) return;
+
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 36, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          stagger: 0.04,
+          ease: "power2.out",
+          clearProps: "opacity,transform",
+        }
+      );
+    },
+    { dependencies: [activeCategoryId, searchQuery], scope: gridRef }
+  );
 
   // Auto-focus search input if requested via query parameter (?focus=search)
   useEffect(() => {
@@ -222,7 +248,7 @@ export function ProductCatalog({
 
       {/* 3. Products Responsive Grid (2 col @ <640, 3 col @ sm, 4 col @ lg) */}
       {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+        <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredProducts.map((product, index) => {
             const productName = product.name[locale];
             const categoryMatch = categories.find(
@@ -272,7 +298,7 @@ export function ProductCatalog({
                       withOrbit
                       className="shrink-0"
                     >
-                      <MessageCircle className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                      <WhatsAppIcon className="w-4 h-4 text-emerald-600" aria-hidden="true" />
                       <span>{tInquire("action")}</span>
                     </Button>
                   </div>

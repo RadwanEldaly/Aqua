@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
-import { MessageCircle, ShoppingBag, ArrowLeft, ArrowRight } from "lucide-react";
+import { ShoppingBag, ArrowLeft, ArrowRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
@@ -70,7 +71,7 @@ export function MobileBottomBar() {
             aria-label={tHome("chatAria")}
             className="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] px-2 text-emerald-700 hover:text-emerald-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg"
           >
-            <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+            <WhatsAppIcon className="w-5 h-5 shrink-0 text-[#25D366]" aria-hidden="true" />
             <span className="text-[10px] font-bold mt-0.5">
               {isAr ? "واتساب" : "WhatsApp"}
             </span>

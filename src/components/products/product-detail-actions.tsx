@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Minus, ShoppingBag, MessageCircle, Check } from "lucide-react";
+import { Plus, Minus, ShoppingBag, Check } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -112,7 +113,7 @@ export function ProductDetailActions({ product, locale }: ProductDetailActionsPr
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 py-3.5 px-6 rounded-button bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all shadow-sm"
           >
-            <MessageCircle className="w-5 h-5" />
+            <WhatsAppIcon className="w-5 h-5 shrink-0" aria-hidden="true" />
             <span>{isAr ? "اطلب الآن عبر واتساب" : "Order via WhatsApp"}</span>
           </a>
         )}

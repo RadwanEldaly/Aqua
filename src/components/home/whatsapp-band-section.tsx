@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
@@ -23,16 +23,17 @@ export function WhatsAppBandSection() {
       if (inner) {
         gsap.fromTo(
           inner,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 48, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.85,
+            ease: "power3.out",
             clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: containerRef.current,
-              start: "top 85%",
+              start: "top 80%",
               toggleActions: "play none none none",
               once: true,
             },
@@ -137,7 +138,7 @@ export function WhatsAppBandSection() {
             size="lg"
             className="min-w-[220px] h-14 px-8 text-base font-bold bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep inline-flex items-center gap-2.5 shadow-subtle cursor-pointer rounded-full transition-transform hover:scale-105"
           >
-            <MessageCircle className="w-5 h-5 shrink-0 text-brand-primary" aria-hidden="true" />
+            <WhatsAppIcon className="w-6 h-6 shrink-0 text-[#25D366]" aria-hidden="true" />
             <span>{t("chatAction")}</span>
           </Button>
         </div>

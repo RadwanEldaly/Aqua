@@ -4,12 +4,13 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
 import { RippleRings } from "@/components/ui/brand-patterns";
 import { HeroVideoBackground } from "./hero-video-background";
 import { PROVISIONAL_CATEGORIES } from "@/data/provisional-products";
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
@@ -25,6 +26,66 @@ export function HeroSection({ locale }: HeroSectionProps) {
 
   // Category quick chips (excluding 'all')
   const categories = PROVISIONAL_CATEGORIES.filter((c) => c.id !== "all");
+
+  // Rich entrance animation for the Hero section
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const heading = containerRef.current?.querySelector(".hero-title-anim");
+      const subtitle = containerRef.current?.querySelector(".hero-sub-anim");
+      const actions = containerRef.current?.querySelector(".hero-actions-anim");
+      const chips = containerRef.current?.querySelectorAll(".hero-chip-anim");
+      const card = containerRef.current?.querySelector(".hero-card-elem");
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      if (heading) {
+        tl.fromTo(
+          heading,
+          { opacity: 0, y: 48 },
+          { opacity: 1, y: 0, duration: 0.8, clearProps: "opacity,transform" }
+        );
+      }
+
+      if (subtitle) {
+        tl.fromTo(
+          subtitle,
+          { opacity: 0, y: 35 },
+          { opacity: 1, y: 0, duration: 0.7, clearProps: "opacity,transform" },
+          "-=0.55"
+        );
+      }
+
+      if (actions) {
+        tl.fromTo(
+          actions,
+          { opacity: 0, y: 30, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.65, clearProps: "opacity,transform" },
+          "-=0.5"
+        );
+      }
+
+      if (chips && chips.length > 0) {
+        tl.fromTo(
+          chips,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.45, stagger: 0.04, clearProps: "opacity,transform" },
+          "-=0.4"
+        );
+      }
+
+      if (card) {
+        tl.fromTo(
+          card,
+          { opacity: 0, y: 45, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out", clearProps: "opacity,transform" },
+          "-=0.7"
+        );
+      }
+    },
+    { scope: containerRef }
+  );
 
   return (
     <section className="w-full px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5">
@@ -48,40 +109,55 @@ export function HeroSection({ locale }: HeroSectionProps) {
           <div className="lg:col-span-7 flex flex-col items-start text-start">
             <h1
               className={cn(
-                "hero-text-elem text-4xl sm:text-6xl lg:text-7xl xl:text-[80px] font-bold text-white leading-[1.2] sm:leading-[1.12]",
+                "hero-title-anim text-4xl sm:text-6xl lg:text-7xl xl:text-[80px] font-bold text-white leading-[1.2] sm:leading-[1.12]",
                 locale === "en" ? "tracking-tight" : "tracking-normal"
               )}
             >
               <bdi>{tHero("descriptor")}</bdi>
             </h1>
 
-            <p className="hero-text-elem mt-4 sm:mt-6 text-lg sm:text-xl lg:text-2xl font-light text-brand-foam/90 leading-[1.45] max-w-xl">
+            <p className="hero-sub-anim mt-4 sm:mt-6 text-lg sm:text-xl lg:text-2xl font-light text-brand-foam/90 leading-[1.45] max-w-xl">
               <bdi>{tCommon("tagline")}</bdi>
             </p>
 
-            {/* Actions Row: Orbit Buttons */}
-            <div className="hero-text-elem mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4 min-h-[52px]">
-              <Button
+            {/* Actions Row: Modernized, high-contrast, beautiful buttons */}
+            <div className="hero-actions-anim mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4 min-h-[52px]">
+              {/* Primary: Browse Products */}
+              <Link
                 href="/products"
-                variant="light"
-                size="lg"
-                withOrbit
-                className="min-w-[170px] h-13 px-7 text-base font-bold bg-white text-brand-abyss hover:bg-brand-pearl hover:text-brand-abyss shadow-subtle cursor-pointer rounded-full"
+                className={cn(
+                  "group/hero-browse min-w-[175px] h-13 px-7 text-base font-bold rounded-full",
+                  "bg-white hover:bg-brand-pearl text-brand-abyss shadow-elevated",
+                  "inline-flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.03] active:scale-95 cursor-pointer",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure focus-visible:ring-offset-2"
+                )}
               >
-                {tHero("browseAction")}
-              </Button>
+                <span>{tHero("browseAction")}</span>
+                <span className="w-7 h-7 rounded-full bg-brand-ocean/10 text-brand-ocean flex items-center justify-center transition-transform duration-200 group-hover/hero-browse:translate-x-1 rtl:group-hover/hero-browse:-translate-x-1">
+                  {locale === "ar" ? (
+                    <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
+                  )}
+                </span>
+              </Link>
 
+              {/* Secondary: Inquire via Official WhatsApp */}
               {hasWhatsApp ? (
-                <Button
+                <a
                   href={whatsappUrl!}
-                  external
-                  variant="outline"
-                  size="lg"
-                  className="min-w-[160px] h-13 px-8 text-base font-bold text-white border-white/70 hover:bg-white/10 hover:border-white inline-flex items-center gap-2 cursor-pointer rounded-full"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "group/hero-wa min-w-[175px] h-13 px-7 text-base font-bold rounded-full",
+                    "bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-elevated",
+                    "inline-flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.03] active:scale-95 cursor-pointer",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
+                  )}
                 >
-                  <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
+                  <WhatsAppIcon className="w-5 h-5 shrink-0 transition-transform duration-200 group-hover/hero-wa:scale-110" aria-hidden="true" />
                   <span>{tHero("inquireAction")}</span>
-                </Button>
+                </a>
               ) : (
                 /* Reserved slot: identical dimensions, zero shift */
                 <div className="hidden sm:inline-block w-0 min-h-[52px]" aria-hidden="true" />
@@ -94,7 +170,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
                 <Link
                   key={c.id}
                   href={`/products?category=${c.id}`}
-                  className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-foam/85 bg-white/5 hover:bg-white/15 hover:text-white border border-white/10 transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure"
+                  className="hero-chip-anim inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-foam/85 bg-white/5 hover:bg-white/15 hover:text-white border border-white/10 transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure"
                 >
                   {c.label[locale]}
                 </Link>

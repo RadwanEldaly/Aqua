@@ -42,7 +42,7 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -51,12 +51,12 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
       if (header) {
         tl.fromTo(
           header,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           }
         );
@@ -65,16 +65,17 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
       if (cards && cards.length > 0) {
         tl.fromTo(
           cards,
-          { opacity: 0, y: 36 },
+          { opacity: 0, y: 50, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
-            stagger: 0.1,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.75,
+            stagger: 0.12,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          header ? "-=0.35" : 0
+          header ? "-=0.4" : 0
         );
       }
     },

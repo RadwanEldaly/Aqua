@@ -21,17 +21,17 @@ export function BrandVideoBand() {
       if (band) {
         gsap.fromTo(
           band,
-          { opacity: 0, y: 35, scale: 0.98 },
+          { opacity: 0, y: 50, scale: 0.96 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.8,
-            ease: "power2.out",
+            duration: 0.85,
+            ease: "power3.out",
             clearProps: "opacity,transform",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 85%",
+              start: "top 80%",
               toggleActions: "play none none none",
               once: true,
             },

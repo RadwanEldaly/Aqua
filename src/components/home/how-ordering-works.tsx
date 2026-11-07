@@ -4,7 +4,8 @@ import React, { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { DisplayNumeral, RippleRings } from "@/components/ui/brand-patterns";
-import { ShoppingCart, MessageCircle, Truck } from "lucide-react";
+import { ShoppingCart, Truck } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 export function HowOrderingWorks() {
@@ -21,7 +22,7 @@ export function HowOrderingWorks() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -30,12 +31,12 @@ export function HowOrderingWorks() {
       if (heading) {
         tl.fromTo(
           heading,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           }
         );
@@ -44,16 +45,17 @@ export function HowOrderingWorks() {
       if (stepCards && stepCards.length > 0) {
         tl.fromTo(
           stepCards,
-          { opacity: 0, y: 32 },
+          { opacity: 0, y: 48, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            stagger: 0.12,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.14,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          heading ? "-=0.35" : 0
+          heading ? "-=0.4" : 0
         );
       }
     },
@@ -69,7 +71,7 @@ export function HowOrderingWorks() {
     },
     {
       numeral: 2,
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       title: t("step2Title"),
       desc: t("step2Desc"),
     },

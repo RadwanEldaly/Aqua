@@ -65,7 +65,7 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -74,12 +74,12 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
       if (header) {
         tl.fromTo(
           header,
-          { opacity: 0, y: 24 },
+          { opacity: 0, y: 38 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            duration: 0.75,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           }
         );
@@ -88,31 +88,33 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
       if (banner) {
         tl.fromTo(
           banner,
-          { opacity: 0, y: 32 },
+          { opacity: 0, y: 48, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.65,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          header ? "-=0.35" : 0
+          header ? "-=0.4" : 0
         );
       }
 
       if (cards && cards.length > 0) {
         tl.fromTo(
           cards,
-          { opacity: 0, y: 28 },
+          { opacity: 0, y: 45, scale: 0.97 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.55,
+            scale: 1,
+            duration: 0.7,
             stagger: 0.08,
-            ease: "power2.out",
+            ease: "power3.out",
             clearProps: "opacity,transform",
           },
-          banner ? "-=0.35" : 0
+          banner ? "-=0.4" : 0
         );
       }
     },
