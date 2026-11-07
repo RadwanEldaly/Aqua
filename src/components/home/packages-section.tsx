@@ -86,6 +86,35 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
                 className="relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full"
               >
                 <div className="min-w-0 w-full">
+                  {/* Cinematic Video Showcase for Al-Aman Package */}
+                  {pkg.id === "package-alaman" && (
+                    <div className="relative w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden mb-3 sm:mb-4 shadow-subtle bg-brand-abyss select-none">
+                      <Image
+                        src="/video/alaman-package-poster.webp"
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, 400px"
+                        loading="lazy"
+                        className="object-cover"
+                        aria-hidden="true"
+                      />
+                      <video
+                        autoPlay
+                        playsInline
+                        loop
+                        muted
+                        preload="none"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        aria-hidden="true"
+                      >
+                        <source src="/video/alaman-package-commercial.mp4" type="video/mp4" />
+                      </video>
+                      <span className="absolute top-2 start-2 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-primary/90 text-white shadow-sm">
+                        {locale === "ar" ? "معاينة البكج" : "Bundle Preview"}
+                      </span>
+                    </div>
+                  )}
+
                   {/* Overlapping Thumbnails */}
                   <div className="flex items-center -space-x-2 sm:-space-x-3 rtl:space-x-reverse mb-3 sm:mb-6 min-w-0">
                     {resolvedItems.slice(0, 4).map((it) => (
