@@ -94,7 +94,11 @@ export default async function LocaleLayout({
       className={`${fontArabic.variable} ${fontSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-canvas text-brand-deep selection:bg-brand-primary selection:text-white" dir={dir}>
+      <body
+        className="min-h-full flex flex-col bg-canvas text-brand-deep selection:bg-brand-primary selection:text-white"
+        dir={dir}
+        suppressHydrationWarning
+      >
         <NextIntlClientProvider messages={messages} locale={locale}>
           <CartProvider>
             <SkipToContent />
