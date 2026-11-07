@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
 import { Price } from "@/components/ui/price";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 interface OffersSectionProps {
   locale: "ar" | "en";
@@ -16,6 +17,7 @@ interface OffersSectionProps {
 export function OffersSection({ locale }: OffersSectionProps) {
   const t = useTranslations("HomePage.offers");
   const tCommon = useTranslations("Common");
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Strict data guard: render only if at least one product has price and compareAtPrice > price
   const offerProducts = PROVISIONAL_PRODUCTS.filter(
@@ -25,15 +27,64 @@ export function OffersSection({ locale }: OffersSectionProps) {
       p.compareAtPrice > p.price
   );
 
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const header = sectionRef.current?.querySelector(".offers-header-anim");
+      const cards = sectionRef.current?.querySelectorAll(".offers-card-anim");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      if (header) {
+        tl.fromTo(
+          header,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          }
+        );
+      }
+
+      if (cards && cards.length > 0) {
+        tl.fromTo(
+          cards,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          header ? "-=0.35" : 0
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
+
   if (offerProducts.length === 0) {
     return null;
   }
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 bg-brand-abyss text-white [content-visibility:auto] [contain-intrinsic-size:0_650px]">
+    <section ref={sectionRef} className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 bg-brand-abyss text-white">
       <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading on Dark Abyss */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="offers-header-anim flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <SectionHeading
             eyebrow={t("eyebrow")}
             title={t("title")}
@@ -54,7 +105,7 @@ export function OffersSection({ locale }: OffersSectionProps) {
               <article
                 key={product.id}
                 data-product-card="true"
-                className="relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full"
+                className="offers-card-anim relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full"
               >
                 {/* Savings Badge COMPUTED directly from real prices */}
                 <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 min-w-0">

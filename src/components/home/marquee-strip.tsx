@@ -22,7 +22,7 @@ export function MarqueeStrip({ locale }: MarqueeStripProps) {
   return (
     <section
       aria-label={locale === "ar" ? "شريط فئات المنتجات" : "Product categories marquee"}
-      className="marquee-container w-full overflow-hidden bg-brand-abyss py-3.5 sm:py-4 border-y border-white/10 select-none [content-visibility:auto] [contain-intrinsic-size:0_56px]"
+      className="marquee-container w-full overflow-hidden bg-brand-abyss py-3.5 sm:py-4 border-y border-white/10 select-none"
     >
       <div
         dir={locale === "ar" ? "rtl" : "ltr"}

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -10,6 +10,7 @@ import { useCart } from "@/context/cart-context";
 import { Button } from "@/components/ui/button";
 import { Price } from "@/components/ui/price";
 import { ShoppingBag } from "lucide-react";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 interface PackagesSectionProps {
   locale: "ar" | "en";
@@ -19,6 +20,56 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
   const t = useTranslations("HomePage.packages");
   const tCommon = useTranslations("Common");
   const { addItem } = useCart();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const header = sectionRef.current?.querySelector(".packages-header-anim");
+      const cards = sectionRef.current?.querySelectorAll(".packages-card-anim");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      if (header) {
+        tl.fromTo(
+          header,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          }
+        );
+      }
+
+      if (cards && cards.length > 0) {
+        tl.fromTo(
+          cards,
+          { opacity: 0, y: 36 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            stagger: 0.1,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          header ? "-=0.35" : 0
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
 
   // Strict Guard: Hide completely if PACKAGES is empty
   if (!PACKAGES || PACKAGES.length === 0) {
@@ -37,14 +88,16 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
   }
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 bg-brand-pearl border-b border-border-subtle [content-visibility:auto] [contain-intrinsic-size:0_650px]">
+    <section ref={sectionRef} className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 bg-brand-pearl border-b border-border-subtle">
       <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading */}
-        <SectionHeading
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          align="start"
-        />
+        <div className="packages-header-anim">
+          <SectionHeading
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            align="start"
+          />
+        </div>
 
         {/* Packages Cards Grid: 2 columns (<640px, 12px gap), 3 columns (>=1024px) */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
@@ -83,7 +136,7 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
               <article
                 key={pkg.id}
                 data-product-card="true"
-                className="relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full"
+                className="packages-card-anim relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full"
               >
                 <div className="min-w-0 w-full">
                   {/* Cinematic Video Showcase for Al-Aman Package */}

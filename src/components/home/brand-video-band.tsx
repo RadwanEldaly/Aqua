@@ -4,12 +4,43 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Play, Pause } from "lucide-react";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 export function BrandVideoBand() {
   const t = useTranslations("Common");
   const locale = useLocale();
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const band = sectionRef.current?.querySelector(".brand-video-container");
+      if (band) {
+        gsap.fromTo(
+          band,
+          { opacity: 0, y: 35, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
 
   const togglePlayback = () => {
     if (!isPlaying) {
@@ -29,10 +60,10 @@ export function BrandVideoBand() {
   };
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+    <section ref={sectionRef} className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto">
         {/* Fixed Aspect Ratio Container: Eliminates Layout Shift */}
-        <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-panel overflow-hidden bg-brand-deep shadow-elevated flex items-center justify-center select-none group">
+        <div className="brand-video-container relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-panel overflow-hidden bg-brand-deep shadow-elevated flex items-center justify-center select-none group">
           {/* 1. Static Poster via next/image (WebP under 25 KB, lazy) */}
           <Image
             src="/video/water-glass-poster.webp"

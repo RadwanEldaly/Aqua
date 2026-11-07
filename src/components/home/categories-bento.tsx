@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -11,6 +11,7 @@ import {
 } from "@/data/provisional-products";
 import { RippleRings } from "@/components/ui/brand-patterns";
 import { ArrowUpRight } from "lucide-react";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface CategoriesBentoProps {
@@ -40,15 +41,84 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
     CATEGORY_FEATURED_IMAGES[leadCategory.id] ||
     (leadProducts[0] ? leadProducts[0].image.src : null);
 
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const heading = sectionRef.current?.querySelector(".bento-heading-anim");
+      const heroTile = sectionRef.current?.querySelector(".bento-hero-tile");
+      const secondaryTiles = sectionRef.current?.querySelectorAll(".bento-sub-tile");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      if (heading) {
+        tl.fromTo(
+          heading,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          }
+        );
+      }
+
+      if (heroTile) {
+        tl.fromTo(
+          heroTile,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          heading ? "-=0.35" : 0
+        );
+      }
+
+      if (secondaryTiles && secondaryTiles.length > 0) {
+        tl.fromTo(
+          secondaryTiles,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          heroTile ? "-=0.4" : 0
+        );
+      }
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 [content-visibility:auto] [contain-intrinsic-size:0_700px]">
+    <section ref={sectionRef} className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading */}
-        <SectionHeading
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          align="start"
-        />
+        <div className="bento-heading-anim">
+          <SectionHeading
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            align="start"
+          />
+        </div>
 
         {/* Bento Grid: 2 columns on mobile (<640px, 12px gap), 12-column grid on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-12 gap-3 sm:gap-6">
@@ -56,7 +126,7 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
           <Link
             href={`/products?category=${leadCategory.id}`}
             className={cn(
-              "group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-brand-pearl p-4 sm:p-8 shadow-card border border-border-subtle/80",
+              "bento-hero-tile group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-brand-pearl p-4 sm:p-8 shadow-card border border-border-subtle/80",
               "col-span-2 md:col-span-5 md:min-h-[440px] min-w-0 w-full",
               "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover cursor-pointer overflow-hidden",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure focus-visible:ring-offset-2"
@@ -150,7 +220,7 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
                   key={cat.id}
                   href={`/products?category=${cat.id}`}
                   className={cn(
-                    "group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-6 shadow-card border border-border-subtle/80",
+                    "bento-sub-tile group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-6 shadow-card border border-border-subtle/80",
                     "col-span-1 min-w-0 w-full",
                     "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover cursor-pointer overflow-hidden",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure focus-visible:ring-offset-2"

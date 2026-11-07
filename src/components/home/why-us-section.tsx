@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { ShieldCheck, Wrench, Droplets, Headphones } from "lucide-react";
-import { useGSAP, gsap } from "@/hooks/use-gsap";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 interface WhyUsSectionProps {
   locale: "ar" | "en";
@@ -56,24 +56,63 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
 
   useGSAP(
     () => {
+      if (isReducedMotionPreferred()) return;
+
+      const header = containerRef.current?.querySelector(".why-us-header-anim");
+      const banner = containerRef.current?.querySelector(".why-us-banner-anim");
       const cards = containerRef.current?.querySelectorAll(".why-us-card");
-      if (cards && cards.length > 0) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 30 },
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+
+      if (header) {
+        tl.fromTo(
+          header,
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
             duration: 0.6,
-            stagger: 0.12,
             ease: "power2.out",
             clearProps: "opacity,transform",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
           }
+        );
+      }
+
+      if (banner) {
+        tl.fromTo(
+          banner,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          header ? "-=0.35" : 0
+        );
+      }
+
+      if (cards && cards.length > 0) {
+        tl.fromTo(
+          cards,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            stagger: 0.08,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+          },
+          banner ? "-=0.35" : 0
         );
       }
     },
@@ -119,7 +158,7 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
     <section className="w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-8 bg-surface-subtle/40">
       <div ref={containerRef} className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* 1. Header Section */}
-        <div className="text-center max-w-2xl mx-auto">
+        <div className="why-us-header-anim text-center max-w-2xl mx-auto">
           <span className="inline-block px-3.5 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold mb-3">
             {isAr ? "معايير الجودة والأمان" : "Quality & Safety Standards"}
           </span>
@@ -136,7 +175,7 @@ export function WhyUsSection({ locale }: WhyUsSectionProps) {
         {/* 2. Water Droplet Splash Visual Banner */}
         <div
           ref={bannerRef}
-          className="relative w-full aspect-[16/7] sm:aspect-[21/8] rounded-panel overflow-hidden bg-brand-deep shadow-elevated flex items-center justify-center p-6 sm:p-12 text-center select-none"
+          className="why-us-banner-anim relative w-full aspect-[16/7] sm:aspect-[21/8] rounded-panel overflow-hidden bg-brand-deep shadow-elevated flex items-center justify-center p-6 sm:p-12 text-center select-none"
         >
           {/* Static WebP Poster (Lazy loaded, < 25 KB) */}
           <Image

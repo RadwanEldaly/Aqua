@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -8,6 +8,7 @@ import { PROVISIONAL_PRODUCTS, type ProvisionalProduct } from "@/data/provisiona
 import { RippleRings, DisplayNumeral } from "@/components/ui/brand-patterns";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
 import { Price } from "@/components/ui/price";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface ProductSpotlightsProps {
@@ -41,6 +42,56 @@ function pickSpotlightProducts(): ProvisionalProduct[] {
 export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
   const t = useTranslations("HomePage.spotlights");
   const spotlights = pickSpotlightProducts();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const heading = sectionRef.current?.querySelector(".spotlights-heading-anim");
+      if (heading) {
+        gsap.fromTo(
+          heading,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+            scrollTrigger: {
+              trigger: heading,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      }
+
+      const panels = sectionRef.current?.querySelectorAll(".spotlight-panel");
+      panels?.forEach((panel) => {
+        gsap.fromTo(
+          panel,
+          { opacity: 0, y: 36 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+            scrollTrigger: {
+              trigger: panel,
+              start: "top 82%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      });
+    },
+    { scope: sectionRef }
+  );
 
   // Guard: hide section if data has fewer than 3 products
   if (spotlights.length < 3) {
@@ -48,14 +99,16 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
   }
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-brand-pearl/60 border-y border-border-subtle/80 [content-visibility:auto] [contain-intrinsic-size:0_1200px]">
+    <section ref={sectionRef} className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-brand-pearl/60 border-y border-border-subtle/80">
       <div className="max-w-7xl mx-auto flex flex-col gap-12 sm:gap-16">
         {/* Section Heading */}
-        <SectionHeading
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          align="start"
-        />
+        <div className="spotlights-heading-anim">
+          <SectionHeading
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            align="start"
+          />
+        </div>
 
         {/* 3 Alternating Editorial Spotlight Panels */}
         <div className="flex flex-col gap-12 sm:gap-16">
@@ -67,7 +120,7 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
               <article
                 key={product.id}
                 className={cn(
-                  "relative rounded-3xl bg-white p-6 sm:p-10 lg:p-12 shadow-card border border-border-subtle/90 overflow-hidden",
+                  "spotlight-panel relative rounded-3xl bg-white p-6 sm:p-10 lg:p-12 shadow-card border border-border-subtle/90 overflow-hidden",
                   "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
                 )}
               >

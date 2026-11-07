@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 export function WhatsAppBandSection() {
   const t = useTranslations("HomePage.whatsappBand");
@@ -13,6 +14,34 @@ export function WhatsAppBandSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [shouldMountVideo, setShouldMountVideo] = useState(false);
+
+  useGSAP(
+    () => {
+      if (isReducedMotionPreferred()) return;
+
+      const inner = containerRef.current?.querySelector(".whatsapp-band-content");
+      if (inner) {
+        gsap.fromTo(
+          inner,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            clearProps: "opacity,transform",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          }
+        );
+      }
+    },
+    { scope: containerRef }
+  );
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -96,7 +125,7 @@ export function WhatsAppBandSection() {
         <div className="absolute inset-0 bg-brand-ocean/85" aria-hidden="true" />
 
         {/* 4. Action Content */}
-        <div className="relative z-10 flex flex-col items-center gap-6 sm:gap-8">
+        <div className="whatsapp-band-content relative z-10 flex flex-col items-center gap-6 sm:gap-8">
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-2xl drop-shadow-sm">
             <bdi>{t("title")}</bdi>
           </h2>
