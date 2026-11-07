@@ -32,15 +32,15 @@ export async function generateMetadata({
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.replace(/\/+$/, "")}`
-      : "http://localhost:3000");
+      : null);
 
   return {
     title: {
       default: t("title"),
-      template: `%s | ${locale === "ar" ? "أكوا جارد" : "AQUA GUARD"}`,
+      template: `%s | ${locale === "ar" ? "أكوا" : "AQUA"}`,
     },
     description: t("description"),
-    metadataBase: new URL(baseUrl),
+    ...(baseUrl ? { metadataBase: new URL(baseUrl) } : {}),
     alternates: {
       canonical: locale === "ar" ? "/" : "/en",
       languages: {
@@ -54,6 +54,14 @@ export async function generateMetadata({
       description: t("description"),
       locale: locale === "ar" ? "ar_SA" : "en_US",
       type: "website",
+      images: [
+        {
+          url: "/opengraph-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: locale === "ar" ? "أكوا - أنظمة وفلاتر تنقية المياه" : "AQUA - Water Filtration Systems",
+        },
+      ],
     },
   };
 }

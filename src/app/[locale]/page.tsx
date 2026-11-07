@@ -42,8 +42,26 @@ export default async function HomePage({
 
   const typedLocale = (locale === "ar" || locale === "en" ? locale : "ar") as Locale;
 
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.replace(/\/+$/, "")}`
+      : null);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: typedLocale === "ar" ? "أكوا" : "AQUA",
+    url: baseUrl || (typedLocale === "ar" ? "/" : "/en"),
+  };
+  const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
+
   return (
     <div className="flex flex-col flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd }}
+      />
       <HeroSection locale={typedLocale} />
       <CategoriesSection locale={typedLocale} />
       <FeaturedProductsSection locale={typedLocale} />
