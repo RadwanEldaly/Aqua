@@ -8,7 +8,7 @@ export function BrandVideoBand() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [canLoadVideo, setCanLoadVideo] = useState(false);
-  const [showPoster, setShowPoster] = useState(false);
+  const [showPoster] = useState(true);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -22,9 +22,8 @@ export function BrandVideoBand() {
     };
     const isSaveData = Boolean(nav.connection?.saveData);
 
-    // If reduced motion or saveData is requested, show poster only
+    // If reduced motion or saveData is requested, keep poster only
     if (prefersReducedMotion || isSaveData) {
-      setShowPoster(true);
       return;
     }
 

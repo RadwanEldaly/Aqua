@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { useGSAP, gsap } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface HeroSectionProps {
@@ -19,30 +18,6 @@ export function HeroSection({ locale }: HeroSectionProps) {
   const whatsappUrl = buildWhatsAppUrl(tHero("whatsappPrefill"));
   const hasWhatsApp = Boolean(whatsappUrl);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // Subtle GSAP entrance animation with reduced-motion support
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".hero-text-elem", {
-          opacity: 0,
-          y: 20,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power2.out",
-        });
-        gsap.from(".hero-card-elem", {
-          opacity: 0,
-          scale: 0.96,
-          duration: 0.7,
-          ease: "power2.out",
-          delay: 0.1,
-        });
-      });
-    },
-    { scope: containerRef }
-  );
 
   return (
     <section className="w-full px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5">

@@ -10,7 +10,6 @@ import {
   PROVISIONAL_PRODUCTS,
 } from "@/data/provisional-products";
 import { ArrowUpRight } from "lucide-react";
-import { useGSAP, gsap } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
 interface CategoriesSectionProps {
@@ -33,37 +32,6 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
   // Show only distinct product categories (excluding "all")
   const categories = PROVISIONAL_CATEGORIES.filter((c) => c.id !== "all");
 
-  // Fast, reliable reveal: starts early at top 95% with fast 0.35s duration
-  // Uses clearProps so elements immediately become 100% natural DOM elements
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tiles = containerRef.current?.querySelectorAll(".category-tile-elem");
-        if (!tiles || tiles.length === 0) return;
-
-        gsap.fromTo(
-          tiles,
-          { opacity: 0.2, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.35,
-            stagger: 0.04,
-            ease: "power2.out",
-            clearProps: "all",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 95%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-    },
-    { scope: containerRef }
-  );
-
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 scroll-mt-24">
       <div ref={containerRef} className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
@@ -74,8 +42,11 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
           align="start"
         />
 
-        {/* 5 Distinct Category Tiles (Side-by-side horizontal snap row on mobile, 5-col grid on desktop) */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 pb-2 sm:pb-0">
+        {/* 5 Distinct Category Tiles:
+            - Mobile (<640px): Silk-smooth horizontal snap carousel (side-by-side cards)
+            - Tablet & Desktop (>=640px): Responsive 5-column grid without overflow
+        */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:overflow-visible gap-4 sm:gap-6 pb-4 sm:pb-0">
           {categories.map((cat) => {
             const matchingProducts = PROVISIONAL_PRODUCTS.filter(
               (p) => p.categoryId === cat.id
@@ -94,8 +65,8 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                 href={`/products?category=${cat.id}`}
                 aria-label={t("viewCategoryAria", { name: categoryName })}
                 className={cn(
-                  "category-tile-elem group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80",
-                  "w-[220px] xs:w-[240px] sm:w-auto shrink-0 sm:shrink snap-start",
+                  "category-tile-elem group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80 opacity-100",
+                  "w-[240px] shrink-0 snap-start sm:w-full sm:shrink",
                   "transition-all duration-300 hover:shadow-hover hover:-translate-y-1 cursor-pointer",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}

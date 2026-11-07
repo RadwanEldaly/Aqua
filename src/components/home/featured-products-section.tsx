@@ -12,7 +12,6 @@ import {
 } from "@/data/provisional-products";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { useGSAP, gsap } from "@/hooks/use-gsap";
 
 interface FeaturedProductsSectionProps {
   locale: "ar" | "en";
@@ -23,37 +22,11 @@ export function FeaturedProductsSection({ locale }: FeaturedProductsSectionProps
   const tProducts = useTranslations("ProductsPage");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Select 4 distinct products (one from each category) from provisional products
-  const categoryIds = ["home-systems", "dispensers", "filters", "cartridges-and-parts"];
+  // Select 4 distinct products (one from each primary category) from provisional products
+  const categoryIds = ["packages", "systems", "dispensers", "filters"];
   const featuredProducts = categoryIds
     .map((catId) => PROVISIONAL_PRODUCTS.find((p) => p.categoryId === catId))
     .filter((p): p is (typeof PROVISIONAL_PRODUCTS)[number] => Boolean(p));
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.fromTo(
-          ".featured-card-elem",
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power2.out",
-            clearProps: "opacity,transform",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-    },
-    { scope: containerRef }
-  );
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24">
