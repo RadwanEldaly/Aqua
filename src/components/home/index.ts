@@ -1,7 +1,10 @@
 export { HeroSection } from "./hero-section";
-export { SpecialOffersSection } from "./special-offers-section";
-export { CategoriesSection } from "./categories-section";
+export { MarqueeStrip } from "./marquee-strip";
+export { CategoriesBento } from "./categories-bento";
+export { ProductSpotlights } from "./product-spotlights";
 export { FeaturedProductsSection } from "./featured-products-section";
-export { WhyUsSection } from "./why-us-section";
+export { OffersSection } from "./offers-section";
+export { PackagesSection } from "./packages-section";
+export { HowOrderingWorks } from "./how-ordering-works";
 export { BrandVideoBand } from "./brand-video-band";
 export { WhatsAppBandSection } from "./whatsapp-band-section";

@@ -2,8 +2,11 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { RippleRings } from "@/components/ui/brand-patterns";
+import { PROVISIONAL_CATEGORIES } from "@/data/provisional-products";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
@@ -19,15 +22,22 @@ export function HeroSection({ locale }: HeroSectionProps) {
   const hasWhatsApp = Boolean(whatsappUrl);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Category quick chips (excluding 'all')
+  const categories = PROVISIONAL_CATEGORIES.filter((c) => c.id !== "all");
+
   return (
     <section className="w-full px-3 sm:px-6 lg:px-8 pt-3 sm:pt-5">
       <div
         ref={containerRef}
-        className="relative max-w-7xl mx-auto rounded-panel bg-brand-navy overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
+        className="relative max-w-7xl mx-auto rounded-panel bg-brand-ocean overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
       >
         {/* Saturated Deep Marine Gradient Background (Passes AAA Contrast > 12:1) */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-deep via-brand-navy to-brand-navy/90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-ocean to-brand-ocean/95" />
+          {/* Concentric Ripple Rings Ambient Mark (11s smooth scale/opacity pulse) */}
+          <div className="absolute -top-16 -start-16 w-[420px] sm:w-[540px] h-[420px] sm:h-[540px] opacity-35">
+            <RippleRings animate className="w-full h-full text-brand-foam/30" />
+          </div>
         </div>
 
         {/* Content Grid: Clearance for Floating Pill Nav (pt-24 sm:pt-28) */}
@@ -43,17 +53,18 @@ export function HeroSection({ locale }: HeroSectionProps) {
               <bdi>{tHero("descriptor")}</bdi>
             </h1>
 
-            <p className="hero-text-elem mt-4 sm:mt-6 text-lg sm:text-xl lg:text-2xl font-light text-aqua-200/95 leading-[1.45] max-w-xl">
+            <p className="hero-text-elem mt-4 sm:mt-6 text-lg sm:text-xl lg:text-2xl font-light text-brand-foam/90 leading-[1.45] max-w-xl">
               <bdi>{tCommon("tagline")}</bdi>
             </p>
 
-            {/* Actions Row: Fixed min-h-[52px] to guarantee zero layout shift */}
+            {/* Actions Row: Orbit Buttons */}
             <div className="hero-text-elem mt-8 sm:mt-10 flex flex-wrap items-center gap-3.5 sm:gap-4 min-h-[52px]">
               <Button
                 href="/products"
-                variant="primary"
+                variant="light"
                 size="lg"
-                className="min-w-[160px] h-13 px-8 text-base font-bold bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep shadow-subtle cursor-pointer rounded-full"
+                withOrbit
+                className="min-w-[170px] h-13 px-7 text-base font-bold bg-white text-brand-abyss hover:bg-brand-pearl hover:text-brand-abyss shadow-subtle cursor-pointer rounded-full"
               >
                 {tHero("browseAction")}
               </Button>
@@ -64,7 +75,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   external
                   variant="outline"
                   size="lg"
-                  className="min-w-[160px] h-13 px-8 text-base font-bold text-white border-white/80 hover:bg-white/15 inline-flex items-center gap-2 cursor-pointer rounded-full"
+                  className="min-w-[160px] h-13 px-8 text-base font-bold text-white border-white/70 hover:bg-white/10 hover:border-white inline-flex items-center gap-2 cursor-pointer rounded-full"
                 >
                   <MessageCircle className="w-5 h-5 shrink-0" aria-hidden="true" />
                   <span>{tHero("inquireAction")}</span>
@@ -73,6 +84,19 @@ export function HeroSection({ locale }: HeroSectionProps) {
                 /* Reserved slot: identical dimensions, zero shift */
                 <div className="hidden sm:inline-block w-0 min-h-[52px]" aria-hidden="true" />
               )}
+            </div>
+
+            {/* Category Quick Chips */}
+            <div className="mt-8 sm:mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center gap-2">
+              {categories.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/products?category=${c.id}`}
+                  className="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold text-brand-foam/85 bg-white/5 hover:bg-white/15 hover:text-white border border-white/10 transition-all select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure"
+                >
+                  {c.label[locale]}
+                </Link>
+              ))}
             </div>
           </div>
 

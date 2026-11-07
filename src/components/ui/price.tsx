@@ -8,6 +8,7 @@ export interface PriceProps extends React.HTMLAttributes<HTMLSpanElement> {
   locale?: "ar" | "en";
   useWesternDigits?: boolean;
   size?: "sm" | "md" | "lg" | "xl";
+  tone?: "light" | "dark";
 }
 
 const sizeStyles = {
@@ -42,6 +43,7 @@ export function Price({
   locale = "ar",
   useWesternDigits = true,
   size = "md",
+  tone = "dark",
   className,
   ...props
 }: PriceProps) {
@@ -50,6 +52,7 @@ export function Price({
   const original = isDiscounted
     ? formatCurrency(compareAtAmount, locale, useWesternDigits)
     : null;
+  const isLight = tone === "light";
 
   return (
     <div
@@ -57,14 +60,32 @@ export function Price({
       {...props}
     >
       {/* Current Active Price */}
-      <span className={cn("text-brand-deep flex items-baseline gap-1", sizeStyles[size])}>
+      <span
+        className={cn(
+          "flex items-baseline gap-1",
+          isLight ? "text-white" : "text-brand-deep",
+          sizeStyles[size]
+        )}
+      >
         <span className="font-bold">{current.formattedNumber}</span>
-        <span className="text-xs font-medium text-text-subtle-accessible ltr:uppercase">{current.currencySymbol}</span>
+        <span
+          className={cn(
+            "text-xs font-medium ltr:uppercase",
+            isLight ? "text-brand-foam/80" : "text-text-subtle-accessible"
+          )}
+        >
+          {current.currencySymbol}
+        </span>
       </span>
 
       {/* Compare-at / Original Price (if discounted) */}
       {isDiscounted && original && (
-        <span className="inline-flex items-baseline gap-1 text-xs sm:text-sm text-text-subtle-accessible line-through">
+        <span
+          className={cn(
+            "inline-flex items-baseline gap-1 text-xs sm:text-sm line-through",
+            isLight ? "text-brand-foam/50" : "text-text-subtle-accessible"
+          )}
+        >
           <span className="sr-only">
             {locale === "ar" ? "السعر الأصلي قبل الخصم:" : "Original price before discount:"}
           </span>

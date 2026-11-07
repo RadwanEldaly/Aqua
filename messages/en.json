@@ -132,6 +132,39 @@
       "chatAction": "Chat via WhatsApp",
       "chatAria": "Chat with AQUA via WhatsApp",
       "whatsappPrefill": "Hello, I would like to contact AQUA"
+    },
+    "spotlights": {
+      "eyebrow": "Closer Look",
+      "title": "Carefully selected product details",
+      "detailCropBadge": "Detail View"
+    },
+    "offers": {
+      "eyebrow": "Special Offers",
+      "title": "Featured Exclusive Offers",
+      "saveBadge": "Save {amount} {currency} ({percent}%)"
+    },
+    "packages": {
+      "eyebrow": "Complete Packages",
+      "title": "Bundled purification packages",
+      "includes": "Package includes:",
+      "addPackage": "Add package to order",
+      "itemQuantity": "{qty}x {name}",
+      "saveBadge": "Save {amount} {currency}"
+    },
+    "howOrderingWorks": {
+      "eyebrow": "How to Order",
+      "title": "Three simple steps to order",
+      "step1Title": "Select your products",
+      "step1Desc": "Browse water systems and filters, and add what you need to your order.",
+      "step2Title": "Send via WhatsApp",
+      "step2Desc": "Send your order directly with a prefilled message without complexity.",
+      "step3Title": "Pay on delivery",
+      "step3Desc": "Your order is dispatched, and you pay upon receipt after inspection."
+    },
+    "inquireBanner": {
+      "title": "Can't find what you're looking for?",
+      "desc": "Contact us directly on WhatsApp for guidance in choosing the right product.",
+      "action": "Ask on WhatsApp"
     }
   }
 }

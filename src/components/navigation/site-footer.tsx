@@ -3,6 +3,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { WaveDivider } from "@/components/ui/brand-patterns";
 
 export function SiteFooter() {
   const locale = useLocale() as "ar" | "en";
@@ -27,60 +28,76 @@ export function SiteFooter() {
   );
 
   return (
-    <footer className="w-full px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 pt-8 sm:pt-12">
-      <div className="max-w-7xl mx-auto rounded-panel bg-brand-deep text-white p-8 sm:p-12 lg:p-16 shadow-elevated flex flex-col justify-between gap-10 sm:gap-14">
-        {/* Top Section: Oversized Wordmark, Tagline, COD Badge */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-white/10">
-          <div className="flex flex-col gap-3">
-            <span className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-none ltr:tracking-tight">
-              {brandMark}
-            </span>
-            <p className="text-aqua-200/90 text-base sm:text-lg font-medium max-w-md">
-              <bdi>{tCommon("tagline")}</bdi>
+    <footer className="w-full relative mt-12 sm:mt-16">
+      {/* Wave Transition Top Edge */}
+      <WaveDivider tone="abyss" position="top" className="relative z-10" />
+
+      <div className="w-full bg-brand-abyss text-white px-4 sm:px-6 lg:px-8 pb-10 pt-4 sm:pt-6">
+        <div className="relative max-w-7xl mx-auto flex flex-col justify-between gap-10 sm:gap-14 overflow-hidden">
+          {/* Subtle Oversized Architectural Brand Watermark */}
+          <div
+            aria-hidden="true"
+            className="absolute -bottom-6 end-0 text-[110px] sm:text-[170px] lg:text-[220px] font-black text-white/[0.03] select-none pointer-events-none leading-none font-sans"
+          >
+            {brandMark}
+          </div>
+
+          {/* Top Section: Brand Name, Tagline, COD Badge */}
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-8 border-b border-white/10">
+            <div className="flex flex-col gap-3">
+              <span className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-none ltr:tracking-tight">
+                {brandMark}
+              </span>
+              <p className="text-brand-foam/85 text-base sm:text-lg font-medium max-w-md">
+                <bdi>{tCommon("tagline")}</bdi>
+              </p>
+            </div>
+
+            {/* Action Badges */}
+            <div className="flex flex-wrap items-center gap-3">
+              {whatsappUrl && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <span>{isAr ? "محادثة عبر واتساب" : "WhatsApp Chat"}</span>
+                </a>
+              )}
+
+              <span className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/10 text-brand-foam shadow-subtle border border-white/10">
+                <bdi>{tFooter("codNotice")}</bdi>
+              </span>
+            </div>
+          </div>
+
+          {/* Middle Section: Localized Navigation Links */}
+          <nav
+            aria-label="Footer Navigation"
+            className="relative z-10 flex flex-wrap items-center gap-4 sm:gap-8 text-sm sm:text-base font-semibold"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-brand-foam/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure rounded-lg px-2 py-1"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Bottom Section: Copyright & Location */}
+          <div className="relative z-10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-brand-foam/70 border-t border-white/10">
+            <p>
+              © {new Date().getFullYear()} {brandMark}. <bdi>{tFooter("rights")}</bdi>
+            </p>
+            <p>
+              {locale === "ar" ? "المملكة العربية السعودية" : "Saudi Arabia"}
             </p>
           </div>
-
-          {/* Action Badges */}
-          <div className="flex flex-wrap items-center gap-3">
-            {whatsappUrl && (
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 transition-colors"
-              >
-                <MessageCircle className="w-4 h-4 text-emerald-400" />
-                <span>{isAr ? "محادثة عبر واتساب" : "WhatsApp Chat"}</span>
-              </a>
-            )}
-
-            <span className="text-xs font-semibold px-3.5 py-1.5 rounded-full bg-white/10 text-aqua-100 shadow-subtle">
-              <bdi>{tFooter("codNotice")}</bdi>
-            </span>
-          </div>
-        </div>
-
-        {/* Middle Section: Localized Navigation Links */}
-        <nav aria-label="Footer Navigation" className="flex flex-wrap items-center gap-4 sm:gap-8 text-sm sm:text-base font-semibold">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-aqua-100/70 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary rounded-lg px-2 py-1"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Bottom Section: Copyright & Location */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-aqua-100/70 border-t border-brand-navy/40">
-          <p>
-            © {new Date().getFullYear()} {brandMark}. <bdi>{tFooter("rights")}</bdi>
-          </p>
-          <p>
-            {locale === "ar" ? "المملكة العربية السعودية" : "Saudi Arabia"}
-          </p>
         </div>
       </div>
     </footer>

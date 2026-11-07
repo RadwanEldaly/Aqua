@@ -4,8 +4,13 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { type Locale } from "@/i18n/routing";
 import {
   HeroSection,
-  CategoriesSection,
+  MarqueeStrip,
+  CategoriesBento,
+  ProductSpotlights,
   FeaturedProductsSection,
+  OffersSection,
+  PackagesSection,
+  HowOrderingWorks,
   BrandVideoBand,
   WhatsAppBandSection,
 } from "@/components/home";
@@ -63,8 +68,13 @@ export default async function HomePage({
         dangerouslySetInnerHTML={{ __html: safeJsonLd }}
       />
       <HeroSection locale={typedLocale} />
-      <CategoriesSection locale={typedLocale} />
+      <MarqueeStrip locale={typedLocale} />
+      <CategoriesBento locale={typedLocale} />
+      <ProductSpotlights locale={typedLocale} />
       <FeaturedProductsSection locale={typedLocale} />
+      <OffersSection locale={typedLocale} />
+      <PackagesSection locale={typedLocale} />
+      <HowOrderingWorks />
       <BrandVideoBand />
       <WhatsAppBandSection />
     </div>

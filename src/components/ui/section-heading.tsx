@@ -9,6 +9,7 @@ export interface SectionHeadingProps extends React.HTMLAttributes<HTMLDivElement
   description?: string;
   align?: HeadingAlignment;
   titleAs?: "h1" | "h2" | "h3";
+  tone?: "light" | "dark";
 }
 
 const alignStyles: Record<HeadingAlignment, string> = {
@@ -23,9 +24,12 @@ export function SectionHeading({
   description,
   align = "start",
   titleAs: TitleTag = "h2",
+  tone = "dark",
   className,
   ...props
 }: SectionHeadingProps) {
+  const isLight = tone === "light";
+
   return (
     <div
       className={cn(
@@ -36,15 +40,30 @@ export function SectionHeading({
       {...props}
     >
       {eyebrow && (
-        <span className="text-xs md:text-sm font-bold ltr:tracking-wider text-brand-primary ltr:uppercase">
+        <span
+          className={cn(
+            "text-xs md:text-sm font-bold ltr:tracking-wider ltr:uppercase",
+            isLight ? "text-brand-champagne" : "text-brand-azure"
+          )}
+        >
           {eyebrow}
         </span>
       )}
-      <TitleTag className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-deep leading-[1.2] ltr:tracking-tight">
+      <TitleTag
+        className={cn(
+          "text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.2] ltr:tracking-tight",
+          isLight ? "text-white" : "text-brand-deep"
+        )}
+      >
         {title}
       </TitleTag>
       {description && (
-        <p className="text-base sm:text-lg text-text-subtle-accessible font-medium leading-relaxed max-w-xl">
+        <p
+          className={cn(
+            "text-base sm:text-lg font-medium leading-relaxed max-w-xl",
+            isLight ? "text-brand-foam/80" : "text-text-subtle-accessible"
+          )}
+        >
           {description}
         </p>
       )}
