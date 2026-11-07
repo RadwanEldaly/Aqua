@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { Price } from "./price";
 import { Badge } from "./badge";
@@ -46,16 +48,27 @@ export function ProductCard({
   className,
   priority = false,
 }: ProductCardProps) {
-  const CardTag = href ? "div" : "article";
+  const router = useRouter();
+  const targetHref = href || `/products/${id}`;
   const formattedIndex =
     typeof index === "number" ? String(index).padStart(2, "0") : undefined;
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    // Don't navigate if user clicked inside a button or a direct interactive link
+    if (target.closest("button, a, [data-prevent-card-click]")) {
+      return;
+    }
+    router.push(targetHref);
+  };
+
   return (
-    <CardTag
+    <article
       data-product-card="true"
+      onClick={handleCardClick}
       className={cn(
-        "group relative flex flex-col h-full rounded-panel bg-white p-3 sm:p-5 shadow-card border border-border-subtle/80",
-        "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover min-w-0 w-full overflow-hidden",
+        "group relative flex flex-col h-full rounded-panel bg-white p-3 sm:p-5 shadow-card border border-border-subtle/80 cursor-pointer",
+        "transition-all duration-200 hover:-translate-y-1 hover:shadow-hover min-w-0 w-full overflow-hidden",
         className
       )}
     >
@@ -158,14 +171,9 @@ export function ProductCard({
           title={name}
           className="min-h-[38px] sm:min-h-[44px] text-sm sm:text-base font-bold text-brand-deep leading-snug group-hover:text-brand-azure transition-colors line-clamp-2 min-w-0 break-words"
         >
-          {href ? (
-            <Link href={href} prefetch={false} className="focus:outline-none">
-              <span className="absolute inset-0 z-0" aria-hidden="true" />
-              <bdi>{name}</bdi>
-            </Link>
-          ) : (
+          <Link href={targetHref} prefetch={false} className="focus:outline-none hover:text-brand-azure transition-colors">
             <bdi>{name}</bdi>
-          )}
+          </Link>
         </h3>
 
         {/* Actions & Price block pinned to bottom with mt-auto */}
@@ -186,7 +194,7 @@ export function ProductCard({
           </div>
 
           {/* Full-width add button (min-height 44px) */}
-          <div className="relative z-10 min-w-0 w-full">
+          <div className="relative z-10 min-w-0 w-full" data-prevent-card-click="true">
             <AddToCartButton
               productId={id}
               locale={locale}
@@ -195,6 +203,6 @@ export function ProductCard({
           </div>
         </div>
       </div>
-    </CardTag>
+    </article>
   );
 }

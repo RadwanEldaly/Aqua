@@ -48,6 +48,8 @@ export const siteConfig = {
     facebook: "https://www.facebook.com/profile.php?id=61596223054770&mibextid=ZbWKwL",
     threads: "https://www.threads.com/@aqua.guard9",
     x: "https://x.com/aquaguaard99",
+    instagram: "https://www.instagram.com/aqua.guard9?utm_source=qr&srtk=d3Y1dnN4dGdoZHcz",
+    snapchat: "https://www.snapchat.com/@aquaguard9?sender_web_id=8e819453-c8db-4e12-85b0-e3a3c3e54d61&device_type=desktop&is_copy_url=true",
   },
 } as const;
 

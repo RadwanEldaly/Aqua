@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PROVISIONAL_PRODUCTS, type ProvisionalProduct } from "@/data/provisional-products";
@@ -42,7 +43,16 @@ function pickSpotlightProducts(): ProvisionalProduct[] {
 export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
   const t = useTranslations("HomePage.spotlights");
   const spotlights = pickSpotlightProducts();
+  const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const handleCardClick = (productId: string) => (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("button, a, [data-prevent-card-click]")) {
+      return;
+    }
+    router.push(`/products/${productId}`);
+  };
 
   useGSAP(
     () => {
@@ -119,8 +129,9 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
             return (
               <article
                 key={product.id}
+                onClick={handleCardClick(product.id)}
                 className={cn(
-                  "spotlight-panel relative rounded-3xl bg-white p-6 sm:p-10 lg:p-12 shadow-card border border-border-subtle/90 overflow-hidden",
+                  "spotlight-panel relative rounded-3xl bg-white p-6 sm:p-10 lg:p-12 shadow-card border border-border-subtle/90 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-hover",
                   "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
                 )}
               >
@@ -209,7 +220,9 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
                   </div>
 
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-brand-deep leading-tight mb-4">
-                    <bdi>{product.name[locale]}</bdi>
+                    <Link href={`/products/${product.id}`} className="hover:text-brand-azure transition-colors">
+                      <bdi>{product.name[locale]}</bdi>
+                    </Link>
                   </h3>
 
                   {/* Price (Rendered only if price exists in data) */}
@@ -225,7 +238,7 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
                   )}
 
                   {/* Action Button: Add to order */}
-                  <div className="pt-4 border-t border-border-subtle/80">
+                  <div className="pt-4 border-t border-border-subtle/80" data-prevent-card-click="true">
                     <AddToCartButton
                       productId={product.id}
                       locale={locale}

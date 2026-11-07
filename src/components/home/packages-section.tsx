@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PACKAGES } from "@/data/packages";
@@ -19,8 +20,17 @@ interface PackagesSectionProps {
 export function PackagesSection({ locale }: PackagesSectionProps) {
   const t = useTranslations("HomePage.packages");
   const tCommon = useTranslations("Common");
+  const router = useRouter();
   const { addItem } = useCart();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const handleCardClick = (pkgId: string) => (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("button, a, [data-prevent-card-click]")) {
+      return;
+    }
+    router.push(`/products/${pkgId}`);
+  };
 
   useGSAP(
     () => {
@@ -126,7 +136,9 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
               pkg.price < sumPrice;
             const savings = hasSavings ? sumPrice! - pkg.price! : undefined;
 
-            const handleAddPackage = () => {
+            const handleAddPackage = (e?: React.MouseEvent) => {
+              e?.preventDefault();
+              e?.stopPropagation();
               for (const it of resolvedItems) {
                 addItem(it.product, it.qty);
               }
@@ -136,7 +148,8 @@ export function PackagesSection({ locale }: PackagesSectionProps) {
               <article
                 key={pkg.id}
                 data-product-card="true"
-                className="packages-card-anim relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full"
+                onClick={handleCardClick(pkg.id)}
+                className="packages-card-anim relative rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-8 shadow-card border border-border-subtle flex flex-col justify-between min-w-0 w-full cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-hover"
               >
                 <div className="min-w-0 w-full">
                   {/* Cinematic Video Showcase for Al-Aman Package */}

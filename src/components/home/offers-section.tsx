@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
@@ -17,7 +17,16 @@ interface OffersSectionProps {
 export function OffersSection({ locale }: OffersSectionProps) {
   const t = useTranslations("HomePage.offers");
   const tCommon = useTranslations("Common");
+  const router = useRouter();
   const sectionRef = useRef<HTMLElement>(null);
+
+  const handleCardClick = (productId: string) => (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("button, a, [data-prevent-card-click]")) {
+      return;
+    }
+    router.push(`/products/${productId}`);
+  };
 
   // Strict data guard: render only if at least one product has price and compareAtPrice > price
   const offerProducts = PROVISIONAL_PRODUCTS.filter(
@@ -105,7 +114,8 @@ export function OffersSection({ locale }: OffersSectionProps) {
               <article
                 key={product.id}
                 data-product-card="true"
-                className="offers-card-anim relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full"
+                onClick={handleCardClick(product.id)}
+                className="offers-card-anim relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-hover"
               >
                 {/* Savings Badge COMPUTED directly from real prices */}
                 <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 min-w-0">
@@ -180,11 +190,13 @@ export function OffersSection({ locale }: OffersSectionProps) {
                       />
                     </div>
 
-                    <AddToCartButton
-                      productId={product.id}
-                      locale={locale}
-                      className="w-full min-h-[44px]"
-                    />
+                    <div className="min-w-0 w-full" data-prevent-card-click="true">
+                      <AddToCartButton
+                        productId={product.id}
+                        locale={locale}
+                        className="w-full min-h-[44px]"
+                      />
+                    </div>
                   </div>
                 </div>
               </article>
