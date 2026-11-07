@@ -124,7 +124,7 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
                         loading="lazy"
                       />
                     </div>
-                    <span className="absolute bottom-1 inset-x-1 text-[9px] font-bold text-center bg-brand-deep/75 text-white rounded py-0.5 backdrop-blur-xs">
+                    <span className="absolute bottom-1 inset-x-1 text-[9px] font-bold text-center bg-brand-deep/90 text-white rounded py-0.5">
                       {t("detailCropBadge")}
                     </span>
                   </div>

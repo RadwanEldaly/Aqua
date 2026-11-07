@@ -108,7 +108,7 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{isAr ? "العرض الأقوى - بكج الأمان" : "Best Seller - Al-Aman Package"}</span>
               </span>
-              <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-semibold">
+              <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/20 text-white text-xs font-semibold">
                 {isAr ? "وفر 900 ريال سعودي" : "Save 900 SAR"}
               </span>
             </div>
