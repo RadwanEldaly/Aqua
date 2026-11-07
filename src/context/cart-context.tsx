@@ -1,22 +1,39 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useSyncExternalStore } from "react";
-import type { Product } from "@/types/product";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useSyncExternalStore,
+} from "react";
+import {
+  PROVISIONAL_PRODUCTS,
+  type ProvisionalProduct,
+} from "@/data/provisional-products";
+
+export interface CartStoredEntry {
+  id: string;
+  qty: number;
+}
 
 export interface CartItem {
-  product: Product;
+  product: ProvisionalProduct;
   quantity: number;
 }
 
 interface CartContextValue {
   items: CartItem[];
-  isOpen: boolean;
   totalCount: number;
-  subtotal: number;
-  addItem: (product: Product, quantity?: number) => void;
+  totalPrice?: number;
+  hasPriceForAll: boolean;
+  isOpen: boolean;
+  isMounted: boolean;
+  addItem: (product: ProvisionalProduct, quantity?: number) => void;
   removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
+  setQuantity: (productId: string, quantity: number) => void;
+  clear: () => void;
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
@@ -24,10 +41,10 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-const STORAGE_KEY = "aqua_cart_v1";
+const STORAGE_KEY = "aqua_cart_v2";
 
-// Lightweight external store to guarantee zero hydration mismatch and zero setState in effect
-let memoryItems: CartItem[] = [];
+// Lightweight in-memory state of raw persisted entries { id, qty }
+let memoryEntries: CartStoredEntry[] = [];
 const listeners = new Set<() => void>();
 
 function notify() {
@@ -43,104 +60,147 @@ function subscribe(listener: () => void) {
   };
 }
 
-function getSnapshot(): CartItem[] {
-  return memoryItems;
+function getSnapshot(): CartStoredEntry[] {
+  return memoryEntries;
 }
 
-const emptySnapshot: CartItem[] = [];
-function getServerSnapshot(): CartItem[] {
+const emptySnapshot: CartStoredEntry[] = [];
+function getServerSnapshot(): CartStoredEntry[] {
   return emptySnapshot;
 }
 
-function saveToStorage(items: CartItem[]) {
-  memoryItems = items;
+function saveEntries(entries: CartStoredEntry[]) {
+  memoryEntries = entries;
   if (typeof window !== "undefined") {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     } catch {
-      // Ignore storage errors
+      // Storage empty or blocked: graceful fallback in memory
     }
   }
   notify();
 }
 
+const emptySubscribe = () => () => {};
+const isClientSnapshot = () => true;
+const isServerSnapshot = () => false;
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const items = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const storedEntries = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const isMounted = useSyncExternalStore(emptySubscribe, isClientSnapshot, isServerSnapshot);
   const [isOpen, setIsOpen] = useState(false);
 
-  // Initialize from localStorage once on client
+  // Initialize from localStorage once on client, dropping unknown product IDs
   useEffect(() => {
+    if (typeof window === "undefined") return;
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
         if (Array.isArray(parsed)) {
-          memoryItems = parsed;
+          // Strictly drop unknown product IDs and validate qty
+          const valid: CartStoredEntry[] = parsed
+            .filter((entry): entry is CartStoredEntry => {
+              if (!entry || typeof entry.id !== "string") return false;
+              return PROVISIONAL_PRODUCTS.some((p) => p.id === entry.id);
+            })
+            .map((entry) => ({
+              id: entry.id,
+              qty: Math.max(1, Math.min(99, Number(entry.qty) || 1)),
+            }));
+          memoryEntries = valid;
           notify();
         }
       }
     } catch {
-      // Ignore
+      // Storage blocked or invalid JSON
     }
   }, []);
 
-  const addItem = (product: Product, quantity = 1) => {
-    const existingIndex = memoryItems.findIndex((item) => item.product.id === product.id);
-    let next: CartItem[];
-    if (existingIndex > -1) {
-      next = [...memoryItems];
-      next[existingIndex] = {
-        ...next[existingIndex],
-        quantity: next[existingIndex].quantity + quantity,
+  // Hydrate full product references from provisional products
+  const items: CartItem[] = storedEntries
+    .map((entry) => {
+      const product = PROVISIONAL_PRODUCTS.find((p) => p.id === entry.id);
+      if (!product) return null;
+      return {
+        product,
+        quantity: Math.max(1, Math.min(99, entry.qty)),
       };
-    } else {
-      next = [...memoryItems, { product, quantity }];
-    }
-    saveToStorage(next);
-    setIsOpen(true);
-  };
-
-  const removeItem = (productId: string) => {
-    const next = memoryItems.filter((item) => item.product.id !== productId);
-    saveToStorage(next);
-  };
-
-  const updateQuantity = (productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeItem(productId);
-      return;
-    }
-    const next = memoryItems.map((item) =>
-      item.product.id === productId ? { ...item, quantity } : item
-    );
-    saveToStorage(next);
-  };
-
-  const clearCart = () => {
-    saveToStorage([]);
-  };
-
-  const openCart = () => setIsOpen(true);
-  const closeCart = () => setIsOpen(false);
-  const toggleCart = () => setIsOpen((prev) => !prev);
+    })
+    .filter((item): item is CartItem => item !== null);
 
   const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+
+  // Totals appear ONLY if EVERY cart item has a numeric price; otherwise undefined
+  const hasPriceForAll =
+    items.length > 0 &&
+    items.every((item) => typeof item.product.price === "number");
+
+  const totalPrice = hasPriceForAll
+    ? items.reduce(
+        (sum, item) => sum + (item.product.price as number) * item.quantity,
+        0
+      )
+    : undefined;
+
+  const addItem = useCallback((product: ProvisionalProduct, quantity = 1) => {
+    const existingIndex = memoryEntries.findIndex((e) => e.id === product.id);
+    let next: CartStoredEntry[];
+    if (existingIndex > -1) {
+      next = [...memoryEntries];
+      const currentQty = next[existingIndex].qty;
+      next[existingIndex] = {
+        id: product.id,
+        qty: Math.max(1, Math.min(99, currentQty + quantity)),
+      };
+    } else {
+      next = [
+        ...memoryEntries,
+        { id: product.id, qty: Math.max(1, Math.min(99, quantity)) },
+      ];
+    }
+    saveEntries(next);
+  }, []);
+
+  const removeItem = useCallback((productId: string) => {
+    const next = memoryEntries.filter((e) => e.id !== productId);
+    saveEntries(next);
+  }, []);
+
+  const setQuantity = useCallback((productId: string, quantity: number) => {
+    if (quantity <= 0) {
+      const next = memoryEntries.filter((e) => e.id !== productId);
+      saveEntries(next);
+      return;
+    }
+    const clamped = Math.max(1, Math.min(99, quantity));
+    const next = memoryEntries.map((e) =>
+      e.id === productId ? { id: e.id, qty: clamped } : e
+    );
+    saveEntries(next);
+  }, []);
+
+  const clear = useCallback(() => {
+    saveEntries([]);
+  }, []);
+
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
+  const toggleCart = useCallback(() => setIsOpen((prev) => !prev), []);
 
   return (
     <CartContext.Provider
       value={{
         items,
-        isOpen,
         totalCount,
-        subtotal,
+        totalPrice,
+        hasPriceForAll,
+        isOpen,
+        isMounted,
         addItem,
         removeItem,
-        updateQuantity,
-        clearCart,
+        setQuantity,
+        clear,
         openCart,
         closeCart,
         toggleCart,

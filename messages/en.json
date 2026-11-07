@@ -36,6 +36,10 @@
     "contact": {
       "title": "Contact",
       "heading": "Contact Us"
+    },
+    "cart": {
+      "title": "Order Cart",
+      "heading": "Order Cart"
     }
   },
   "Footer": {
@@ -46,6 +50,23 @@
     "title": "404 - Page Not Found",
     "description": "Sorry, the page you are looking for could not be found.",
     "homeAction": "Return Home"
+  },
+  "CartPage": {
+    "title": "Order Cart",
+    "eyebrow": "Orders",
+    "heading": "Order Cart",
+    "description": "Review your selected items and quantities.",
+    "clearAction": "Clear Order",
+    "clearConfirmAria": "Clear all items from order",
+    "removeAria": "Remove {name} from order",
+    "increaseAria": "Increase quantity for {name}",
+    "decreaseAria": "Decrease quantity for {name}",
+    "emptyTitle": "Your order is empty",
+    "emptyDescription": "You have not added any products to your order yet.",
+    "browseProducts": "Browse Products",
+    "proceedToCheckout": "Proceed to Checkout",
+    "totalLabel": "Total",
+    "quantityLabel": "Quantity"
   },
   "ContactPage": {
     "eyebrow": "Contact Us",

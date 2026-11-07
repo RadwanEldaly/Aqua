@@ -16,9 +16,10 @@ export function CartDrawer() {
     items,
     isOpen,
     totalCount,
-    subtotal,
+    totalPrice,
+    hasPriceForAll,
     closeCart,
-    updateQuantity,
+    setQuantity,
     removeItem,
   } = useCart();
 
@@ -47,13 +48,17 @@ export function CartDrawer() {
 
   if (!isOpen) return null;
 
-  // Build WhatsApp pre-filled order string
+  // Build neutral WhatsApp pre-filled order string
   const itemsText = items
-    .map((item) => `- ${item.product.name[isAr ? "ar" : "en"]} (${item.quantity}x) : ${item.product.price * item.quantity} ر.س`)
+    .map((item) => {
+      const priceText = typeof item.product.price === "number" ? ` (${item.product.price * item.quantity} ر.س)` : "";
+      return `- ${item.product.name[isAr ? "ar" : "en"]} (${item.quantity}x)${priceText}`;
+    })
     .join("\n");
+  const totalText = hasPriceForAll && typeof totalPrice === "number" ? `\n\nالإجمالي: ${totalPrice} ر.س` : "";
   const whatsappMsg = isAr
-    ? `مرحباً أكوا جارد، أود طلب السلة التالية:\n\n${itemsText}\n\nالإجمالي: ${subtotal} ر.س\nالدفع عند الاستلام مع التوصيل والتركيب المجاني.`
-    : `Hello Aqua Guard, I would like to order the following cart:\n\n${itemsText}\n\nTotal: ${subtotal} SAR\nPayment on delivery with free installation.`;
+    ? `مرحباً، أود الاستفسار عن طلب المنتجات التالية:\n\n${itemsText}${totalText}`
+    : `Hello, I would like to inquire about the following order:\n\n${itemsText}${hasPriceForAll && typeof totalPrice === "number" ? `\n\nTotal: ${totalPrice} SAR` : ""}`;
   const whatsappUrl = buildWhatsAppUrl(whatsappMsg);
 
   return (
@@ -129,7 +134,7 @@ export function CartDrawer() {
                   {/* Thumbnail */}
                   <div className="relative w-20 h-20 rounded-xl bg-surface-subtle shrink-0 p-2 overflow-hidden flex items-center justify-center">
                     <Image
-                      src={item.product.thumbnailImage}
+                      src={item.product.image.src}
                       alt={item.product.name[isAr ? "ar" : "en"]}
                       fill
                       className="object-contain p-1"
@@ -142,15 +147,17 @@ export function CartDrawer() {
                     <h4 className="text-sm font-bold text-brand-deep truncate mb-1">
                       {item.product.name[isAr ? "ar" : "en"]}
                     </h4>
-                    <div className="text-sm font-semibold text-brand-primary mb-2">
-                      {item.product.price} {isAr ? "ر.س" : "SAR"}
-                    </div>
+                    {typeof item.product.price === "number" ? (
+                      <div className="text-sm font-semibold text-brand-primary mb-2">
+                        {item.product.price} {isAr ? "ر.س" : "SAR"}
+                      </div>
+                    ) : null}
 
                     {/* Quantity controls */}
                     <div className="flex items-center gap-2">
                       <div className="flex items-center border border-border-subtle rounded-lg bg-surface-subtle overflow-hidden">
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                          onClick={() => setQuantity(item.product.id, item.quantity - 1)}
                           className="p-1.5 hover:bg-white text-text-subtle hover:text-brand-deep transition-colors"
                           aria-label={isAr ? "تقليل الكمية" : "Decrease quantity"}
                         >
@@ -160,7 +167,7 @@ export function CartDrawer() {
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                          onClick={() => setQuantity(item.product.id, item.quantity + 1)}
                           className="p-1.5 hover:bg-white text-text-subtle hover:text-brand-deep transition-colors"
                           aria-label={isAr ? "زيادة الكمية" : "Increase quantity"}
                         >
@@ -185,23 +192,17 @@ export function CartDrawer() {
           {/* Footer Summary */}
           {items.length > 0 && (
             <div className="p-6 border-t border-border-subtle bg-surface-subtle space-y-4">
-              {/* Shipping Highlight */}
-              <div className="flex items-center justify-between text-xs py-2 px-3 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">
-                <span className="font-semibold">
-                  {isAr ? "🚚 التوصيل والتركيب المنزلي:" : "🚚 Delivery & Installation:"}
-                </span>
-                <span className="font-bold">{isAr ? "مجاني 100%" : "Free 100%"}</span>
-              </div>
-
-              {/* Subtotal */}
-              <div className="flex items-center justify-between text-base">
-                <span className="font-medium text-text-subtle">
-                  {isAr ? "المجموع الفرعي:" : "Subtotal:"}
-                </span>
-                <span className="text-xl font-bold text-brand-deep">
-                  {subtotal} {isAr ? "ر.س" : "SAR"}
-                </span>
-              </div>
+              {/* Subtotal - only shown if EVERY item has a price */}
+              {hasPriceForAll && typeof totalPrice === "number" ? (
+                <div className="flex items-center justify-between text-base">
+                  <span className="font-medium text-text-subtle">
+                    {isAr ? "المجموع الفرعي:" : "Subtotal:"}
+                  </span>
+                  <span className="text-xl font-bold text-brand-deep">
+                    {totalPrice} {isAr ? "ر.س" : "SAR"}
+                  </span>
+                </div>
+              ) : null}
 
               {/* Checkout Action Button */}
               <Link

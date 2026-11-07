@@ -36,6 +36,10 @@
     "contact": {
       "title": "تواصل معنا",
       "heading": "تواصل معنا"
+    },
+    "cart": {
+      "title": "سلة الطلبات",
+      "heading": "سلة الطلبات"
     }
   },
   "Footer": {
@@ -46,6 +50,23 @@
     "title": "404 - الصفحة غير موجودة",
     "description": "عذراً، لم نتمكن من العثور على الصفحة المطلوبة.",
     "homeAction": "العودة للرئيسية"
+  },
+  "CartPage": {
+    "title": "سلة الطلبات",
+    "eyebrow": "الطلبات",
+    "heading": "سلة الطلبات",
+    "description": "مراجعة المنتجات والكميات المطلوبة.",
+    "clearAction": "إفراغ السلة",
+    "clearConfirmAria": "إفراغ جميع المنتجات من السلة",
+    "removeAria": "حذف {name} من السلة",
+    "increaseAria": "زيادة كمية {name}",
+    "decreaseAria": "تقليل كمية {name}",
+    "emptyTitle": "سلة الطلبات فارغة",
+    "emptyDescription": "لم تقم بإضافة أي منتج إلى الطلب بعد.",
+    "browseProducts": "تصفح المنتجات",
+    "proceedToCheckout": "متابعة الطلب",
+    "totalLabel": "المجموع",
+    "quantityLabel": "الكمية"
   },
   "ContactPage": {
     "eyebrow": "تواصل معنا",
