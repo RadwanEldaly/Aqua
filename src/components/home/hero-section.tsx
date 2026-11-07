@@ -6,6 +6,7 @@ import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { RippleRings } from "@/components/ui/brand-patterns";
+import { HeroVideoBackground } from "./hero-video-background";
 import { PROVISIONAL_CATEGORIES } from "@/data/provisional-products";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -31,11 +32,12 @@ export function HeroSection({ locale }: HeroSectionProps) {
         ref={containerRef}
         className="relative max-w-7xl mx-auto rounded-panel bg-brand-ocean overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
       >
-        {/* Saturated Deep Marine Gradient Background (Passes AAA Contrast > 12:1) */}
+        {/* Decorative Desktop-Only Ripple Video / Poster Background */}
+        <HeroVideoBackground />
+
+        {/* Ambient Concentric Ripple Rings */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-ocean to-brand-ocean/95" />
-          {/* Concentric Ripple Rings Ambient Mark (11s smooth scale/opacity pulse) */}
-          <div className="absolute -top-16 -start-16 w-[420px] sm:w-[540px] h-[420px] sm:h-[540px] opacity-35">
+          <div className="absolute -top-16 -start-16 w-[420px] sm:w-[540px] h-[420px] sm:h-[540px] opacity-25">
             <RippleRings animate className="w-full h-full text-brand-foam/30" />
           </div>
         </div>
