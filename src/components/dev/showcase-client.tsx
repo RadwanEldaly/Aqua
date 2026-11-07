@@ -254,11 +254,6 @@ export function ShowcaseClient({ locale }: { locale: "ar" | "en" }) {
               badge={PLACEHOLDER_CARD_DATA.badge}
               href={PLACEHOLDER_CARD_DATA.href}
               locale={locale}
-              actions={
-                <Button variant="primary" size="sm" withOrbit>
-                  <span>{isRtl ? "طلب" : "Order"}</span>
-                </Button>
-              }
             />
 
             <ProductCardSkeleton />

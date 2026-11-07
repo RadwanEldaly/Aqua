@@ -8,10 +8,8 @@ import {
   Sparkles,
   ArrowRight,
   ArrowLeft,
-  MessageCircle,
 } from "lucide-react";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { useGSAP, gsap } from "@/hooks/use-gsap";
 
 interface SpecialOffersSectionProps {
@@ -70,11 +68,6 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
     },
     { scope: sectionRef }
   );
-
-  const alamanWhatsappMsg = isAr
-    ? "مرحباً أكوا جارد، أود الاستفسار وطلب (عرض بكج الأمان المتكامل 1999 ر.س) شامل التوصيل والتركيب والضريبة."
-    : "Hello Aqua Guard, I would like to order the (Al-Aman Safety Package 1999 SAR) with free delivery and installation.";
-  const alamanWhatsappUrl = buildWhatsAppUrl(alamanWhatsappMsg);
 
   return (
     <section ref={sectionRef} className="w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -166,18 +159,6 @@ export function SpecialOffersSection({ locale }: SpecialOffersSectionProps) {
                 size="md"
                 className="bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep shadow-elevated"
               />
-
-              {alamanWhatsappUrl && (
-                <a
-                  href={alamanWhatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-subtle transition-all"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{isAr ? "طلب العرض عبر واتساب" : "Order via WhatsApp"}</span>
-                </a>
-              )}
 
               <Link
                 href="/products/package-alaman"

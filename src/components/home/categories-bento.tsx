@@ -50,18 +50,15 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
           align="start"
         />
 
-        {/* Bento Grid:
-            - Mobile (<768px): Horizontal scroll snap row
-            - Desktop (>=768px): 12-column Bento Grid (1 large 5-col tile + 4 tiles in 7-col 2x2 grid)
-        */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-12 md:overflow-visible gap-4 sm:gap-6 pb-4 md:pb-0">
-          {/* 1. Large Bento Hero Tile (e.g. Packages / 5-col span) */}
+        {/* Bento Grid: 2 columns on mobile (<640px, 12px gap), 12-column grid on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-3 sm:gap-6">
+          {/* 1. Large Bento Hero Tile (e.g. Packages / 2-col on mobile, 5-col on desktop) */}
           <Link
             href={`/products?category=${leadCategory.id}`}
             className={cn(
-              "group relative flex flex-col justify-between rounded-3xl bg-brand-pearl p-6 sm:p-8 shadow-card border border-border-subtle/80",
-              "w-[280px] shrink-0 snap-start md:w-auto md:col-span-5 md:min-h-[440px]",
-              "transition-transform duration-200 hover:-translate-y-1.5 hover:shadow-hover cursor-pointer overflow-hidden",
+              "group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-brand-pearl p-4 sm:p-8 shadow-card border border-border-subtle/80",
+              "col-span-2 md:col-span-5 md:min-h-[440px] min-w-0 w-full",
+              "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover cursor-pointer overflow-hidden",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure focus-visible:ring-offset-2"
             )}
           >
@@ -109,8 +106,8 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
             </div>
           </Link>
 
-          {/* 2. Four Secondary Bento Tiles in 7-col 2x2 grid */}
-          <div className="flex md:grid md:grid-cols-2 md:col-span-7 gap-4 sm:gap-6 shrink-0 md:shrink">
+          {/* 2. Four Secondary Bento Tiles in 7-col 2x2 grid (2-col on mobile) */}
+          <div className="col-span-2 md:col-span-7 grid grid-cols-2 gap-3 sm:gap-6 min-w-0 w-full">
             {secondaryCategories.map((cat, idx) => {
               const matchingProducts = PROVISIONAL_PRODUCTS.filter(
                 (p) => p.categoryId === cat.id
@@ -126,8 +123,8 @@ export function CategoriesBento({ locale }: CategoriesBentoProps) {
                   key={cat.id}
                   href={`/products?category=${cat.id}`}
                   className={cn(
-                    "group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80",
-                    "w-[230px] shrink-0 snap-start md:w-auto",
+                    "group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-6 shadow-card border border-border-subtle/80",
+                    "col-span-1 min-w-0 w-full",
                     "transition-transform duration-200 hover:-translate-y-1 hover:shadow-hover cursor-pointer overflow-hidden",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-azure focus-visible:ring-offset-2"
                   )}

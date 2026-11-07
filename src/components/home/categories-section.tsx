@@ -42,11 +42,8 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
           align="start"
         />
 
-        {/* 5 Distinct Category Tiles:
-            - Mobile (<640px): Silk-smooth horizontal snap carousel (side-by-side cards)
-            - Tablet & Desktop (>=640px): Responsive 5-column grid without overflow
-        */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:overflow-visible gap-4 sm:gap-6 pb-4 sm:pb-0">
+        {/* Category Tiles Grid: 2 columns on mobile (<640px, 12px gap), 3 col at sm, 5 col at lg */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
           {categories.map((cat) => {
             const matchingProducts = PROVISIONAL_PRODUCTS.filter(
               (p) => p.categoryId === cat.id
@@ -64,8 +61,7 @@ export function CategoriesSection({ locale }: CategoriesSectionProps) {
                 key={cat.id}
                 href={`/products?category=${cat.id}`}
                 className={cn(
-                  "category-tile-elem group relative flex flex-col justify-between rounded-3xl bg-white p-5 sm:p-6 shadow-card border border-border-subtle/80 opacity-100",
-                  "w-[240px] shrink-0 snap-start sm:w-full sm:shrink",
+                  "category-tile-elem group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl bg-white p-3 sm:p-6 shadow-card border border-border-subtle/80 opacity-100 min-w-0 w-full",
                   "transition-all duration-300 hover:shadow-hover hover:-translate-y-1 cursor-pointer",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
                 )}

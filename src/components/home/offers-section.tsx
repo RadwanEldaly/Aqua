@@ -31,7 +31,7 @@ export function OffersSection({ locale }: OffersSectionProps) {
   }
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-brand-abyss text-white [content-visibility:auto] [contain-intrinsic-size:0_650px]">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-24 bg-brand-abyss text-white [content-visibility:auto] [contain-intrinsic-size:0_650px]">
       <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading on Dark Abyss */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -43,8 +43,8 @@ export function OffersSection({ locale }: OffersSectionProps) {
           />
         </div>
 
-        {/* Offers Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* Offers Cards Grid: 2 columns (<640px, 12px gap), 3 columns (>=640px), 4 columns (>=1024px) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {offerProducts.map((product) => {
             const price = product.price!;
             const compareAt = product.compareAtPrice!;
@@ -54,7 +54,7 @@ export function OffersSection({ locale }: OffersSectionProps) {
             return (
               <article
                 key={product.id}
-                className="relative rounded-3xl bg-brand-ocean/90 border border-white/10 p-5 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden"
+                className="relative rounded-2xl sm:rounded-3xl bg-brand-ocean/90 border border-white/10 p-3 sm:p-6 shadow-card flex flex-col justify-between overflow-hidden min-w-0 w-full"
               >
                 {/* Background Ripple Accent */}
                 <div className="absolute -top-10 -end-10 w-64 h-64 opacity-25 pointer-events-none">
@@ -62,8 +62,8 @@ export function OffersSection({ locale }: OffersSectionProps) {
                 </div>
 
                 {/* Savings Badge COMPUTED directly from real prices */}
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-brand-champagne/20 text-brand-champagne border border-brand-champagne/40">
+                <div className="flex items-center justify-between gap-2 mb-3 sm:mb-4 min-w-0">
+                  <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-brand-champagne/20 text-brand-champagne border border-brand-champagne/40 truncate">
                     {t("saveBadge", {
                       amount: savings,
                       percent,
@@ -73,40 +73,43 @@ export function OffersSection({ locale }: OffersSectionProps) {
                 </div>
 
                 {/* Inset Cutout Photo */}
-                <div className="relative w-full aspect-square rounded-2xl bg-white overflow-hidden p-4 mb-4 flex items-center justify-center">
+                <div className="relative w-full aspect-square rounded-xl sm:rounded-2xl bg-white overflow-hidden p-2.5 sm:p-4 mb-3 sm:mb-4 flex items-center justify-center min-w-0">
                   <div className="feathered-image-mask relative w-full h-full flex items-center justify-center">
                     <Image
                       src={product.image.src}
                       alt={product.image.alt[locale]}
                       fill
-                      sizes="(max-width: 640px) 90vw, 30vw"
-                      className="object-contain p-2"
+                      sizes="(max-width: 640px) 384px, (max-width: 1024px) 50vw, 25vw"
+                      className="object-contain p-1 sm:p-2"
                       loading="lazy"
                     />
                   </div>
                 </div>
 
                 {/* Details */}
-                <div className="flex flex-col gap-2 flex-1">
-                  <h3 className="text-lg font-bold text-white line-clamp-2">
+                <div className="flex flex-col gap-1.5 sm:gap-2 flex-1 min-w-0 w-full">
+                  <h3 className="text-sm sm:text-lg font-bold text-white line-clamp-2 min-h-[38px] sm:min-h-[48px] min-w-0 break-words">
                     <Link href={`/products/${product.id}`} className="hover:text-brand-foam transition-colors">
                       <bdi>{product.name[locale]}</bdi>
                     </Link>
                   </h3>
 
-                  <div className="mt-auto pt-4 flex items-center justify-between border-t border-white/10">
-                    <Price
-                      amount={price}
-                      compareAtAmount={compareAt}
-                      locale={locale}
-                      size="md"
-                      tone="light"
-                    />
+                  <div className="mt-auto pt-2.5 sm:pt-4 flex flex-col gap-2 border-t border-white/10 min-w-0 w-full">
+                    <div className="min-w-0 w-full min-h-[22px] sm:min-h-[24px] flex items-baseline">
+                      <Price
+                        amount={price}
+                        compareAtAmount={compareAt}
+                        locale={locale}
+                        size="sm"
+                        tone="light"
+                        className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 min-w-0"
+                      />
+                    </div>
 
                     <AddToCartButton
                       productId={product.id}
                       locale={locale}
-                      size="sm"
+                      className="w-full min-h-[44px]"
                     />
                   </div>
                 </div>

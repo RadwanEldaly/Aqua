@@ -17,7 +17,6 @@ export function AddToCartButton({
   productId,
   locale,
   className,
-  size = "sm",
 }: AddToCartButtonProps) {
   const isAr = locale === "ar";
   const { addItem } = useCart();
@@ -39,9 +38,9 @@ export function AddToCartButton({
     <button
       type="button"
       onClick={handleClick}
+      aria-label={isAdded ? (isAr ? "تمت الإضافة إلى الطلب" : "Added to order") : (isAr ? "أضف إلى الطلب" : "Add to order")}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 font-bold rounded-full transition-all active:scale-95 cursor-pointer shadow-subtle shrink-0",
-        size === "sm" ? "h-9 px-3.5 text-xs" : "h-11 px-5 text-sm",
+        "w-full min-h-[44px] h-11 px-2.5 py-2 inline-flex items-center justify-center gap-1.5 font-bold rounded-xl sm:rounded-full transition-all active:scale-95 cursor-pointer shadow-subtle shrink-0 text-xs sm:text-sm text-center leading-tight min-w-0 select-none",
         isAdded
           ? "bg-emerald-600 text-white"
           : "bg-brand-primary hover:bg-brand-primary-hover text-white",
@@ -51,12 +50,15 @@ export function AddToCartButton({
       {isAdded ? (
         <>
           <Check className="w-3.5 h-3.5 shrink-0 stroke-[2.5]" aria-hidden="true" />
-          <span>{isAr ? "تمت الإضافة" : "Added"}</span>
+          <span className="truncate">{isAr ? "تمت الإضافة" : "Added"}</span>
         </>
       ) : (
         <>
           <ShoppingBag className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-          <span>{isAr ? "أضف إلى الطلب" : "Add to order"}</span>
+          <span className="truncate">
+            <span className="sm:hidden">{isAr ? "أضف" : "Add"}</span>
+            <span className="hidden sm:inline">{isAr ? "أضف إلى الطلب" : "Add to order"}</span>
+          </span>
         </>
       )}
     </button>

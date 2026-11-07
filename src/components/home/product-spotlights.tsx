@@ -7,9 +7,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { PROVISIONAL_PRODUCTS, type ProvisionalProduct } from "@/data/provisional-products";
 import { RippleRings, DisplayNumeral } from "@/components/ui/brand-patterns";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
-import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { Price } from "@/components/ui/price";
 import { cn } from "@/lib/utils";
 
@@ -43,7 +40,6 @@ function pickSpotlightProducts(): ProvisionalProduct[] {
 
 export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
   const t = useTranslations("HomePage.spotlights");
-  const isAr = locale === "ar";
   const spotlights = pickSpotlightProducts();
 
   // Guard: hide section if data has fewer than 3 products
@@ -66,10 +62,6 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
           {spotlights.map((product, idx) => {
             const isReversed = idx % 2 === 1;
             const numeral = idx + 1;
-            const whatsappMsg = isAr
-              ? `السلام عليكم، أود الاستفسار عن: ${product.name.ar}`
-              : `Hello, I would like to inquire about: ${product.name.en}`;
-            const whatsappUrl = buildWhatsAppUrl(whatsappMsg);
 
             return (
               <article
@@ -164,26 +156,14 @@ export function ProductSpotlights({ locale }: ProductSpotlightsProps) {
                     </div>
                   )}
 
-                  {/* Action Buttons: Add to order + WhatsApp inquiry */}
-                  <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border-subtle/80">
+                  {/* Action Button: Add to order */}
+                  <div className="pt-4 border-t border-border-subtle/80">
                     <AddToCartButton
                       productId={product.id}
                       locale={locale}
                       size="md"
+                      className="w-full sm:w-auto min-h-[44px]"
                     />
-
-                    {whatsappUrl && (
-                      <Button
-                        href={whatsappUrl}
-                        external
-                        variant="outline"
-                        size="md"
-                        className="inline-flex items-center gap-2"
-                      >
-                        <MessageCircle className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-                        <span>{isAr ? "استفسر عبر واتساب" : "WhatsApp Inquiry"}</span>
-                      </Button>
-                    )}
                   </div>
                 </div>
               </article>

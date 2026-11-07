@@ -124,9 +124,9 @@ export function ProductCardSkeleton({ className }: { className?: string }) {
         </div>
 
         {/* Price & Action Row */}
-        <div className="mt-auto pt-2 h-11 flex items-center justify-between border-t border-border-subtle">
+        <div className="mt-auto pt-2 sm:pt-3 flex flex-col gap-2 min-w-0 w-full">
           <PriceSkeleton />
-          <Skeleton className="h-9 w-20" rounded="full" />
+          <Skeleton className="h-11 w-full" rounded="full" />
         </div>
       </div>
     </div>
