@@ -6,7 +6,6 @@ import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { RippleRings } from "@/components/ui/brand-patterns";
-import { BackgroundVideo } from "@/components/ui/background-video";
 import { PROVISIONAL_CATEGORIES } from "@/data/provisional-products";
 import { MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -32,17 +31,14 @@ export function HeroSection({ locale }: HeroSectionProps) {
         ref={containerRef}
         className="relative max-w-7xl mx-auto rounded-panel bg-brand-ocean overflow-hidden shadow-elevated min-h-[640px] sm:min-h-[720px] lg:min-h-[760px] flex flex-col justify-between"
       >
-        {/* Saturated Deep Marine Video & Gradient Background (Passes AAA Contrast > 12:1) */}
-        <BackgroundVideo
-          videoSrc="/video/hero-ripples-720p.mp4"
-          posterSrc="/video/hero-ripples-poster.webp"
-          overlayClassName="bg-gradient-to-t from-brand-abyss via-brand-ocean/90 to-brand-ocean/85 backdrop-brightness-75"
-        >
+        {/* Saturated Deep Marine Gradient Background (Passes AAA Contrast > 12:1) */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-abyss via-brand-ocean to-brand-ocean/95" />
           {/* Concentric Ripple Rings Ambient Mark (11s smooth scale/opacity pulse) */}
           <div className="absolute -top-16 -start-16 w-[420px] sm:w-[540px] h-[420px] sm:h-[540px] opacity-35">
             <RippleRings animate className="w-full h-full text-brand-foam/30" />
           </div>
-        </BackgroundVideo>
+        </div>
 
         {/* Content Grid: Clearance for Floating Pill Nav (pt-24 sm:pt-28) */}
         <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center p-6 sm:p-10 lg:p-14 pt-24 sm:pt-28 lg:pt-32 my-auto">

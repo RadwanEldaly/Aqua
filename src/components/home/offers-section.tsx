@@ -9,7 +9,6 @@ import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { AddToCartButton } from "@/components/products/add-to-cart-button";
 import { RippleRings } from "@/components/ui/brand-patterns";
 import { Price } from "@/components/ui/price";
-import { BackgroundVideo } from "@/components/ui/background-video";
 
 interface OffersSectionProps {
   locale: "ar" | "en";
@@ -32,14 +31,8 @@ export function OffersSection({ locale }: OffersSectionProps) {
   }
 
   return (
-    <section className="relative w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-brand-abyss text-white overflow-hidden [content-visibility:auto] [contain-intrinsic-size:0_650px]">
-      {/* Ambient Water Pour Video Loop */}
-      <BackgroundVideo
-        videoSrc="/video/water-pour-720p.mp4"
-        posterSrc="/video/water-pour-poster.webp"
-        overlayClassName="bg-brand-abyss/85 backdrop-brightness-75"
-      />
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-brand-abyss text-white [content-visibility:auto] [contain-intrinsic-size:0_650px]">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         {/* Section Heading on Dark Abyss */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <SectionHeading
