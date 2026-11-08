@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 export function WhatsAppBandSection() {
@@ -136,6 +137,7 @@ export function WhatsAppBandSection() {
             external
             variant="primary"
             size="lg"
+            onClick={() => trackWhatsAppClick({ context: "whatsapp_band" })}
             className="min-w-[220px] h-14 px-8 text-base font-bold bg-white text-brand-deep hover:bg-aqua-100 hover:text-brand-deep inline-flex items-center gap-2.5 shadow-subtle cursor-pointer rounded-full transition-transform hover:scale-105"
           >
             <WhatsAppIcon className="w-6 h-6 shrink-0 text-[#25D366]" aria-hidden="true" />

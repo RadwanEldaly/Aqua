@@ -12,6 +12,7 @@ import {
   PROVISIONAL_PRODUCTS,
   type ProvisionalProduct,
 } from "@/data/provisional-products";
+import { pushEvent } from "@/lib/gtm";
 
 export interface CartStoredEntry {
   id: string;
@@ -171,6 +172,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
     saveEntries(next);
     setLastAddedToast({ product, id: Date.now() });
+
+    // Push GTM add_to_cart event
+    const itemPrice = typeof product.price === "number" ? product.price : 0;
+    pushEvent({
+      event: "add_to_cart",
+      currency: "SAR",
+      value: itemPrice * quantity,
+      items: [
+        {
+          item_id: product.id,
+          item_name: product.name.ar || product.name.en,
+          price: itemPrice,
+          quantity,
+        },
+      ],
+    });
   }, []);
 
   const removeItem = useCallback((productId: string) => {

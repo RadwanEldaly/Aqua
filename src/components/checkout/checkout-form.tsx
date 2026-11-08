@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -17,6 +17,7 @@ import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/config/site";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { pushEvent, trackWhatsAppClick } from "@/lib/gtm";
 
 /**
  * Normalizes a Saudi mobile phone input:
@@ -62,6 +63,19 @@ export function CheckoutForm() {
   const fullNameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const addressRef = useRef<HTMLInputElement>(null);
+
+  // Track GTM begin_checkout event once on mount
+  const beginCheckoutFired = useRef(false);
+  useEffect(() => {
+    if (isMounted && items.length > 0 && !beginCheckoutFired.current) {
+      beginCheckoutFired.current = true;
+      pushEvent({
+        event: "begin_checkout",
+        currency: "SAR",
+        value: typeof totalPrice === "number" ? totalPrice : 0,
+      });
+    }
+  }, [isMounted, items.length, totalPrice]);
 
   const cities = siteConfig.commerce.supportCities;
 
@@ -161,7 +175,30 @@ export function CheckoutForm() {
     const url = buildWhatsAppUrl(message);
     setWhatsappHref(url || "");
 
+    // Track GTM purchase event once per unique order id
+    try {
+      const storageKey = `gtm_purchase_${generatedOrderNum}`;
+      if (!sessionStorage.getItem(storageKey)) {
+        sessionStorage.setItem(storageKey, "true");
+        pushEvent({
+          event: "purchase",
+          transaction_id: generatedOrderNum,
+          currency: "SAR",
+          value: typeof totalPrice === "number" ? totalPrice : 0,
+          items: items.map((item) => ({
+            item_id: item.product.id,
+            item_name: item.product.name[isAr ? "ar" : "en"],
+            price: typeof item.product.price === "number" ? item.product.price : 0,
+            quantity: item.quantity,
+          })),
+        });
+      }
+    } catch {
+      // In case sessionStorage is blocked
+    }
+
     if (url) {
+      trackWhatsAppClick({ context: "checkout_submit", order_id: generatedOrderNum });
       window.open(url, "_blank", "noopener");
     }
 
@@ -229,6 +266,7 @@ export function CheckoutForm() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick({ context: "checkout_reopen" })}
               className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors shadow-subtle"
             >
               <WhatsAppIcon className="w-4 h-4" />

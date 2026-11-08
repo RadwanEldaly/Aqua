@@ -11,6 +11,7 @@ import { MobileBottomBar } from "@/components/navigation/mobile-bottom-bar";
 import { CartProvider } from "@/context/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CartToast } from "@/components/ui/cart-toast";
+import { GtmGlobalListener } from "@/lib/gtm";
 import "@/app/globals.css";
 
 export function generateStaticParams() {
@@ -123,6 +124,7 @@ export default async function LocaleLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <GtmGlobalListener />
         <NextIntlClientProvider messages={messages} locale={locale}>
           <CartProvider>
             <SkipToContent />

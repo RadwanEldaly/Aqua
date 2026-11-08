@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { Label, Input, Textarea } from "@/components/ui/form-inputs";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { trackWhatsAppClick } from "@/lib/gtm";
 import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 
 interface ContactFormProps {
@@ -70,6 +71,7 @@ export function ContactForm({ locale }: ContactFormProps) {
 
     const url = buildWhatsAppUrl(formattedMessage);
     if (url) {
+      trackWhatsAppClick({ context: "contact_form", name: name.trim() });
       window.open(url, "_blank", "noopener,noreferrer");
     }
   }
@@ -86,6 +88,7 @@ export function ContactForm({ locale }: ContactFormProps) {
             href={directWhatsAppUrl!}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick({ context: "contact_direct" })}
             aria-label={t("directActionAria")}
             className="w-full sm:w-auto min-w-[220px] h-12 px-6 rounded-xl font-bold bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-card hover:shadow-hover inline-flex items-center justify-center gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
           >
