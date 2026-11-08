@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { getMessages, setRequestLocale, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -94,11 +95,34 @@ export default async function LocaleLayout({
       className={`${fontArabic.variable} ${fontSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Google Tag Manager (GTM-MDB88DR9) */}
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-MDB88DR9"
+          strategy="afterInteractive"
+        />
+        <Script id="google-gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
+      </head>
       <body
         className="min-h-full flex flex-col bg-canvas text-brand-deep selection:bg-brand-primary selection:text-white"
         dir={dir}
         suppressHydrationWarning
       >
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MDB88DR9"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <CartProvider>
             <SkipToContent />
