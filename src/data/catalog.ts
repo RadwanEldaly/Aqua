@@ -259,6 +259,44 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
+  // 6. Stand 9-Stage RO System with Gauge & Tank
+  {
+    id: "stand-9stages-filter",
+    slug: "stand-9stages-filter",
+    name: {
+      ar: "فلتر 9 مراحل مع ساعة ضغط + خزان",
+      en: "9-Stage RO Filter System with Pressure Gauge + Tank",
+    },
+    shortDescription: {
+      ar: "نظام تنقية ستاند متطور 9 مراحل مع ساعة ضغط وخزان حفظ صحي.",
+      en: "Advanced 9-stage RO filtration stand system with pressure gauge and tank.",
+    },
+    fullDescription: {
+      ar: "فلتر تنقية وتحلية مياه متطور 9 مراحل مثبت على هيكل ستاند أرضي متين، مزود بساعة قياس ضغط لمتابعة كفاءة الضخ ومضخة قوية، بالإضافة إلى خزان حفظ مياه صحي وصنبور ستيل فاخر لضمان مياه شرب نقية وصحية بأعلى معايير الجودة.",
+      en: "Advanced 9-stage stand RO water purification system on a heavy-duty frame. Features an integrated pressure gauge, booster pump, sanitary storage tank, and luxury drinking faucet for pure, healthy water.",
+    },
+    price: 699,
+    currency: "SAR",
+    images: ["/images/products/stand-9stages-filter.jpg"],
+    thumbnailImage: "/images/products/stand-9stages-filter.jpg",
+    category: "systems",
+    badge: { ar: "9 مراحل متطورة", en: "9-Stage System" },
+    features: [
+      { ar: "9 مراحل تنقية متطورة تضمن إزالة الشوائب والأملاح وإضافة المعادن الصحية", en: "9 advanced purification stages ensuring pure, mineral-balanced water" },
+      { ar: "ساعة قياس ضغط هيدروليكية لمراقبة كفاءة الفلتر بدقة", en: "Hydraulic pressure gauge for precise system monitoring" },
+      { ar: "خزان ضغط صحي لحفظ المياه النقية وتوفير تدفق مستمر", en: "Sanitary pressurized tank for continuous fresh water supply" },
+      { ar: "قاعدة ستاند أرضية قوية تسهل وضعه على الأرضيات أو تحت المجلى", en: "Durable floor stand frame for stable under-sink or floor placement" },
+      { ar: "صنبور مياه شرب فاخر وتوصيلات متكاملة", en: "Luxury drinking faucet and complete installation fittings" },
+    ],
+    specs: [
+      { id: "stages", label: { ar: "عدد المراحل", en: "Stages" }, value: { ar: "9 مراحل تنقية", en: "9 Stages" } },
+      { id: "tank", label: { ar: "الخزان", en: "Tank" }, value: { ar: "خزان ضغط صحي مرفق", en: "Sanitary Tank Included" } },
+      { id: "gauge", label: { ar: "ساعة الضغط", en: "Pressure Gauge" }, value: { ar: "ساعة قياس ضغط مدمجة", en: "Built-in Pressure Gauge" } },
+      { id: "frame", label: { ar: "الهيكل", en: "Frame" }, value: { ar: "ستاند أرضي مقاوم للصدأ", en: "Rustproof Floor Stand" } },
+    ],
+    inStock: true,
+  },
+
   // 6. Pure 7-Stage Under-sink Complete
   {
     id: "pure-7stages-complete",
