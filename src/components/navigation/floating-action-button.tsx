@@ -3,7 +3,6 @@
 import React from "react";
 import { useLocale } from "next-intl";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { trackWhatsAppClick } from "@/lib/gtm";
 import { WhatsAppIcon, PhoneCallIcon } from "@/components/ui/social-icons";
 import { cn } from "@/lib/utils";
 
@@ -63,7 +62,6 @@ export function FloatingActionButton({ className }: FloatingActionButtonProps) {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackWhatsAppClick({ context: "floating_button" })}
           aria-label={isAr ? "محادثة فورية عبر واتساب" : "Instant chat on WhatsApp"}
           className={cn(
             "group/wa relative w-13 h-13 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-elevated",

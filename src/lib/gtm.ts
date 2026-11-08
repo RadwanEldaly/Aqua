@@ -22,22 +22,21 @@ export function pushEvent(data: GtmEvent) {
   window.dataLayer.push(data);
 }
 
-// Track WhatsApp click with debouncing to prevent double firing
+// Track WhatsApp click with debouncing to prevent any rapid double firing
 let lastWaClick = 0;
-export function trackWhatsAppClick(metadata?: Record<string, unknown>) {
+export function trackWhatsAppClick() {
   const now = Date.now();
-  if (now - lastWaClick < 600) return;
+  if (now - lastWaClick < 800) return;
   lastWaClick = now;
 
   pushEvent({
     event: "whatsapp_click",
-    ...metadata,
   });
 }
 
 /**
- * Global listener that automatically intercepts any clicks on WhatsApp links (wa.me / whatsapp.com)
- * across the entire application without needing manual handlers on every single link.
+ * Single source of truth listener: automatically intercepts all WhatsApp clicks
+ * across the entire application without needing individual onClick handlers on links.
  */
 export function GtmGlobalListener() {
   useEffect(() => {
@@ -45,8 +44,12 @@ export function GtmGlobalListener() {
       const target = (e.target as HTMLElement)?.closest("a");
       if (!target) return;
       const href = target.getAttribute("href") || "";
-      if (href.includes("wa.me") || href.includes("whatsapp.com")) {
-        trackWhatsAppClick({ context: "auto_detected", href });
+      if (
+        href.includes("wa.me") ||
+        href.includes("whatsapp.com") ||
+        href.includes("api.whatsapp.com")
+      ) {
+        trackWhatsAppClick();
       }
     };
 

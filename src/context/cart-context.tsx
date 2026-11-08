@@ -175,6 +175,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     // Push GTM add_to_cart event
     const itemPrice = typeof product.price === "number" ? product.price : 0;
+    const itemName = typeof product.name === "object"
+      ? (product.name.ar || product.name.en || product.id)
+      : String(product.name || product.id);
+
     pushEvent({
       event: "add_to_cart",
       currency: "SAR",
@@ -182,7 +186,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       items: [
         {
           item_id: product.id,
-          item_name: product.name.ar || product.name.en,
+          item_name: itemName,
           price: itemPrice,
           quantity,
         },

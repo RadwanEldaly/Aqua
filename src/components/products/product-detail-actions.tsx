@@ -6,7 +6,6 @@ import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { PROVISIONAL_PRODUCTS } from "@/data/provisional-products";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { trackWhatsAppClick } from "@/lib/gtm";
 import type { Product } from "@/types/product";
 import { cn } from "@/lib/utils";
 
@@ -112,7 +111,6 @@ export function ProductDetailActions({ product, locale }: ProductDetailActionsPr
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick({ context: "product_detail", product_id: product.id })}
             className="flex items-center justify-center gap-2 py-3.5 px-6 rounded-button bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all shadow-sm"
           >
             <WhatsAppIcon className="w-5 h-5 shrink-0" aria-hidden="true" />

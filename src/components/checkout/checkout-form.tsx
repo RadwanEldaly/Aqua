@@ -17,7 +17,7 @@ import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { useCart } from "@/context/cart-context";
 import { siteConfig } from "@/config/site";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { pushEvent, trackWhatsAppClick } from "@/lib/gtm";
+import { pushEvent } from "@/lib/gtm";
 
 /**
  * Normalizes a Saudi mobile phone input:
@@ -187,7 +187,9 @@ export function CheckoutForm() {
           value: typeof totalPrice === "number" ? totalPrice : 0,
           items: items.map((item) => ({
             item_id: item.product.id,
-            item_name: item.product.name[isAr ? "ar" : "en"],
+            item_name: typeof item.product.name === "object"
+              ? (item.product.name[isAr ? "ar" : "en"] || item.product.name.ar || item.product.id)
+              : String(item.product.name || item.product.id),
             price: typeof item.product.price === "number" ? item.product.price : 0,
             quantity: item.quantity,
           })),
@@ -198,7 +200,6 @@ export function CheckoutForm() {
     }
 
     if (url) {
-      trackWhatsAppClick({ context: "checkout_submit", order_id: generatedOrderNum });
       window.open(url, "_blank", "noopener");
     }
 
@@ -266,7 +267,6 @@ export function CheckoutForm() {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ context: "checkout_reopen" })}
               className="inline-flex items-center gap-2 py-3 px-6 rounded-full bg-emerald-600 text-white font-medium text-sm hover:bg-emerald-700 transition-colors shadow-subtle"
             >
               <WhatsAppIcon className="w-4 h-4" />

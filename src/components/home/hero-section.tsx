@@ -10,7 +10,6 @@ import { PROVISIONAL_CATEGORIES } from "@/data/provisional-products";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { trackWhatsAppClick } from "@/lib/gtm";
 import { useGSAP, gsap, isReducedMotionPreferred } from "@/hooks/use-gsap";
 import { cn } from "@/lib/utils";
 
@@ -149,7 +148,6 @@ export function HeroSection({ locale }: HeroSectionProps) {
                   href={whatsappUrl!}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick({ context: "hero_inquire" })}
                   className={cn(
                     "group/hero-wa min-w-[175px] h-13 px-7 text-base font-bold rounded-full",
                     "bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1da851] text-white shadow-elevated",
