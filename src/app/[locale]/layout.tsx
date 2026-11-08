@@ -107,6 +107,7 @@ export default async function LocaleLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            gtag('config', 'GTM-MDB88DR9');
             gtag('config', 'AW-18563616365');
           `}
         </Script>

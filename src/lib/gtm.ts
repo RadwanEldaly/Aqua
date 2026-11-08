@@ -26,6 +26,15 @@ export function pushEvent(data: GtmEvent) {
   if (data.event === "purchase") {
     const win = window as unknown as { gtag?: (...args: unknown[]) => void };
     if (typeof win.gtag === "function") {
+      // Primary conversion label provided from Google Ads snippet
+      win.gtag("event", "conversion", {
+        send_to: "AW-18563616365/tsOyCMPq1rQdEO2c6ZNF",
+        value: data.value,
+        currency: data.currency || "SAR",
+        transaction_id: data.transaction_id,
+      });
+
+      // Secondary conversion label tested by Tag Assistant
       win.gtag("event", "conversion", {
         send_to: "AW-18563616365/1qRaCNbz07QdEO2c6ZNF",
         value: data.value,
