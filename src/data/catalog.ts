@@ -16,11 +16,15 @@ export const CATALOG_CATEGORIES: readonly CatalogCategory[] = [
   },
   {
     id: "systems",
-    label: { ar: "أجهزة مياه منزلية", en: "Home Water Systems" },
+    label: { ar: "أنظمة التحلية المنزلية", en: "Home RO Systems" },
   },
   {
     id: "dispensers",
-    label: { ar: "برادات المياه", en: "Water Dispensers" },
+    label: { ar: "برادات وموزعات المياه", en: "Water Dispensers & Coolers" },
+  },
+  {
+    id: "filters",
+    label: { ar: "فلاتر ومحطات جامبو", en: "Jumbo & Main Filters" },
   },
   {
     id: "commercial",
@@ -136,13 +140,13 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 3. فلتر كلاسيك 7 مراحل (بدون تركيب)
+  // 3. نظام التحلية المنزلي بيور نانو 7 مراحل مع خزان وصنبور
   {
     id: "classic-7stages-no-install",
     slug: "classic-7stages-no-install",
     name: {
-      ar: "فلتر كلاسيك 7 مراحل (بدون تركيب)",
-      en: "Classic 7-Stage RO Filter (Without Installation)",
+      ar: "نظام التحلية المنزلي بيور نانو 7 مراحل مع خزان وصنبور",
+      en: "Pure Nano 7-Stage Home RO System with Tank & Faucet",
     },
     shortDescription: {
       ar: "فلتر تنقية وتحلية مياه منزلي كلاسيك 7 مراحل بدون تركيب.",
@@ -275,27 +279,27 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 7. فلتر خزان علوي
+  // 7. فلتر جامبو ثلاثي لخزان المنزل الرئيسي (أكوا تاور 20 بوصة)
   {
     id: "jumbo-triple-rack",
     slug: "jumbo-triple-rack",
     name: {
-      ar: "فلتر خزان علوي",
-      en: "Rooftop Tank Water Filter",
+      ar: "فلتر جامبو ثلاثي لخزان المنزل الرئيسي (أكوا تاور 20 بوصة)",
+      en: "Jumbo 20-Inch Triple Housing Whole-House Filter (Aqua Tower)",
     },
     shortDescription: {
       ar: "تنقية المياه المركزية للخزانات العلوية لحماية شبكة السباكة والأجهزة.",
       en: "Whole-house central water filtration for rooftop tank supply and plumbing protection.",
     },
     fullDescription: {
-      ar: "فلتر خزان علوي بمقاس 20 بوصة مصمم ليركب بعد الخزان العلوي أو العداد الرئيسي ليصفي كامل مياه المنزل من الأتربة والشوائب والصدأ والكلور لحماية الخلاطات وسخانات المياه والغسالات.",
+      ar: "فلتر جامبو ثلاثي بمقاس 20 بوصة مصمم ليركب بعد الخزان العلوي أو العداد الرئيسي ليصفي كامل مياه المنزل من الأتربة والشوائب والصدأ والكلور لحماية الخلاطات وسخانات المياه والغسالات.",
       en: "High-capacity 20-inch triple jumbo rooftop tank filter installed after the main water tank or meter. Filters entire home water supply from rust, silt, sand, and chlorine.",
     },
     price: 1199,
     currency: "SAR",
     images: ["/images/products/jumbo-triple-rack.jpg"],
     thumbnailImage: "/images/products/jumbo-triple-rack.jpg",
-    category: "systems",
+    category: "filters",
     badge: { ar: "تنقية مركزية", en: "Whole House" },
     features: [
       { ar: "3 أسطوانات زرقاء عملاقة 20 بوصة عالية التحمل", en: "3 heavy-duty 20-inch jumbo housings" },
@@ -309,21 +313,21 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 8. عرض فلتر 7 مراحل مع برادة
+  // 8. بكج التوفير: فلتر نانو سيلفر 7 مراحل + برادة بيور تاب سوداء
   {
     id: "bundle-filter-dispenser",
     slug: "bundle-filter-dispenser",
     name: {
-      ar: "عرض فلتر 7 مراحل مع برادة",
-      en: "7-Stage Filter with Water Dispenser Offer",
+      ar: "بكج التوفير: فلتر نانو سيلفر 7 مراحل + برادة بيور تاب سوداء",
+      en: "Economy Bundle: Pure Silver 7-Stage Purifier + Pure Tap Dispenser",
     },
     shortDescription: {
       ar: "طقم متكامل يجمع بين قوة التحلية السداسية والسباعية مع برادة أنيقة.",
       en: "Complete water bundle combining 7-stage RO purifier and tabletop dispenser.",
     },
     fullDescription: {
-      ar: "عرض فلتر 7 مراحل مع برادة يجمع بين وحدة الفلترة الفائقة 7 مراحل بنظام التناضح العكسي، وبرادة طاولة أنيقة بتصميم عصري وصنابير ثلاثية للمياه الباردة والحارة والمعتدلة.",
-      en: "Smart combo offer combining the 7-stage RO filtration unit and the sleek tabletop water dispenser.",
+      ar: "بكج التوفير الذكي يجمع بين وحدة الفلترة الفائقة 7 مراحل بنظام التناضح العكسي، وبرادة طاولة بيور تاب سوداء فاخرة بثلاثة صنابير للمياه الباردة والحارة والمعتدلة.",
+      en: "Smart combo offer combining the 7-stage RO filtration unit and the sleek Pure Tap black tabletop water dispenser.",
     },
     price: 1049,
     currency: "SAR",
@@ -352,13 +356,13 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 9. برادة ذاتية التعبئة (Classic Pure Nano) - فضي
+  // 9. برادة طاولة كلاسیك بیور نانو فضية - 3 صنابیر (بارد، فاتر، حار)
   {
     id: "tabletop-dispenser-silver",
     slug: "tabletop-dispenser-silver",
     name: {
-      ar: "برادة ذاتية التعبئة (Classic Pure Nano) - فضي",
-      en: "Classic Pure Nano Self-Refilling Dispenser - Silver",
+      ar: "برادة طاولة كلاسیك بیور نانو فضية - 3 صنابیر (بارد، فاتر، حار)",
+      en: "Classic Pure Nano Tabletop Water Dispenser - Silver 3 Taps (Cold, Normal, Hot)",
     },
     shortDescription: {
       ar: "برادة فضية متينة بثلاث صنابير تتصل مباشرة بجهاز التحلية بدون قوارير.",
@@ -386,13 +390,13 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 10. برادة ذاتية التعبئة (Classic Pure Nano) - أسود
+  // 10. برادة طاولة کلاسیك بیور نانو سوداء فاخرة - 3 صنابير
   {
     id: "tabletop-dispenser-black",
     slug: "tabletop-dispenser-black",
     name: {
-      ar: "برادة ذاتية التعبئة (Classic Pure Nano) - أسود",
-      en: "Classic Pure Nano Self-Refilling Dispenser - Black",
+      ar: "برادة طاولة کلاسیك بیور نانو سوداء فاخرة - 3 صنابير",
+      en: "Classic Pure Nano Tabletop Water Dispenser - Piano Black 3 Taps",
     },
     shortDescription: {
       ar: "لون أسود ملكي فخم يندمج بشكل رائع مع ديكورات المطابخ الحديثة.",
@@ -420,28 +424,28 @@ export const CATALOG_PRODUCTS: readonly Product[] = [
     inStock: true,
   },
 
-  // 11. برادة تحلية مدمجة بفلتر
+  // 11. برادة مياه طاولة فاخرة ديجيتال مع شاشة تحكم دائرية
   {
     id: "digital-round-dispenser",
     slug: "digital-round-dispenser",
     name: {
-      ar: "برادة تحلية مدمجة بفلتر",
-      en: "Water Purifier Dispenser with Built-in Filter",
+      ar: "برادة مياه طاولة فاخرة ديجيتال مع شاشة تحكم دائرية",
+      en: "Luxury Digital Tabletop Water Dispenser with Circular Screen",
     },
     shortDescription: {
-      ar: "برادة ذكية مدمجة بفلتر تنقية وشاشة دائرية توضح درجات الحرارة.",
-      en: "Smart water dispenser with integrated purification filter and digital display.",
+      ar: "برادة ذكية بتصميم بيانو أسود فخم وشاشة دائرية توضح درجات الحرارة.",
+      en: "Smart piano-black tabletop dispenser with circular temperature display.",
     },
     fullDescription: {
-      ar: "برادة تحلية مدمجة بفلتر تنقية متكامل تجمع بين الفخامة والأداء العالي؛ توفر الماء البارد والساخن والمعتدل مع فلترة ذاتية وشاشة دائرية توضح درجات الحرارة ونظام أمان للأطفال.",
-      en: "Premium water dispenser with built-in filtration system, featuring LED display, child lock on hot water, and quiet rapid cooling compressor.",
+      ar: "برادة مياه طاولة ديجيتال تجمع بين الفخامة والأداء العالي؛ تتيح لك الحصول الفوري على الماء البارد والساخن مع شاشة دائرية مضيئة توضح درجات الحرارة بدقة ونظام أمان للأطفال لصنبور الماء الساخن.",
+      en: "Premium digital tabletop water dispenser featuring an ultra-modern circular LED display, child lock on hot water, and quiet rapid cooling compressor.",
     },
     price: 1099,
     currency: "SAR",
     images: ["/images/products/digital-round-dispenser.jpg"],
     thumbnailImage: "/images/products/digital-round-dispenser.jpg",
     category: "dispensers",
-    badge: { ar: "فلتر مدمج", en: "Built-in Filter" },
+    badge: { ar: "ديجيتال فاخر", en: "Premium Digital" },
     features: [
       { ar: "فلتر تنقية مدمج داخلي عالي الكفاءة", en: "High efficiency built-in internal filter" },
       { ar: "شاشة تحكم رقمية دائرية تعرض درجات الحرارة", en: "Circular digital display showing temperatures" },

@@ -56,7 +56,6 @@ export function ProductCatalog({
     if (typeof window === "undefined") return "all";
     const params = new URLSearchParams(window.location.search);
     const cat = params.get("category");
-    if (cat === "filters") return "systems";
     if (cat && categories.some((c) => c.id === cat)) return cat;
     return "all";
   });
