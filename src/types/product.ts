@@ -33,7 +33,7 @@ export interface Product {
   currency: "SAR";
   images: string[];
   thumbnailImage: string;
-  category: "packages" | "systems" | "dispensers" | "filters" | "accessories";
+  category: "packages" | "systems" | "dispensers" | "filters" | "accessories" | "commercial" | "shower";
   badge?: LocalizedString;
   isOffer?: boolean;
   warranty?: LocalizedString;

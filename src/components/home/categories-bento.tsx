@@ -20,11 +20,13 @@ interface CategoriesBentoProps {
 
 // Curated iconic image for each category
 const CATEGORY_FEATURED_IMAGES: Record<string, string> = {
-  packages: "/images/offers/package-alaman.jpg",
   systems: "/images/offers/artec-pro-digital.jpg",
   dispensers: "/images/products/tabletop-dispenser-black.jpg",
-  filters: "/images/products/jumbo-triple-rack.jpg",
+  commercial: "/images/products/restaurant-filter-800l.jpg",
   accessories: "/images/products/cartridges-7stages.jpg",
+  shower: "/images/offers/shower-filter-bundle.jpg",
+  packages: "/images/offers/package-alaman.jpg",
+  filters: "/images/products/jumbo-triple-rack.jpg",
 };
 
 export function CategoriesBento({ locale }: CategoriesBentoProps) {
